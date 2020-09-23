@@ -1,5 +1,5 @@
 # hack-frontend
-New version of IS2 frontend, implemented using Vue.
+Hack frontend, implemented using Vue.
 
 ## Environment setup
 In order to start working on IS2 frontend, you should install:

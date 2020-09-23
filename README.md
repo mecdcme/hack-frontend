@@ -1,4 +1,4 @@
-# is2-frontend
+# hack-frontend
 New version of IS2 frontend, implemented using Vue.
 
 ## Environment setup

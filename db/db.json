@@ -1,0 +1,84 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "Relais",
+      "description": "Record Linkage at Istat",
+      "organization": "Istat"
+    },
+    {
+      "id": 2,
+      "name": "Validate",
+      "description": "Data validation in R",
+      "organization": "Istat"
+    },
+    {
+      "id": 3,
+      "name": "ARC loader",
+      "description": "Arc file loader",
+      "organization": "Istat"
+    }
+  ],
+  "processes": [
+    {
+      "id": 1,
+      "name": "Prob",
+      "description": "Probabilistic record linkage",
+      "label": "PRLo",
+      "organization": "Istat"
+    },
+    {
+      "id": 2,
+      "name": "Deterministic record linkage",
+      "description": "Deterministic record linkage",
+      "label": "DRLOOO",
+      "organization": "Istatgggg"
+    },
+    {
+      "id": 3,
+      "name": "Probabilistic record linkage with blocking",
+      "description": "Probabilistic record linkage with blocking",
+      "label": "PRLBlockELLO",
+      "organization": "Istatello"
+    },
+    {
+      "{\"id\":2,\"name\":\"Deterministic record \",\"description\":\"Deterministic record linkage\",\"label\":\"DRL\",\"organization\":\"Istat\"}": "",
+      "id": 6,
+      "name": "Relais",
+      "description": "Record linkage process",
+      "label": "RELAIS",
+      "organization": "ISTAT"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "framato@istat.it",
+      "name": "Francesco",
+      "surname": "Amati",
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "email": "iannacone@istat.it",
+      "name": "Renzo",
+      "surname": "Iannacone",
+      "role": "USER"
+    },
+    {
+      "id": 4,
+      "email": "papizzo@istat.it",
+      "name": "Paolo",
+      "surname": "Pizzo",
+      "role": "USER"
+    },
+    {
+      "name": "Mauro",
+      "surname": "Bruno",
+      "email": "mbruno@istat.it",
+      "role": "USER",
+      "password": "belfiore",
+      "id": 6
+    }
+  ]
+}

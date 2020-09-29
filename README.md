@@ -2,7 +2,7 @@
 Hack frontend, implemented using Vue.
 
 ## Environment setup
-In order to start working on IS2 frontend, you should install:
+In order to start working on hack frontend, you should install:
 1. [Visual studio code](https://code.visualstudio.com/)
 2. [Node js](https://nodejs.org/en/download/)
 
@@ -20,8 +20,7 @@ It is also important to add the following extensions to Visual studio code:
 Your development environment is ready, it is time to start coding. First of all clone the project in your development folder:
 
 ```
-D:
-cd ./development
+cd path-to-development
 git clone https://github.com/mecdcme/is2-frontend.git is2-frontend
 ```
 Open the project in visual studio code. In order to install the application, open a terminal (Terminal -> New Terminal) and run:

@@ -109,14 +109,11 @@ export default {
       };
     },
     styleFunction() {
-      const fillColor = this.fillColor; // important! need touch fillColor in computed for re-calculate when change fillColor
-      //const fillColor = getColor(feature.properties.pop_est);
       return () => {
         return {
           weight: 2,
           //color: "#ECEFF1",
           opacity: 1,
-          fillColor: fillColor,
           fillOpacity: 0.6
         };
       };
@@ -141,7 +138,13 @@ export default {
             "</div>",
           { permanent: false, sticky: true }
         );
-        //style.fillColor(getColor(feature.properties.pop_est));
+        console.log(
+          "Population " +
+            feature.properties.pop_est +
+            ", color: " +
+            getColor(feature.properties.pop_est)
+        );
+        layer.options.fillColor = getColor(feature.properties.pop_est);
       };
     }
   },
@@ -153,7 +156,7 @@ export default {
     this.loading = false;
   }
 };
-/*
+
 function getColor(d) {
   return d > 1000
     ? "#800026"
@@ -171,5 +174,4 @@ function getColor(d) {
     ? "#FED976"
     : "#FFEDA0";
 }
-*/
 </script>

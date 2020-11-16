@@ -114,7 +114,7 @@ export default {
       return () => {
         return {
           weight: 2,
-          color: "#ECEFF1",
+          //color: "#ECEFF1",
           opacity: 1,
           fillColor: fillColor,
           fillOpacity: 0.6

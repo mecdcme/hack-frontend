@@ -6,6 +6,7 @@ import { error } from "./modules/error";
 import { coreui } from "./modules/coreui";
 import { message } from "./modules/message";
 import { businessProcess } from "./modules/metadata/businessProcess";
+import { geomap } from "./modules/geomap/geomap";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     error,
     coreui,
     message,
-    businessProcess
+    businessProcess,
+    geomap
   }
 });

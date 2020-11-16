@@ -125,7 +125,8 @@ export default {
       if (!this.enableTooltip) {
         return () => {};
       }
-      return (feature, layer, style) => {
+      //return (feature, layer,style) => {
+      return (feature, layer) => {
         layer.bindTooltip(
           "<div>" +
             "<div>" +
@@ -140,7 +141,7 @@ export default {
             "</div>",
           { permanent: false, sticky: true }
         );
-        style.fillColor(getColor(feature.properties.pop_est));
+        //style.fillColor(getColor(feature.properties.pop_est));
       };
     }
   },
@@ -152,6 +153,7 @@ export default {
     this.loading = false;
   }
 };
+/*
 function getColor(d) {
   return d > 1000
     ? "#800026"
@@ -169,4 +171,5 @@ function getColor(d) {
     ? "#FED976"
     : "#FFEDA0";
 }
+*/
 </script>

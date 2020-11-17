@@ -13,6 +13,7 @@
     "@coreui/vue": "^3.1.2",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "json-server": "^0.16.3",
     "jsonwebtoken": "^8.5.1",
     "leaflet": "^1.7.1",
     "query-string": "^6.13.2",

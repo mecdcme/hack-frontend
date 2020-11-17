@@ -1,5 +1,4 @@
-import { axiosIs2 } from "@/http";
-/*import { config } from "@/common";*/
+import { axiosHack } from "@/http";
 
 export const geomapService = {
   findAll
@@ -12,7 +11,7 @@ export const geomapService = {
 
 function findAll() {
   return new Promise((resolve, reject) => {
-    axiosIs2.get("/countries/").then(
+    axiosHack.get("/countries/").then(
       response => {
         console.log(response.data);
         console.log(response.statusText);
@@ -32,7 +31,7 @@ function findAll() {
 /*
 function findById(id) {
   return new Promise((resolve, reject) => {
-    axiosIs2.get("/maps/" + id).then(
+    axiosHack.get("/maps/" + id).then(
       response => {
         //var data = response.data ? response.data : null;
         console.log(response.data);
@@ -53,7 +52,7 @@ function findById(id) {
 /*
 function save(data) {
   return new Promise((resolve, reject) => {
-    axiosIs2.post("/maps/", data, config).then(
+    axiosHack.post("/maps/", data, config).then(
       response => {
         console.log(response.data);
         console.log(response.statusText);
@@ -79,7 +78,7 @@ function update(data) {
       //email: data.email,
       //role: data.role
     };
-    axiosIs2.put("/maps/" + data.id, map, config).then(
+    axiosHack.put("/maps/" + data.id, map, config).then(
       response => {
         console.log(response.data);
         console.log(response.statusText);
@@ -99,7 +98,7 @@ function update(data) {
 /*
 function _delete(id) {
   return new Promise((resolve, reject) => {
-    axiosIs2.delete("/maps/" + id).then(
+    axiosHack.delete("/maps/" + id).then(
       response => {
         console.log(response.data);
         console.log(response.statusText);

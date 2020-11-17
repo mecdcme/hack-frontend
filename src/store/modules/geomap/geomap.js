@@ -17,25 +17,25 @@ const mutations = {
 
 const actions = {
   findAll({ commit }) {
-    geomapService.findAll().then(
-      data => {
+    return geomapService
+      .findAll()
+      .then(data => {
         commit("SET_GEOMAPS", data);
         commit("SET_GEOMAP", null); //clear geomap
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   findById({ commit }, id) {
-    geomapService.findById(id).then(
-      data => {
+    return geomapService
+      .findById(id)
+      .then(data => {
         commit("SET_GEOMAP", data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 

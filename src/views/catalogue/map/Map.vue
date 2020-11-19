@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { L, latLng } from "leaflet";
+import { latLng } from "leaflet";
 import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
 
 /*
@@ -197,17 +197,7 @@ export default {
     const response = await fetch("http://localhost:3000/countries");
     const data = await response.json();
     this.geojson = data;
-    this.loading = false;
-
-    this.legend = Lcontrol.onAdd(
-      { position: "bottomright" });
-    this.legend.onAdd = function() {
-      var div = L.DomUtil.create("div", "legend");
-      (this.labels = ["<strong>Categories</strong>"]),
-        (this.categories = ["Tobacco", "Whiskey", "Beer", "Cigar", "Other"]);
-      return div;
-    };
-    this.legend.addTo();
+    this.loading = false;  
   }
 };
 </script>

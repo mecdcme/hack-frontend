@@ -1,86 +1,196 @@
 <template>
-  <div id="app">
-    <l-map
-      :center="[-23.752961, -57.854357]"
-      :zoom="6"
-      style="height: 500px;"
-      :options="mapOptions"
-    >
-      <l-geo-json
-        v-if="show"
-        :geojson="geojson"
-        :options="options"
-        :options-style="styleFunction"
-      />
-      <l-choropleth-layer
-        :data="pyDepartmentsData"
-        titleKey="department_name"
-        idKey="department_id"
-        :value="value"
-        :extraValues="extraValues"
-        geojsonIdKey="dpto"
-        :geojson="paraguayGeojson"
-        :colorScale="colorScale"
-      >
-        <template slot-scope="props">
-          <l-info-control
-            :item="props.currentItem"
-            :unit="props.unit"
-            title="Department"
-            placeholder="Hover over a department"
-          />
-          <l-reference-chart
-            title="Girls school enrolment"
-            :colorScale="colorScale"
-            :min="props.min"
-            :max="props.max"
-            position="topright"
-          />
-        </template>
-      </l-choropleth-layer>
-    </l-map>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <div class="card">
+        <header class="card-header">
+          Map
+          <div class="card-header-actions">
+            <span v-if="loading">Loading...</span>
+            <router-link tag="a" :to="{ name: 'Map' }">
+              <add-icon />
+            </router-link>
+          </div>
+        </header>
+        <CCardBody>
+          <div>
+            <l-map
+              :zoom="zoom"
+              :center="center"
+              style="height: 650px; width: 100%"
+            >
+              <l-tile-layer :url="url" :attribution="attribution" />
+              <l-geo-json
+                v-if="show"
+                :geojson="geojson"
+                :options="options"
+                :options-style="styleFunction"
+              />
+              <l-marker :lat-lng="marker" />
+              <l-control position="bottomright">
+                <div class="legend">yyyyyyyyyyyyyyyyyyy</div></l-control
+              >
+            </l-map>
+          </div>
+        </CCardBody>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { InfoControl, ReferenceChart, ChoroplethLayer } from "vue-choropleth";
-// eslint-disable-next-line no-unused-vars
-import { geojson } from "./data/py-departments-geojson";
-import paraguayGeojson from "./data/paraguay.json";
-import { pyDepartmentsData } from "./data/py-departments-data";
-import { LMap, LGeoJson } from "vue2-leaflet";
-//import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+import { L, latLng } from "leaflet";
+import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+
+/*
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function() {
+  var div = L.DomUtil.create("div", "info legend"),
+    grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+    labels = [],
+    from,
+    to;
+
+  for (var i = 0; i < grades.length; i++) {
+    from = grades[i];
+    to = grades[i + 1];
+
+    labels.push(
+      '<i style="background:' +
+        getColor(from + 1) +
+        '"></i> ' +
+        from +
+        (to ? "&ndash;" + to : "+")
+    );
+  }
+
+  div.innerHTML = labels.join("<br>");
+  return div;
+};
+
+legend.addTo();
+
+*/
+function mouseover({ target }) {
+  target.setStyle({
+    weight: this.currentStrokeWidth,
+    color: `#${this.currentStrokeColor}`,
+    dashArray: ""
+  });
+}
+
+function mouseout({ target }) {
+  target.setStyle({
+    weight: this.strokeWidth,
+    color: `#${this.strokeColor}`,
+    dashArray: ""
+  });
+  this.currentItem = { name: "", value: 0 };
+}
+function getColor(d) {
+  d = d / 2000000;
+  return d > 1000
+    ? "#800026"
+    : d > 500
+    ? "#BD0026"
+    : d > 200
+    ? "#E31A1C"
+    : d > 100
+    ? "#FC4E2A"
+    : d > 50
+    ? "#FD8D3C"
+    : d > 20
+    ? "#FEB24C"
+    : d > 10
+    ? "#FED976"
+    : "#FFEDA0";
+}
 
 export default {
-  name: "app",
+  name: "geomap",
   components: {
     LMap,
+    LTileLayer,
+    LControl,
     LGeoJson,
-    "l-info-control": InfoControl,
-    "l-reference-chart": ReferenceChart,
-    "l-choropleth-layer": ChoroplethLayer
+    LMarker
+  },
+  props: {
+    strokeColor: { type: String, default: "fff" },
+    currentStrokeColor: { type: String, default: "4d4d4d" },
+    strokeWidth: { type: Number, default: 2 },
+    currentStrokeWidth: { type: Number, default: 3 }
   },
   data() {
     return {
-      pyDepartmentsData,
-      paraguayGeojson,
-      colorScale: ["e7d090", "e9ae7b", "de7062"],
-      value: {
-        key: "amount_w",
-        metric: "% girls"
-      },
-      extraValues: [
-        {
-          key: "amount_m",
-          metric: "% boys"
-        }
-      ],
-      mapOptions: {
-        attributionControl: false
-      },
-      currentStrokeColor: "3d3213",
-      geojson: null
+      loading: false,
+      show: true,
+      enableTooltip: true,
+      zoom: 3,
+      center: [45.861347, 57.405578],
+      /*center: latLng(45.861347, 57.405578),*/
+      geojson: null,
+      fillColor: "#e4ce7f",
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      marker: latLng(41.86956082699455, 12.436523437500002)
     };
+  },
+  computed: {
+    options() {
+      return {
+        onEachFeature: this.onEachFeatureFunction
+      };
+    },
+    styleFunction() {
+      return () => {
+        return {
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.6
+        };
+      };
+    },
+    onEachFeatureFunction() {
+      if (!this.enableTooltip) {
+        return () => {};
+      }
+      return (feature, layer) => {
+        layer.bindTooltip(
+          "<div>" +
+            "<div>" +
+            feature.properties.continent +
+            " </div>" +
+            "<div>" +
+            feature.properties.subregion +
+            " </div>" +
+            "<div> " +
+            feature.properties.sovereignt +
+            " </div>" +
+            "<div> " +
+            feature.properties.pop_est +
+            "</div>",
+          "</div>",
+          { permanent: false, sticky: true }
+        );
+        layer.on({
+          mouseover: mouseover.bind(this),
+          mouseout: mouseout.bind(this)
+        });
+
+        //click: zoomToFeature
+
+        console.log(
+          "Population " +
+            feature.properties.pop_est +
+            ", color: " +
+            getColor(feature.properties.pop_est)
+        );
+        layer.options.fillColor = getColor(feature.properties.pop_est);
+        layer.options.color = getColor(feature.properties.pop_est);
+      };
+    }
   },
   async created() {
     this.loading = true;
@@ -88,18 +198,29 @@ export default {
     const data = await response.json();
     this.geojson = data;
     this.loading = false;
+
+    this.legend = Lcontrol.onAdd(
+      { position: "bottomright" });
+    this.legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "legend");
+      (this.labels = ["<strong>Categories</strong>"]),
+        (this.categories = ["Tobacco", "Whiskey", "Beer", "Cigar", "Other"]);
+      return div;
+    };
+    this.legend.addTo();
   }
 };
 </script>
 <style>
-@import "../node_modules/leaflet/dist/leaflet.css";
-body {
-  background-color: #e7d090;
-  margin-left: 100px;
-  margin-right: 100px;
+.legend {
+  line-height: 18px;
+  color: #555;
 }
-
-#map {
-  background-color: #eee;
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
 }
 </style>

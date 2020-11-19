@@ -164,16 +164,16 @@ export default {
         layer.bindTooltip(
           "<div>" +
             "<div>" +
-            feature.properties.continent +
+            //feature.properties.continent +
             " </div>" +
             "<div>" +
-            feature.properties.subregion +
+            //feature.properties.subregion +
             " </div>" +
             "<div> " +
-            feature.properties.sovereignt +
+            //feature.properties.sovereignt +
             " </div>" +
             "<div> " +
-            feature.properties.pop_est +
+            //feature.properties.pop_est +
             "</div>",
           "</div>",
           { permanent: false, sticky: true }
@@ -198,7 +198,7 @@ export default {
   },
   async created() {
     this.loading = true;
-    const response = await fetch("http://localhost:3000/countries");
+    const response = await fetch("http://localhost:3000/countriesOther");
     const data = await response.json();
     this.geojson = data;
     this.loading = false;

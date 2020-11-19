@@ -26,8 +26,12 @@
                 :options-style="styleFunction"
               />
               <l-marker :lat-lng="marker" />
+
+              <l-control position="topright">
+                <div class="legend">info</div></l-control
+              >
               <l-control position="bottomright">
-                <div class="legend">yyyyyyyyyyyyyyyyyyy</div></l-control
+                <div class="legend">legend</div></l-control
               >
             </l-map>
           </div>
@@ -197,7 +201,7 @@ export default {
     const response = await fetch("http://localhost:3000/countries");
     const data = await response.json();
     this.geojson = data;
-    this.loading = false;  
+    this.loading = false;
   }
 };
 </script>

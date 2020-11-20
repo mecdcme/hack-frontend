@@ -1,4 +1,3 @@
-//import router from "@/router";
 import { geomapService } from "@/services";
 
 const state = {
@@ -27,9 +26,9 @@ const actions = {
         console.log(err);
       });
   },
-  findById({ commit }, id) {
+  findByName({ commit }, name) {
     return geomapService
-      .findById(id)
+      .findByName(name)
       .then(data => {
         commit("SET_GEOMAP", data);
       })

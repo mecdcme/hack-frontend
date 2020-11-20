@@ -9,7 +9,7 @@
         <div class="card-body">
           This section contains maps displaying hack data.
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'Map' }"
+            <router-link tag="a" :to="{ name: 'GeoMap' }"
               ><span>Go to map section <chevron-right-icon /></span>
             </router-link>
           </p>

@@ -2,10 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import store from "@/store";
-import { Role } from "@/common";
 
-import Login from "@/views/auth/Login";
-import Register from "@/views/auth/Register";
 import Error from "@/views/error/Error";
 import Unauthorized from "@/views/error/Unauthorized";
 import Home from "@/views/Home";
@@ -15,12 +12,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/login",
-    component: Login,
+    component: () => import("../views/auth/Login"),
     meta: { authorize: [] }
   },
   {
     path: "/register",
-    component: Register,
+    component: () => import("../views/auth/Register"),
     meta: { authorize: [] }
   },
   {
@@ -53,6 +50,12 @@ const routes = [
         meta: { authorize: [] }
       },
       {
+        path: "catalogue/geomap",
+        name: "GeoMap",
+        component: () => import("../views/catalogue/map/GeoMap"),
+        meta: { authorize: [] }
+      },
+      {
         path: "catalogue/process",
         name: "BusinessProcessList",
         component: () =>
@@ -60,24 +63,6 @@ const routes = [
             "../views/catalogue/process/businessProcess/BusinessProcessList"
           ),
         meta: { authorize: [] }
-      },
-      {
-        path: "catalogue/process/processedit/:id",
-        name: "BusinessProcessEdit",
-        component: () =>
-          import(
-            "../views/catalogue/process/businessProcess/BusinessProcessEdit"
-          ),
-        meta: { authorize: [] }
-      },
-      {
-        path: "catalogue/process/processnew/:id",
-        name: "BusinessProcessNew",
-        component: () =>
-          import(
-            "../views/catalogue/process/businessProcess/BusinessProcessNew"
-          ),
-        meta: { authorize: [Role.Admin] }
       },
       {
         path: "catalogue/user",

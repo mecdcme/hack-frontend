@@ -61,7 +61,7 @@ import { pyDepartmentsData } from "./data/py-departments-data";
 import { LMap } from "vue2-leaflet";
 
 export default {
-  name: "app",
+  name: "MapKo",
   components: {
     LMap,
     "l-info-control": InfoControl,

@@ -111,7 +111,7 @@ function getColor(d) {
 }
 
 export default {
-  name: "geomap",
+  name: "Map",
   components: {
     LMap,
     LTileLayer,
@@ -206,6 +206,8 @@ export default {
 };
 </script>
 <style>
+@import "~leaflet/dist/leaflet.css";
+
 .legend {
   line-height: 18px;
   color: #555;

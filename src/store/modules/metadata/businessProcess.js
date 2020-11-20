@@ -82,7 +82,7 @@ const actions = {
 };
 
 const getters = {
-  businessProcesss: state => {
+  businessProcesses: state => {
     return state.businessProcesss;
   },
   businessProcess: state => {

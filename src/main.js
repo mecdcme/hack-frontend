@@ -1,24 +1,23 @@
 import Vue from "vue";
 
+//Vue core
 import App from "./App.vue";
 import router from "@/router";
 import store from "@/store";
-import CoreuiVue from "@coreui/vue";
-import { iconsSet as icons } from "@/assets/icons/icons.js";
+
+//Vue global plugins
 import Vuelidate from "vuelidate";
 import vSelect from "vue-select";
 
-//Leaflet (https://vue2-leaflet.netlify.app/)
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
-import "leaflet/dist/leaflet.css";
+//CoreUI components
+import "@/coreui";
 
-Vue.component("l-map", LMap);
-Vue.component("l-tile-layer", LTileLayer);
-Vue.component("l-marker", LMarker);
-
-//Leaflet - icon (bug fixing)
+//Icons
+import { iconsSet as icons } from "@/assets/icons/coreui.js";
+import "@/assets/icons/material";
 import { Icon } from "leaflet";
 
+//Leaflet - icon (bug fixing)
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -26,12 +25,9 @@ Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
-import "@/assets/icons/materialIcons";
 Vue.config.productionTip = false;
 
-Vue.use(CoreuiVue);
 Vue.use(Vuelidate);
-
 Vue.component("v-select", vSelect);
 
 new Vue({

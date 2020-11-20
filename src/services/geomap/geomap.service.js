@@ -1,119 +1,33 @@
 import { axiosHack } from "@/http";
+import { axiosMap } from "@/http";
 
 export const geomapService = {
-  findAll
-  //,
-  //findById,
-  //save,
-  //update,
-  //delete: _delete
+  findAll,
+  findByName
 };
 
 function findAll() {
-  return new Promise((resolve, reject) => {
-    axiosHack.get("/countries/").then(
-      response => {
-        console.log(response.data);
-        console.log(response.statusText);
-        resolve(response.data);
-      },
-      error => {
-        const err = {
-          code: error.response.status,
-          message: error.response.data.code
-        };
-        reject(err);
-      }
-    );
-  });
+  return axiosHack
+    .get("/countriesOther/")
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
 
-/*
-function findById(id) {
-  return new Promise((resolve, reject) => {
-    axiosHack.get("/maps/" + id).then(
-      response => {
-        //var data = response.data ? response.data : null;
-        console.log(response.data);
-        console.log(response.statusText);
-        resolve(response.data);
-      },
-      error => {
-        const err = {
-          code: error.response.status,
-          message: error.response.data.code
-        };
-        reject(err);
-      }
-    );
-  });
+function findByName(name) {
+  return axiosMap
+    .get("/search?country=" + name + "&polygon_geojson=1&format=geojson")
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
-*/
-/*
-function save(data) {
-  return new Promise((resolve, reject) => {
-    axiosHack.post("/maps/", data, config).then(
-      response => {
-        console.log(response.data);
-        console.log(response.statusText);
-        resolve(response.data);
-      },
-      error => {
-        const err = {
-          code: error.response.status,
-          message: error.response.data.code
-        };
-        reject(err);
-      }
-    );
-  });
-}
-*/
-/*
-function update(data) {
-  return new Promise((resolve, reject) => {
-    const map = {
-      //name: data.name,
-      //surname: data.surname,
-      //email: data.email,
-      //role: data.role
-    };
-    axiosHack.put("/maps/" + data.id, map, config).then(
-      response => {
-        console.log(response.data);
-        console.log(response.statusText);
-        resolve(response.data);
-      },
-      error => {
-        const err = {
-          code: error.response.status,
-          message: error.response.data.code
-        };
-        reject(err);
-      }
-    );
-  });
-}
-*/
-/*
-function _delete(id) {
-  return new Promise((resolve, reject) => {
-    axiosHack.delete("/maps/" + id).then(
-      response => {
-        console.log(response.data);
-        console.log(response.statusText);
-        resolve(response.data);
-      },
-      error => {
-        const err = {
-          code: error.response.status,
-          message: error.response.data.code
-        };
-        reject(err);
-      }
-    );
-    
-  });
-
-}
-*/

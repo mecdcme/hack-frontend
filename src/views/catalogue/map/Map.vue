@@ -18,6 +18,17 @@
               :center="center"
               style="height: 650px; width: 100%"
             >
+              <l-circle-marker
+                @click="$emit('MARKER_CLICKED', l)"
+                v-for="(l, idx) in locations"
+                :key="idx"
+                :lat-lng="[+l.Lat, +l.Long]"
+                color="red"
+                fillColor="#f00"
+                :fillOpacity="0.35"
+                :stroke="false"
+                :radius="l.radius"
+              />
               <l-tile-layer :url="url" :attribution="attribution" />
               <l-geo-json
                 v-if="show"
@@ -30,9 +41,9 @@
               <l-control position="topright">
                 <div class="legend">info</div></l-control
               >
-              <l-control position="bottomright">
-                <div class="legend">legend</div></l-control
-              >
+              <l-control position="bottomright"
+                ><div class="legend"></div>
+              </l-control>
             </l-map>
           </div>
         </CCardBody>
@@ -43,7 +54,14 @@
 
 <script>
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+import {
+  LMap,
+  LTileLayer,
+  LControl,
+  LMarker,
+  //LCircleMarker,
+  LGeoJson
+} from "vue2-leaflet";
 
 /*
 var legend = L.control({ position: "bottomright" });
@@ -75,41 +93,6 @@ legend.onAdd = function() {
 legend.addTo();
 
 */
-function mouseover({ target }) {
-  target.setStyle({
-    weight: this.currentStrokeWidth,
-    color: `#${this.currentStrokeColor}`,
-    dashArray: ""
-  });
-}
-
-function mouseout({ target }) {
-  target.setStyle({
-    weight: this.strokeWidth,
-    color: `#${this.strokeColor}`,
-    dashArray: ""
-  });
-  this.currentItem = { name: "", value: 0 };
-}
-function getColor(d) {
-  d = d / 2000000;
-  return d > 1000
-    ? "#800026"
-    : d > 500
-    ? "#BD0026"
-    : d > 200
-    ? "#E31A1C"
-    : d > 100
-    ? "#FC4E2A"
-    : d > 50
-    ? "#FD8D3C"
-    : d > 20
-    ? "#FEB24C"
-    : d > 10
-    ? "#FED976"
-    : "#FFEDA0";
-}
-
 export default {
   name: "geomap",
   components: {
@@ -118,6 +101,8 @@ export default {
     LControl,
     LGeoJson,
     LMarker
+    //,
+    //LCircleMarker
   },
   props: {
     strokeColor: { type: String, default: "fff" },
@@ -163,37 +148,60 @@ export default {
       return (feature, layer) => {
         layer.bindTooltip(
           "<div>" +
-            "<div>" +
-            //feature.properties.continent +
-            " </div>" +
-            "<div>" +
-            //feature.properties.subregion +
-            " </div>" +
             "<div> " +
-            //feature.properties.sovereignt +
+            feature.properties.display_name +
             " </div>" +
-            "<div> " +
-            //feature.properties.pop_est +
             "</div>",
-          "</div>",
           { permanent: false, sticky: true }
         );
         layer.on({
-          mouseover: mouseover.bind(this),
-          mouseout: mouseout.bind(this)
+          mouseover: this.mouseover.bind(this),
+          mouseout: this.mouseout.bind(this)
         });
-
-        //click: zoomToFeature
-
         console.log(
           "Population " +
             feature.properties.pop_est +
             ", color: " +
-            getColor(feature.properties.pop_est)
+            this.getColor(feature.properties.pop_est)
         );
-        layer.options.fillColor = getColor(feature.properties.pop_est);
-        layer.options.color = getColor(feature.properties.pop_est);
+        layer.options.fillColor = this.getColor(feature.properties.pop_est);
+        layer.options.color = this.getColor(feature.properties.pop_est);
       };
+    }
+  },
+  methods: {
+    mouseover: function({ target }) {
+      target.setStyle({
+        weight: this.currentStrokeWidth,
+        color: `#${this.currentStrokeColor}`,
+        dashArray: ""
+      });
+    },
+    mouseout: function({ target }) {
+      target.setStyle({
+        weight: this.strokeWidth,
+        color: `#${this.strokeColor}`,
+        dashArray: ""
+      });
+      this.currentItem = { name: "", value: 0 };
+    },
+    getColor: function(d) {
+      d = d / 2000000;
+      return d > 1000
+        ? "#800026"
+        : d > 500
+        ? "#BD0026"
+        : d > 200
+        ? "#E31A1C"
+        : d > 100
+        ? "#FC4E2A"
+        : d > 50
+        ? "#FD8D3C"
+        : d > 20
+        ? "#FEB24C"
+        : d > 10
+        ? "#FED976"
+        : "#FFEDA0";
     }
   },
   async created() {

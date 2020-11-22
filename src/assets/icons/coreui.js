@@ -3,6 +3,7 @@ import {
   cilHome,
   cilLayers,
   cilLockLocked,
+  cilTerminal,
   cilUser
 } from "@coreui/icons";
 
@@ -11,5 +12,6 @@ export const iconsSet = Object.assign({
   cilHome,
   cilLayers,
   cilLockLocked,
+  cilTerminal,
   cilUser
 });

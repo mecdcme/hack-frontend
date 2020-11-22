@@ -47,7 +47,7 @@ button:focus {
 }
 
 .icon-link{
-  color: #321fdb;
+  color:$primary;
 }
 
 .table thead th {
@@ -64,11 +64,11 @@ button:focus {
 }
 
 .section-link-disabled {
-  color: #ced2d8;
+  color: $secondary;
 }
 
 .section-link-disabled > .theme--light.v-icon {
-  color: #ced2d8;
+  color: $secondary;
 }
 
 /* Cards */
@@ -89,12 +89,12 @@ button:focus {
 
 .form-mandatory {
   margin-top: 0.4rem;
-  color: #321fdb;
+  color: $primary;
 }
 
 .form-control:disabled,
 .form-control[readonly] {
-  background-color: #ebedef;
+  background-color: $light;
   opacity: 1;
   margin-bottom: 1rem;
 }
@@ -104,12 +104,12 @@ button:focus {
 .help-block {
   visibility: hidden;
   font-size: 80%;
-  color: #e55353;
+  color: $danger;
   font-style: italic;
 }
 
 .invalid {
-  border-color: #e55353 !important;
+  border-color: $danger !important;
 }
 
 .show {
@@ -121,14 +121,14 @@ button:focus {
   color: #768192;
 }
 .vs__dropdown-toggle{
-  border: 1px solid #ced2d8;
+  border: 1px solid $secondary;
 }
 .vs__selected, .vs__dropdown-option{
   color: #768192;
 }
 .vs__dropdown-option--highlight{
   color: white;
-  background-color:	#3399ff;
+  background-color:	$primary;
 }
 .vs__selected-options {
   padding: 2px 3px 2px 6px;
@@ -140,10 +140,10 @@ button:focus {
   padding-bottom: 5px;
 }
 .is-invalid > .vs__dropdown-toggle {
-  border-color: #e55353;
+  border-color: $danger;
 }
 
 /* Spinner */
 .spinner > div {
-  background-color: #321fdb !important;
+  background-color: $primary !important;
 }

@@ -66,7 +66,7 @@ const actions = {
     commit("TOGGLE_SIDEBAR_MOBILE");
   },
   loading({ commit }, isLoading) {
-    commit("SET_CONTEXT", isLoading);
+    commit("SET_LOADING", isLoading);
   },
   setContext({ commit }, context) {
     commit("SET_CONTEXT", context);

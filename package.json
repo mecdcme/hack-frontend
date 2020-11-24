@@ -12,6 +12,7 @@
     "@coreui/icons": "^1.0.1",
     "@coreui/vue": "^3.1.4",
     "axios": "^0.19.2",
+    "chroma-js": "^2.1.0",
     "core-js": "^3.7.0",
     "json-server": "^0.16.3",
     "jsonwebtoken": "^8.5.1",

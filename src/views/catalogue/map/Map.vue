@@ -18,17 +18,6 @@
               :center="center"
               style="height: 650px; width: 100%"
             >
-              <l-circle-marker
-                @click="$emit('MARKER_CLICKED', l)"
-                v-for="(l, idx) in locations"
-                :key="idx"
-                :lat-lng="[+l.Lat, +l.Long]"
-                color="red"
-                fillColor="#f00"
-                :fillOpacity="0.35"
-                :stroke="false"
-                :radius="l.radius"
-              />
               <l-tile-layer :url="url" :attribution="attribution" />
               <l-geo-json
                 v-if="show"
@@ -39,10 +28,10 @@
               <l-marker :lat-lng="marker" />
 
               <l-control position="topright">
-                <div class="legend">info</div></l-control
-              >
+                <div class="legend info" v-html="legend"></div>
+              </l-control>
               <l-control position="bottomright"
-                ><div class="legend"></div>
+                ><div class="info" v-html="info"></div>
               </l-control>
             </l-map>
           </div>
@@ -54,45 +43,8 @@
 
 <script>
 import { latLng } from "leaflet";
-import {
-  LMap,
-  LTileLayer,
-  LControl,
-  LMarker,
-  //LCircleMarker,
-  LGeoJson
-} from "vue2-leaflet";
-
-/*
-var legend = L.control({ position: "bottomright" });
-
-legend.onAdd = function() {
-  var div = L.DomUtil.create("div", "info legend"),
-    grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-    labels = [],
-    from,
-    to;
-
-  for (var i = 0; i < grades.length; i++) {
-    from = grades[i];
-    to = grades[i + 1];
-
-    labels.push(
-      '<i style="background:' +
-        getColor(from + 1) +
-        '"></i> ' +
-        from +
-        (to ? "&ndash;" + to : "+")
-    );
-  }
-
-  div.innerHTML = labels.join("<br>");
-  return div;
-};
-
-legend.addTo();
-
-*/
+import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+import chroma from "chroma-js";
 export default {
   name: "Map",
   components: {
@@ -123,7 +75,9 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: latLng(41.86956082699455, 12.436523437500002)
+      marker: latLng(41.86956082699455, 12.436523437500002),
+      legend: {},
+      info: {}
     };
   },
   computed: {
@@ -158,12 +112,6 @@ export default {
           mouseover: this.mouseover.bind(this),
           mouseout: this.mouseout.bind(this)
         });
-        console.log(
-          "Population " +
-            feature.properties.pop_est +
-            ", color: " +
-            this.getColor(feature.properties.pop_est)
-        );
         layer.options.fillColor = this.getColor(feature.properties.pop_est);
         layer.options.color = this.getColor(feature.properties.pop_est);
       };
@@ -176,6 +124,7 @@ export default {
         color: `#${this.currentStrokeColor}`,
         dashArray: ""
       });
+      this.info = this.buildInfo(target.feature);
     },
     mouseout: function({ target }) {
       target.setStyle({
@@ -183,10 +132,18 @@ export default {
         color: `#${this.strokeColor}`,
         dashArray: ""
       });
-      this.currentItem = { name: "", value: 0 };
+      this.info = this.buildInfo("");
+    },
+    buildInfo: function(props) {
+      var div =
+        "<h4>State of </h4>" +
+        (props
+          ? "<b>" + props.properties.display_name + "</b><br /> state "
+          : "Hover over a state");
+      return div;
     },
     getColor: function(d) {
-      d = d / 2000000;
+      //d = d / 2000000;
       return d > 1000
         ? "#800026"
         : d > 500
@@ -202,6 +159,34 @@ export default {
         : d > 10
         ? "#FED976"
         : "#FFEDA0";
+    },
+    chromaColor: function(d) {
+      var color = chroma
+        .scale(["e7d090", "e9ae7b", "de7062"])
+        .mode("lch")
+        .colors(d);
+      return color;
+    },
+    buildLegend: function() {
+      var div,
+        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [],
+        from,
+        to;
+      for (var i = 0; i < grades.length; i++) {
+        from = grades[i];
+        to = grades[i + 1];
+
+        labels.push(
+          '<i style="background:' +
+            this.getColor(from + 1) +
+            '"></i> ' +
+            from +
+            (to ? "&ndash;" + to : "+")
+        );
+      }
+      div = labels.join("<br>");
+      return div;
     }
   },
   async created() {
@@ -209,6 +194,7 @@ export default {
     const response = await fetch("http://localhost:3000/countriesOther");
     const data = await response.json();
     this.geojson = data;
+    this.legend = this.buildLegend();
     this.loading = false;
   }
 };

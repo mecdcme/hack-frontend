@@ -28,7 +28,19 @@
               <l-marker :lat-lng="marker" />
 
               <l-control position="topright">
-                <div class="legend info" v-html="legend"></div>
+                <div class="legend info">
+                  <div>{{ legend.title }}</div>
+                  <ul>
+                    <li
+                      v-for="(id, color, fromLabel, toLabel) in legend.series"
+                      v-bind:key="id"
+                    >
+                      <div>{{color}}</div>
+                      <div v-html="legend.series.fromLabel"></div>
+                      <div v-html="toLabel"></div>
+                    </li>
+                  </ul>
+                </div>
               </l-control>
               <l-control position="bottomright"
                 ><div class="info" v-html="info"></div>
@@ -40,11 +52,12 @@
     </div>
   </div>
 </template>
-
 <script>
+import { mapGetters } from "vuex";
+//import { Map } from "@/common";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
-import chroma from "chroma-js";
+//import chroma from "chroma-js";
 export default {
   name: "Map",
   components: {
@@ -53,8 +66,6 @@ export default {
     LControl,
     LGeoJson,
     LMarker
-    //,
-    //LCircleMarker
   },
   props: {
     strokeColor: { type: String, default: "fff" },
@@ -70,17 +81,28 @@ export default {
       zoom: 3,
       center: [45.861347, 57.405578],
       /*center: latLng(45.861347, 57.405578),*/
-      geojson: null,
+      /*geojson: null,*/
       fillColor: "#e4ce7f",
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       marker: latLng(41.86956082699455, 12.436523437500002),
-      legend: {},
+      legend: {
+        title: null,
+        series: [
+          {
+            id: "",
+            color: "",
+            fromLabel: "",
+            toLabel: ""
+          }
+        ]
+      },
       info: {}
     };
   },
   computed: {
+    ...mapGetters("geomap", { geojson: "geomap" }),
     options() {
       return {
         onEachFeature: this.onEachFeatureFunction
@@ -135,44 +157,48 @@ export default {
       this.info = this.buildInfo("");
     },
     buildInfo: function(props) {
-      var div =
-        "<h4>State of </h4>" +
-        (props
-          ? "<b>" + props.properties.display_name + "</b><br /> state "
-          : "Hover over a state");
+      var div = props
+        ? "<h4>State of </h4>" +
+          "<b>" +
+          props.properties.display_name +
+          "</b><br/>"
+        : "Hover over a state";
       return div;
     },
     getColor: function(d) {
       //d = d / 2000000;
-      return d > 1000
+      return d > 1000000
         ? "#800026"
-        : d > 500
+        : d > 500000
         ? "#BD0026"
-        : d > 200
+        : d > 200000
         ? "#E31A1C"
-        : d > 100
+        : d > 100000
         ? "#FC4E2A"
-        : d > 50
+        : d > 50000
         ? "#FD8D3C"
-        : d > 20
+        : d > 20000
         ? "#FEB24C"
-        : d > 10
+        : d > 10000
         ? "#FED976"
         : "#FFEDA0";
     },
-    chromaColor: function(d) {
-      var color = chroma
-        .scale(["e7d090", "e9ae7b", "de7062"])
-        .mode("lch")
-        .colors(d);
-      return color;
-    },
     buildLegend: function() {
-      var div,
-        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+      /* var div,
+        grades = [
+          0,
+          100000,
+          200000,
+          500000,
+          1000000,
+          2000000,
+          5000000,
+          10000000
+        ],
         labels = [],
         from,
         to;
+
       for (var i = 0; i < grades.length; i++) {
         from = grades[i];
         to = grades[i + 1];
@@ -185,10 +211,41 @@ export default {
             (to ? "&ndash;" + to : "+")
         );
       }
-      div = labels.join("<br>");
-      return div;
+      */
+
+      this.legend.title = "State";
+      var grades = [
+          0,
+          100000,
+          200000,
+          500000,
+          1000000,
+          2000000,
+          5000000,
+          10000000
+        ],
+        from,
+        to;
+
+      for (var i = 0; i < grades.length; i++) {
+        from = grades[i];
+        to = grades[i + 1];
+        this.legend.series.push({
+          color: this.getColor(from + 1),
+          fromLabel: from,
+          toLabel: to
+        });
+      }
     }
   },
+  created() {
+    this.loading = true;
+    this.$store.dispatch("geomap/findByName", "Italy");
+    this.buildLegend();
+    this.info = this.buildInfo("");
+    this.loading = false;
+  }
+  /*
   async created() {
     this.loading = true;
     const response = await fetch("http://localhost:3000/countriesOther");
@@ -197,6 +254,7 @@ export default {
     this.legend = this.buildLegend();
     this.loading = false;
   }
+*/
 };
 </script>
 <style>

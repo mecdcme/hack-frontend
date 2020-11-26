@@ -45,10 +45,7 @@
                         <div class="px-1 text-right">
                           {{ row.fromNumber }}
                         </div>
-                        <div
-                          v-if="row.toNumber !== null && row.toNumber !== ''"
-                          class="px-0"
-                        >
+                        <div v-show="row.toNumber" class="px-0">
                           <b>:</b>
                         </div>
                         <div class="px-1 text-left">
@@ -59,7 +56,6 @@
                   </ul>
                 </div>
               </l-control>
-
               <l-control position="bottomright"
                 ><div class="info" v-html="info"></div>
               </l-control>
@@ -173,10 +169,7 @@ export default {
     },
     buildInfo: function(props) {
       var div = props
-        ? "<h4>State of </h4>" +
-          "<b>" +
-          props.properties.display_name +
-          "</b><br/>"
+        ? "State of " + "<b>" + props.properties.display_name + "</b><br/>"
         : "Hover over a state";
       return div;
     },
@@ -274,6 +267,5 @@ export default {
 }
 .legend li {
   list-style-type: none;
-  /*display: inline;*/
 }
 </style>

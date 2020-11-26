@@ -28,20 +28,38 @@
               <l-marker :lat-lng="marker" />
 
               <l-control position="topright">
-                <div class="legend info">
+                <div class="legend">
                   <div>{{ legend.title }}</div>
-                  <ul>
-                    <li
-                      v-for="(id, color, fromLabel, toLabel) in legend.series"
-                      v-bind:key="id"
-                    >
-                      <div>{{color}}</div>
-                      <div v-html="legend.series.fromLabel"></div>
-                      <div v-html="toLabel"></div>
+                  <ul class="px-2">
+                    <li v-for="row in legend.series" v-bind:key="row.id">
+                      <div class="row px-0">
+                        <span
+                          class="px-1"
+                          v-bind:style="{
+                            height: '15px',
+                            width: '15px',
+                            backgroundColor: row.color
+                          }"
+                        >
+                        </span>
+                        <div class="px-1 text-right">
+                          {{ row.fromNumber }}
+                        </div>
+                        <div
+                          v-if="row.toNumber !== null && row.toNumber !== ''"
+                          class="px-0"
+                        >
+                          <b>:</b>
+                        </div>
+                        <div class="px-1 text-left">
+                          {{ row.toNumber }}
+                        </div>
+                      </div>
                     </li>
                   </ul>
                 </div>
               </l-control>
+
               <l-control position="bottomright"
                 ><div class="info" v-html="info"></div>
               </l-control>
@@ -54,7 +72,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-//import { Map } from "@/common";
+import { Map } from "@/common";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
 //import chroma from "chroma-js";
@@ -67,12 +85,6 @@ export default {
     LGeoJson,
     LMarker
   },
-  props: {
-    strokeColor: { type: String, default: "fff" },
-    currentStrokeColor: { type: String, default: "4d4d4d" },
-    strokeWidth: { type: Number, default: 2 },
-    currentStrokeWidth: { type: Number, default: 3 }
-  },
   data() {
     return {
       loading: false,
@@ -83,9 +95,8 @@ export default {
       /*center: latLng(45.861347, 57.405578),*/
       /*geojson: null,*/
       fillColor: "#e4ce7f",
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      url: Map.Url,
+      attribution: Map.Attribution,
       marker: latLng(41.86956082699455, 12.436523437500002),
       legend: {
         title: null,
@@ -93,12 +104,16 @@ export default {
           {
             id: "",
             color: "",
-            fromLabel: "",
-            toLabel: ""
+            fromNumber: "",
+            toNumber: ""
           }
         ]
       },
-      info: {}
+      info: {},
+      strokeColor: "fff",
+      currentStrokeColor: "4d4d4d",
+      strokeWidth: 2,
+      currentStrokeWidth: 3
     };
   },
   computed: {
@@ -184,35 +199,6 @@ export default {
         : "#FFEDA0";
     },
     buildLegend: function() {
-      /* var div,
-        grades = [
-          0,
-          100000,
-          200000,
-          500000,
-          1000000,
-          2000000,
-          5000000,
-          10000000
-        ],
-        labels = [],
-        from,
-        to;
-
-      for (var i = 0; i < grades.length; i++) {
-        from = grades[i];
-        to = grades[i + 1];
-
-        labels.push(
-          '<i style="background:' +
-            this.getColor(from + 1) +
-            '"></i> ' +
-            from +
-            (to ? "&ndash;" + to : "+")
-        );
-      }
-      */
-
       this.legend.title = "State";
       var grades = [
           0,
@@ -232,8 +218,8 @@ export default {
         to = grades[i + 1];
         this.legend.series.push({
           color: this.getColor(from + 1),
-          fromLabel: from,
-          toLabel: to
+          fromNumber: from,
+          toNumber: to
         });
       }
     }
@@ -245,42 +231,49 @@ export default {
     this.info = this.buildInfo("");
     this.loading = false;
   }
-  /*
-  async created() {
-    this.loading = true;
-    const response = await fetch("http://localhost:3000/countriesOther");
-    const data = await response.json();
-    this.geojson = data;
-    this.legend = this.buildLegend();
-    this.loading = false;
-  }
-*/
 };
 </script>
 <style>
 @import "~leaflet/dist/leaflet.css";
-
-.legend {
-  line-height: 18px;
-  color: #555;
-}
-.legend i {
-  width: 18px;
-  height: 18px;
-  float: left;
-  margin-right: 8px;
-  opacity: 0.7;
-}
 .info {
+  line-height: 15px;
+  color: #555;
   padding: 6px 8px;
-  font: 18px/20px sans-serif;
+  font: 16px/18px Arial, Helvetica, sans-serif;
   background: white;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  width: auto;
+  height: auto;
+  margin-right: 6px;
+  opacity: 0.7;
 }
 .info h4 {
   margin: 0 0 5px;
   color: #777;
+}
+.legend {
+  line-height: 15px;
+  color: #555;
+  padding: 6px 8px;
+  font: 16px/18px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: auto;
+  height: auto;
+  margin-right: 6px;
+  opacity: 0.7;
+}
+.legend ul {
+  display: block;
+  padding-inline-start: 25px !important;
+  padding-inline-end: 25px !important;
+}
+.legend li {
+  list-style-type: none;
+  /*display: inline;*/
 }
 </style>

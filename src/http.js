@@ -56,7 +56,7 @@ axiosMap.interceptors.response.use(
 
 export { axiosAuth, axiosHack, axiosMap };
 
-function manageResponseError(error){
+function manageResponseError(error) {
   console.log("Error status", error.response.status);
   var err = {
     code: error.response.status,

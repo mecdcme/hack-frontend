@@ -1,3 +1,5 @@
+/* eslint-disable vue/no-unused-components */ /* eslint-disable
+vue/no-unused-components */
 <template>
   <div class="row">
     <div class="col-sm-12 col-md-12">
@@ -25,13 +27,31 @@
                 :options="options"
                 :options-style="styleFunction"
               />
-              <l-marker :lat-lng="marker" />
-
+              <l-circle-marker
+                v-for="(marker, i) in news"
+                v-bind:key="i"
+                :lat-lng="[
+                  marker.coordinates.latitude,
+                  marker.coordinates.longitude
+                ]"
+                :radius="scale(marker.stats.confirmed)"
+                :color="getColor(marker.stats.confirmed)"
+                :fillColor="getColor(marker.stats.confirmed)"
+              >
+                <l-tooltip>
+                  {{ marker.country }} <br />
+                  {{ marker.county }} <br />
+                  {{ marker.province }}<br />
+                  confirmed: {{ marker.stats.confirmed }} <br />
+                  recovered: {{ marker.stats.recovered }}<br />
+                  deaths : {{ marker.stats.deaths }}
+                </l-tooltip>
+              </l-circle-marker>
               <l-control position="topright">
                 <div class="legend">
                   <div>{{ legend.title }}</div>
                   <ul class="px-2">
-                    <li v-for="row in legend.series" v-bind:key="row.id">
+                    <li v-for="(row, r) in legend.series" v-bind:key="r">
                       <div class="row px-0">
                         <span
                           class="px-1"
@@ -70,26 +90,33 @@
 import { mapGetters } from "vuex";
 import { Map } from "@/common";
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
-//import chroma from "chroma-js";
+import {
+  LMap,
+  LTileLayer,
+  LControl,
+  LTooltip,
+  LCircleMarker,
+  LGeoJson
+} from "vue2-leaflet";
 export default {
   name: "Map",
   components: {
     LMap,
     LTileLayer,
     LControl,
-    LGeoJson,
-    LMarker
+    LCircleMarker,
+    LTooltip,
+    LGeoJson
   },
   data() {
     return {
+      //states: ["Italia", "Germania"],
+      name: "Italia",
       loading: false,
       show: true,
       enableTooltip: true,
       zoom: 3,
       center: [45.861347, 57.405578],
-      /*center: latLng(45.861347, 57.405578),*/
-      /*geojson: null,*/
       fillColor: "#e4ce7f",
       url: Map.Url,
       attribution: Map.Attribution,
@@ -98,7 +125,6 @@ export default {
         title: null,
         series: [
           {
-            id: "",
             color: "",
             fromNumber: "",
             toNumber: ""
@@ -109,11 +135,15 @@ export default {
       strokeColor: "fff",
       currentStrokeColor: "4d4d4d",
       strokeWidth: 2,
-      currentStrokeWidth: 3
+      currentStrokeWidth: 3,
+      optionCircle: {
+        color: "",
+        radius: "10"
+      }
     };
   },
   computed: {
-    ...mapGetters("geomap", { geojson: "geomap" }),
+    ...mapGetters("geomap", { geojson: "geomap", news: "covid" }),
     options() {
       return {
         onEachFeature: this.onEachFeatureFunction
@@ -151,6 +181,12 @@ export default {
     }
   },
   methods: {
+    scale(d) {
+      const min = 1;
+      const factor = 5;
+      const zoomFactor = this.zoom >= 5 ? 1 : this.zoom / 10; // adjust divisor for best optics
+      return Math.floor(Math.log(d) * factor * zoomFactor) + min;
+    },
     mouseover: function({ target }) {
       target.setStyle({
         weight: this.currentStrokeWidth,
@@ -174,8 +210,7 @@ export default {
       return div;
     },
     getColor: function(d) {
-      //d = d / 2000000;
-      return d > 1000000
+      return d > 10000000
         ? "#800026"
         : d > 500000
         ? "#BD0026"
@@ -193,16 +228,7 @@ export default {
     },
     buildLegend: function() {
       this.legend.title = "State";
-      var grades = [
-          0,
-          100000,
-          200000,
-          500000,
-          1000000,
-          2000000,
-          5000000,
-          10000000
-        ],
+      var grades = [10000, 20000, 50000, 100000, 200000, 500000, 1000000],
         from,
         to;
 
@@ -219,9 +245,11 @@ export default {
   },
   created() {
     this.loading = true;
-    this.$store.dispatch("geomap/findByName", "Italy");
     this.buildLegend();
     this.info = this.buildInfo("");
+    this.$store.dispatch("geomap/findAll");
+    //this.$store.dispatch("geomap/findByName", this.name);
+
     this.loading = false;
   }
 };

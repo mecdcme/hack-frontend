@@ -12,6 +12,9 @@ const axiosHack = axios.create({
 const axiosMap = axios.create({
   baseURL: process.env.VUE_APP_MAP_SERVER
 });
+const axiosGraph = axios.create({
+  baseURL: process.env.VUE_APP_MAP_SERVER
+});
 
 //request interceptor
 axiosHack.interceptors.request.use(
@@ -54,7 +57,20 @@ axiosMap.interceptors.response.use(
   }
 );
 
-export { axiosAuth, axiosHack, axiosMap };
+//response interceptor
+axiosGraph.interceptors.response.use(
+  response => {
+    store.dispatch("coreui/loading", false);
+    return response;
+  },
+  error => {
+    store.dispatch("coreui/loading", false);
+    manageResponseError(error);
+    return Promise.reject(error);
+  }
+);
+
+export { axiosAuth, axiosHack, axiosMap, axiosGraph };
 
 function manageResponseError(error) {
   console.log("Error status", error.response.status);

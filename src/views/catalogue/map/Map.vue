@@ -8,7 +8,7 @@ vue/no-unused-components */
           Map
           <div class="card-header-actions">
             <span v-if="loading">Loading...</span>
-            <router-link tag="a" :to="{ name: 'Map' }">
+            <router-link tag="a" :to="{ name: 'Graph' }">
               <add-icon />
             </router-link>
           </div>

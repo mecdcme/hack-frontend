@@ -24,6 +24,11 @@
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
+        <router-link tag="a" :to="{ name: 'Graph' }" class="c-sidebar-nav-link">
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
           :to="{ name: 'BusinessProcessList' }"

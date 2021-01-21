@@ -7,6 +7,7 @@ import { coreui } from "./modules/coreui";
 import { message } from "./modules/message";
 import { businessProcess } from "./modules/metadata/businessProcess";
 import { geomap } from "./modules/geomap/geomap";
+import { graph } from "./modules/graph/graph";
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     coreui,
     message,
     businessProcess,
-    geomap
+    geomap,
+    graph
   }
 });

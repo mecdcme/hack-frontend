@@ -11,6 +11,11 @@ import vSelect from "vue-select";
 
 //CoreUI components
 import "@/coreui";
+//
+
+import VueCytoscape from "vue-cytoscape";
+Vue.use(VueCytoscape);
+Vue.config.productionTip = false;
 
 //Icons
 import { iconsSet as icons } from "@/assets/icons/coreui.js";

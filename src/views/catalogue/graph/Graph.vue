@@ -6,25 +6,23 @@
           <header class="card-header">
             Graph
             <div class="card-header-actions">
-              <!--span v-if="loading">Loading...</span-->
+              <span v-if="loading">Loading...</span>
               <router-link tag="a" :to="{ name: 'Map' }">
                 <add-icon />
               </router-link>
             </div>
           </header>
           <CCardBody>
-            <div>
+            <div id="app">
               <cytoscape
-                ref="cy"
+                ref="cyRef"
                 :config="config"
-                v-on:mousedown="addNode"
-                v-on:cxttapstart="updateNode"
+                :afterCreated="afterCreated"
               >
                 <cy-element
                   v-for="def in elements"
-                  :key="`${def.data.id}`"
+                  v-bind:key="def.data.id"
                   :definition="def"
-                  v-on:mousedown="deleteNode($event, def.data.id)"
                 />
               </cytoscape>
             </div>
@@ -42,14 +40,19 @@
 //import CyElement from "@/components/CyElement";
 
 import { config } from "@/common/graph";
+//import { config } from "@/common/cy-config";
 import { mapGetters } from "vuex";
 
-//const elements = [...elements];
-//delete elements;
+//import coseBilkent from "cytoscape-cose-bilkent";
+//import dagre from "cytoscape-dagre";
+//import cola from "cytoscape-cola";
+//import klay from "cytoscape-klay";
+//import { isNode, isRelationship } from "neo4j-driver/lib/graph-types.js";
 
 export default {
   data() {
     return {
+      loading: false,
       config
     };
   },
@@ -57,10 +60,12 @@ export default {
     ...mapGetters("graph", { elements: "graphs" })
   },
   methods: {
+    /*
     addNode(event) {
       console.log(event.target, this.$refs.cyRef.instance);
-      if (event.target === this.$refs.cyRef.instance)
+      if (event.target === this.$refs.cyRef.instance) {
         console.log("adding node", event.target);
+      }
     },
     deleteNode(id) {
       console.log("node clicked", id);
@@ -70,17 +75,65 @@ export default {
     },
     preConfig(cytoscape) {
       console.log("calling pre-config", cytoscape);
+      //cytoscape.use(coseBilkent);
+      //cytoscape.use(klay);
+      //cytoscape.use(cola);
+      //cytoscape.use(dagre);
+      //if (!cytoscape("core", "cxtmenu")) {
+      //   cytoscape.use(cxtmenu);
+      //}
     },
+    */
     afterCreated(cy) {
       // cy: this is the cytoscape instance
+
       console.log("after created", cy);
+
+      cy.layout({
+        name: "cose",
+        /*
+        idealEdgeLength: 100,
+        nodeOverlap: 20,
+        refresh: 20,
+        fit: true,
+        padding: 30,
+        */
+        randomize: true,
+        /*
+        componentSpacing: 100,
+        nodeRepulsion: 400000,
+        edgeElasticity: 100,
+        nestingFactor: 5,
+        gravity: 80,
+        numIter: 1000,
+        initialTemp: 200,
+        coolingFactor: 0.95,
+        minTemp: 1.0,
+        */
+        animationEasing: "ease-out",
+        animationDuration: 1000
+      }).run();
+
+      cy.center();
+      //cy.fit(null, 200);
+      cy.minZoom(1);
+      cy.maxZoom(4);
+  
+      
+
     }
+    /* ,
+    config() {
+      const defaultLayout = { ...config };
+      return defaultLayout;
+    }
+    */
   },
   created() {
-    //this.loading = true;
+    this.loading = true;
     this.$store.dispatch("graph/findAll");
     //this.$store.dispatch("graph/findByName", this.name);
-    //this.loading = false;
+    this.loading = false;
   }
 };
 </script>

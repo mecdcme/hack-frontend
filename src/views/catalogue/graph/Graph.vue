@@ -91,15 +91,12 @@ export default {
 
       cy.layout({
         name: "cose",
-        /*
         idealEdgeLength: 100,
         nodeOverlap: 20,
         refresh: 20,
         fit: true,
         padding: 30,
-        */
-        randomize: true,
-        /*
+        randomize: false,
         componentSpacing: 100,
         nodeRepulsion: 400000,
         edgeElasticity: 100,
@@ -108,19 +105,13 @@ export default {
         numIter: 1000,
         initialTemp: 200,
         coolingFactor: 0.95,
-        minTemp: 1.0,
-        */
-        animationEasing: "ease-out",
-        animationDuration: 1000
+        minTemp: 1.0
       }).run();
 
       cy.center();
       //cy.fit(null, 200);
       cy.minZoom(1);
       cy.maxZoom(4);
-  
-      
-
     }
     /* ,
     config() {

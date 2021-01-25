@@ -8,6 +8,7 @@ import { message } from "./modules/message";
 import { businessProcess } from "./modules/metadata/businessProcess";
 import { geomap } from "./modules/geomap/geomap";
 import { graph } from "./modules/graph/graph";
+import { demoGraph } from "./modules/demoGraph/demoGraph";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     message,
     businessProcess,
     geomap,
-    graph
+    graph,
+    demoGraph
   }
 });

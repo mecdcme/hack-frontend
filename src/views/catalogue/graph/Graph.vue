@@ -17,6 +17,7 @@
               <cytoscape
                 ref="cyRef"
                 :config="config"
+                :preConfig="preConfig"
                 :afterCreated="afterCreated"
               >
                 <cy-element
@@ -34,22 +35,18 @@
 </template>
 
 <script>
-//import { Component, Vue } from "vue-property-decorator";
-//import { Core, EventObject } from "cytoscape";
-//import Cytoscape from "@/components/Cytoscape";
-//import CyElement from "@/components/CyElement";
-
 import { config } from "@/common/graph";
-//import { config } from "@/common/cy-config";
 import { mapGetters } from "vuex";
 
-//import coseBilkent from "cytoscape-cose-bilkent";
-//import dagre from "cytoscape-dagre";
-//import cola from "cytoscape-cola";
-//import klay from "cytoscape-klay";
+import coseBilkent from "cytoscape-cose-bilkent";
+import dagre from "cytoscape-dagre";
+import cola from "cytoscape-cola";
+import klay from "cytoscape-klay";
+
 //import { isNode, isRelationship } from "neo4j-driver/lib/graph-types.js";
 
 export default {
+  name: "Graph",
   data() {
     return {
       loading: false,
@@ -73,52 +70,94 @@ export default {
     updateNode(event) {
       console.log("right click node", event);
     },
+    */
+
     preConfig(cytoscape) {
       console.log("calling pre-config", cytoscape);
-      //cytoscape.use(coseBilkent);
-      //cytoscape.use(klay);
-      //cytoscape.use(cola);
-      //cytoscape.use(dagre);
+
+      cytoscape.use(coseBilkent);
+      cytoscape.use(klay);
+      cytoscape.use(cola);
+      cytoscape.use(dagre);
+
       //if (!cytoscape("core", "cxtmenu")) {
       //   cytoscape.use(cxtmenu);
       //}
     },
-    */
     afterCreated(cy) {
       // cy: this is the cytoscape instance
 
       console.log("after created", cy);
 
-      cy.layout({
+      let layout = {
         name: "cose",
-        idealEdgeLength: 100,
-        nodeOverlap: 20,
+        ready: function() {},
+        stop: function() {},
+        animate: true,
+        animationEasing: undefined,
+        animationDuration: undefined,
+        animateFilter: function() {
+          return true;
+        },
+        animationThreshold: 250,
         refresh: 20,
         fit: true,
         padding: 30,
+        boundingBox: undefined,
+        nodeDimensionsIncludeLabels: false,
         randomize: false,
-        componentSpacing: 100,
-        nodeRepulsion: 400000,
-        edgeElasticity: 100,
-        nestingFactor: 5,
-        gravity: 80,
+        componentSpacing: 40,
+        nodeRepulsion: function() {
+          return 2048;
+        },
+        nodeOverlap: 4,
+        idealEdgeLength: function() {
+          return 32;
+        },
+        edgeElasticity: function() {
+          return 32;
+        },
+        nestingFactor: 1.2,
+        gravity: 1,
         numIter: 1000,
-        initialTemp: 200,
-        coolingFactor: 0.95,
+        initialTemp: 1000,
+        coolingFactor: 0.99,
         minTemp: 1.0
+      };
+
+      let option = {
+        animate: false, // whether to animate changes to the layout
+        zoom: 4, // zoom level as a positive number to set after animation
+        animationDuration: 500, // duration of animation in ms, if enabled
+        animationEasing: undefined, // easing of animation, if enabled
+        animateFilter: function() {
+          return true;
+        }, // a function that determines whether the node should be animated.
+        // All nodes animated by default for `animate:true`.  Non-animated nodes are positioned immediately when the layout starts.
+        //eles: , // collection of elements involved in the layout; set by cy.layout() or eles.layout()
+        fit: true, // whether to fit the viewport to the graph
+        padding: 30, // padding to leave between graph and viewport
+        pan: undefined, // pan the graph to the provided position, given as { x, y }
+        ready: undefined, // callback for the layoutready event
+        stop: undefined, // callback for the layoutstop event
+        spacingFactor: 1, // a positive value which adjusts spacing between nodes (>1 means greater than usual spacing)
+        transform: function(node, position) {
+          return position;
+        } // transform a given node position. Useful for changing flow direction in discrete layouts
+      };
+
+      cy.layout(layout, option, function() {
+        cy.nodes.positions(function(n) {
+          var pos = n.position();
+          return { x: pos.y, y: pos.x };
+        });
+        cy.fit(); // fit to new node positions
       }).run();
 
       cy.center();
-      //cy.fit(null, 200);
       cy.minZoom(1);
       cy.maxZoom(4);
     }
-    /* ,
-    config() {
-      const defaultLayout = { ...config };
-      return defaultLayout;
-    }
-    */
   },
   created() {
     this.loading = true;

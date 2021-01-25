@@ -1,14 +1,14 @@
 import { axiosHack } from "@/http";
 import { axiosGraph } from "@/http";
 
-export const graphService = {
+export const demoGraphService = {
   findAll,
   findByName
 };
 
 function findAll() {
   return axiosHack
-    .get("/graph/")
+    .get("/demograph/")
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

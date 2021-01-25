@@ -4,3 +4,4 @@ export * from "./context";
 export * from "./headers";
 export * from "./map";
 export * from "./graph";
+export * from "./demograph";

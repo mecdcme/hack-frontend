@@ -1,4 +1,4 @@
-import { graphService } from "@/services";
+import { demoGraphService } from "@/services";
 
 const state = {
   graphs: [],
@@ -14,7 +14,7 @@ const mutations = {
 };
 const actions = {
   findAll({ commit }) {
-    return graphService
+    return demoGraphService
       .findAll()
       .then(data => {
         commit("SET_GRAPHS", data);
@@ -24,7 +24,7 @@ const actions = {
       });
   },
   findByName({ commit }, name) {
-    return graphService
+    return demoGraphService
       .findByName(name)
       .then(data => {
         commit("SET_GRAPH", data);
@@ -42,7 +42,7 @@ const getters = {
     return state.graph;
   }
 };
-export const graph = {
+export const demoGraph = {
   namespaced: true,
   state,
   mutations,

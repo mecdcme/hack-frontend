@@ -31,19 +31,10 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'BusinessProcessList' }"
+          :to="{ name: 'DemoGraph' }"
           class="c-sidebar-nav-link"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Process
-        </router-link>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <router-link
-          tag="a"
-          :to="{ name: 'Analytics' }"
-          class="c-sidebar-nav-link"
-        >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Analytics
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> DemoGraph
         </router-link>
       </li>
     </ul>

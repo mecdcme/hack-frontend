@@ -3,7 +3,6 @@ import { demoGraphService } from "@/services";
 const state = {
   graphs: [],
   graph: null
-
 };
 const mutations = {
   SET_GRAPHS(state, graphs) {
@@ -41,6 +40,12 @@ const getters = {
   },
   graph: state => {
     return state.graph;
+  },
+  nodes: state => {
+    return state.graphs ? state.graphs.nodes : [];
+  },
+  edges: state => {
+    return state.graphs ? state.graphs.edges : [];
   }
 };
 export const demoGraph = {

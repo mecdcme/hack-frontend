@@ -19,9 +19,9 @@ function findAll() {
     });
 },
 */
-function findAll(type) {
+function findAll() {
   return axiosHack
-    .get(type)
+    .get("/visdata")
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

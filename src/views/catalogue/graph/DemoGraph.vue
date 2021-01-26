@@ -134,6 +134,8 @@ export default {
           >
           </network>
 
+          
+
           <button @click="addNode">Add node</button>
           <button @click="addEdge">Add edge</button>
           <button @click="resetNetwork">Reset Network</button>
@@ -156,28 +158,14 @@ export default {
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters("demoGraph", ["nodes", "edges"])
+  },
   data: () => ({
     networkEvents: "",
-    computed: {
-      ...mapGetters("demoGraph", {nodes: "graphs.nodes", edges: "graphs.edges"
-      })
-    },
     network: {
-      nodes:[
-        { id: 1, label: "Node 1" },
-        { id: 2, label: "Node 2" },
-        { id: 3, label: "Node 3" },
-        { id: 4, label: "Node 4" },
-        { id: 5, label: "Node 5" }
-      ],
-      
-      edges:[
-        { id: 1, from: 1, to: 3 },
-        { id: 2, from: 1, to: 2 },
-        { id: 3, from: 2, to: 4 },
-        { id: 4, from: 2, to: 5 },
-        { id: 5, from: 3, to: 3 }
-        ],
+      nodes: this.nodes,
+      edges: this.edges,
       options: {
         nodes: {
           shape: "circle"
@@ -208,20 +196,8 @@ export default {
     },
     resetNetwork() {
       this.network = {
-        nodes: [
-          { id: 1, label: "Node 1" },
-          { id: 2, label: "Node 2" },
-          { id: 3, label: "Node 3" },
-          { id: 4, label: "Node 4" },
-          { id: 5, label: "Node 5" }
-        ],
-        edges: [
-          { id: 1, from: 1, to: 3 },
-          { id: 2, from: 1, to: 2 },
-          { id: 3, from: 2, to: 4 },
-          { id: 4, from: 2, to: 5 },
-          { id: 5, from: 3, to: 3 }
-        ],
+        nodes: this.graphs.nodes,
+        edges: this.graphs.edges,
         options: {}
       };
     },
@@ -233,8 +209,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("demoGraph/findAll('/nodes/'))");
-    this.$store.dispatch("demoGraph/findAll('/edges/'))");
+    this.$store.dispatch("demoGraph/findAll");
   }
 };
 </script>

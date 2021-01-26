@@ -3,6 +3,7 @@ import { demoGraphService } from "@/services";
 const state = {
   graphs: [],
   graph: null
+
 };
 const mutations = {
   SET_GRAPHS(state, graphs) {

@@ -56,7 +56,7 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/graph",
+        path: "catalogue/demograph",
         name: "DemoGraph",
         component: () => import("../views/catalogue/graph/DemoGraph"),
         meta: { authorize: [] }

@@ -134,8 +134,6 @@ export default {
           >
           </network>
 
-          
-
           <button @click="addNode">Add node</button>
           <button @click="addEdge">Add edge</button>
           <button @click="resetNetwork">Reset Network</button>
@@ -158,23 +156,24 @@ export default {
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters("demoGraph", ["nodes", "edges"])
-  },
-  data: () => ({
-    networkEvents: "",
-    network: {
-      nodes: this.nodes,
-      edges: this.edges,
-      options: {
-        nodes: {
-          shape: "circle"
-        }
-      }
-    }
-  }),
   components: { Network },
-
+  data: () => ({
+    networkEvents: ""
+  }),
+  computed: {
+    ...mapGetters("demoGraph", ["nodes", "edges"]),
+    network() {
+      return {
+        nodes: this.nodes,
+        edges: this.edges,
+        options: {
+          nodes: {
+            shape: "circle"
+          }
+        }
+      };
+    }
+  },
   methods: {
     networkEvent(eventName) {
       if (this.networkEvents.length > 500) this.networkEvents = "";

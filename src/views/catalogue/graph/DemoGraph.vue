@@ -156,6 +156,7 @@ export default {
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 export default {
+  name: "DemoGraph",
   components: { Network },
   data: () => ({
     networkEvents: ""

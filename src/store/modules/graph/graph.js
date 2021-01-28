@@ -1,7 +1,7 @@
 import { graphService } from "@/services";
 
 const state = {
-  graphs: [],
+  graphs: null,
   graph: null
 };
 const mutations = {

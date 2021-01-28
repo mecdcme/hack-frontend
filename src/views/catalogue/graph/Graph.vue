@@ -1,4 +1,4 @@
-<template>
+<!--template>
   <div id="app">
     <div class="row">
       <div class="col-sm-12 col-md-12">
@@ -166,4 +166,70 @@ export default {
     this.loading = false;
   }
 };
+</script-->
+<template>
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <div class="card">
+        <header class="card-header">
+          Graph
+          <div class="card-header-actions">
+            <span v-if="loading">Loading...</span>
+            <router-link tag="a" :to="{ name: 'Map' }">
+              <add-icon />
+            </router-link>
+          </div>
+        </header>
+        <CCardBody>
+          <cytoscape
+            :config="config"
+            :preConfig="preConfig"
+            :afterCreated="afterCreated"
+          />
+        </CCardBody>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+/* eslint-disable */
+//import { mapGetters } from "vuex";
+import { config } from "@/common/graph";
+
+export default {
+  name: 'Graph', 
+  //computed: {
+  //  ...mapGetters("graph", { elements: "graphs" })    
+  //},
+  data () {
+    return {
+      config,
+      i: 1
+    }
+  },
+  methods: {
+    preConfig (cytoscape) {
+      console.log('calling pre-config');	 
+      const that = this
+      cytoscape.reset
+      cytoscape(cy => {
+        cy.on('tap', event => {
+          console.log('tapped by', that.i, 'time')
+          that.i++
+        })
+      })
+    },
+    afterCreated (cy) {
+      console.log('after created')
+    }
+  }
+  //,  
+  //created() {
+  //  this.loading = true;
+  //  this.$store.dispatch("graph/findAll");
+  //  //this.$store.dispatch("graph/findByName", this.name);
+  //  this.loading = false;
+  //}
+}
 </script>

@@ -10,7 +10,7 @@
             </router-link>
           </div>
         </header>
-        <CCardBody>
+        <CCardBody v-if="graphElements">
           <cytoscape
             :config="graphElements"
             :preConfig="preConfig"
@@ -37,10 +37,12 @@ export default {
   computed: {
     ...mapGetters("graph", ["graphs"]),
     graphElements() {
-      return {
-        elements: this.graphs,
-        ...config
-      };
+      return this.graphs
+        ? {
+            elements: this.graphs,
+            ...config
+          }
+        : null;
     }
   },
   methods: {

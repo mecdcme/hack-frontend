@@ -195,11 +195,7 @@ export default {
       });
     },
     resetNetwork() {
-      this.network = {
-        nodes: this.graphs.nodes,
-        edges: this.graphs.edges,
-        options: {}
-      };
+      this.$store.dispatch("demoGraph/findAll");
     },
     removeNode() {
       this.network.nodes.splice(0, 1);

@@ -1,4 +1,4 @@
-import { demoGraphService } from "@/services";
+import { graphVisjsService } from "@/services";
 
 const state = {
   graphs: [],
@@ -14,20 +14,10 @@ const mutations = {
 };
 const actions = {
   findAll({ commit }) {
-    return demoGraphService
+    return graphVisjsService
       .findAll()
       .then(data => {
         commit("SET_GRAPHS", data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  },
-  findByName({ commit }, name) {
-    return demoGraphService
-      .findByName(name)
-      .then(data => {
-        commit("SET_GRAPH", data);
       })
       .catch(err => {
         console.log(err);
@@ -48,7 +38,7 @@ const getters = {
     return state.graphs ? state.graphs.edges : [];
   }
 };
-export const demoGraph = {
+export const graphVisjs = {
   namespaced: true,
   state,
   mutations,

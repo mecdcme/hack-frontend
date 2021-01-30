@@ -7,8 +7,9 @@ import { coreui } from "./modules/coreui";
 import { message } from "./modules/message";
 import { businessProcess } from "./modules/metadata/businessProcess";
 import { geomap } from "./modules/geomap/geomap";
-import { graph } from "./modules/graph/graph";
-import { demoGraph } from "./modules/demoGraph/demoGraph";
+import { graphCola } from "./modules/graphCola/graphCola";
+import { graphCose } from "./modules/graphCose/graphCose";
+import { graphVisjs } from "./modules/graphVisjs/graphVisjs";
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ export default new Vuex.Store({
     message,
     businessProcess,
     geomap,
-    graph,
-    demoGraph
+    graphCose,
+    graphCola,
+    graphVisjs
   }
 });

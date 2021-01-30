@@ -15,7 +15,6 @@ export const config = {
     },
     {
       selector: "edge",
-
       removed: false,
       selected: false,
       selectable: true,

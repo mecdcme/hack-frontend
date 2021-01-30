@@ -23,7 +23,6 @@ export const config = {
   },
   zoom: 1,
   pan: { x: 0, y: 0 },
-
   // interaction options:
   minZoom: 1e-50,
   maxZoom: 1e50,
@@ -38,7 +37,6 @@ export const config = {
   autolock: false,
   autoungrabify: false,
   autounselectify: false,
-
   // rendering options:
   headless: false,
   styleEnabled: true,

@@ -24,18 +24,17 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { config } from "@/common/graph";
+import { config } from "@/common/graphCose";
 
 export default {
-  name: "Graph",
+  name: "GraphCose",
   data() {
     return {
-      loading: false,
       i: 1
     };
   },
   computed: {
-    ...mapGetters("graph", ["graphs"]),
+    ...mapGetters("graphCose", ["graphs"]),
     graphElements() {
       return this.graphs
         ? {
@@ -60,10 +59,13 @@ export default {
     },
     afterCreated() {
       console.log("after created");
+    },
+    resetGraph() {
+      this.$store.dispatch("graphCose/findAll");
     }
   },
   created() {
-    this.$store.dispatch("graph/findAll");
+    this.$store.dispatch("graphCose/findAll");
   }
 };
 </script>

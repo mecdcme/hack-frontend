@@ -9,7 +9,7 @@
         <div class="card-body">
           This section contains maps displaying hack data.
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'GeoMap' }"
+            <router-link tag="a" :to="{ name: 'Map' }"
               ><span>Go to map section <chevron-right-icon /></span>
             </router-link>
           </p>
@@ -23,13 +23,11 @@
           <span class="badge float-right badge-success">New</span>
         </header>
         <div class="card-body">
-          This section contains the list of processes available in the
-          catalogue. The processes allow to execute the algorithms offered by
-          the statistical services.
+          This section contains the Graph Cola .
           <br />
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'BusinessProcessList' }"
-              ><span>Go to process catalogue <chevron-right-icon /></span>
+            <router-link tag="a" :to="{ name: 'GraphCola' }"
+              ><span>Go to GraphCola catalogue <chevron-right-icon /></span>
             </router-link>
           </p>
         </div>
@@ -37,12 +35,34 @@
     </div>
     <div class="col-sm-6 col-md-4">
       <div class="card">
-        <header class="card-header">Analytics</header>
+        <header class="card-header">
+          Process catalogue
+          <span class="badge float-right badge-success">New</span>
+        </header>
         <div class="card-body">
-          This section contains analytics capabilities to display aggregate
-          data.
-          <p class="section-link section-link-disabled">
-            <span>Go to analytics section <chevron-right-icon /></span>
+          This section contains the Graph CoSe .
+          <br />
+          <p class="section-link">
+            <router-link tag="a" :to="{ name: 'GraphCose' }"
+              ><span>Go to GraphCose catalogue <chevron-right-icon /></span>
+            </router-link>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="card">
+        <header class="card-header">
+          Process catalogue
+          <span class="badge float-right badge-success">New</span>
+        </header>
+        <div class="card-body">
+          This section contains the Graph VisJs .
+          <br />
+          <p class="section-link">
+            <router-link tag="a" :to="{ name: 'GraphVisjs' }"
+              ><span>Go to GraphVisjs catalogue <chevron-right-icon /></span>
+            </router-link>
           </p>
         </div>
       </div>

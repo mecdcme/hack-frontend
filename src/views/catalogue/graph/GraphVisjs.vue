@@ -93,10 +93,15 @@ export default {
       return {
         nodes: this.nodes,
         edges: this.edges,
+
         options: {
           nodes: {
             shape: "circle"
-          }
+          },
+          groups: {
+            gbox: { color: { background: "red" }, borderWidth: 3 }
+          },
+          physics: false
         }
       };
     }

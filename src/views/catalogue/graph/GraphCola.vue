@@ -63,6 +63,9 @@ export default {
           }
         ],
         elements: {
+          nodes: [this.nodes]
+          //edges:[this.edges]
+          /*
           nodes: [
             {
               data: {
@@ -363,9 +366,9 @@ export default {
                 id: "189",
                 label: "ATP"
               }
-            }
+            }            
           ],
-          edges: [
+          edges: [            
             {
               data: {
                 source: "2",
@@ -695,8 +698,9 @@ export default {
                 source: "22",
                 target: "104"
               }
-            }
+            }            
           ]
+          */
         }
       };
     }
@@ -714,6 +718,9 @@ export default {
     resetGraph() {
       this.$store.dispatch("graphCola/findAll");
     }
+  },
+  created() {
+    this.$store.dispatch("graphCola/findAll");
   }
 };
 </script>

@@ -13,9 +13,9 @@ const mutations = {
   }
 };
 const actions = {
-  findAll({ commit }) {
+  findAll({ commit }, dataname) {
     return graphVisjsService
-      .findAll()
+      .findAll(dataname)
       .then(data => {
         commit("SET_GRAPHS", data);
       })

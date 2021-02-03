@@ -59,40 +59,22 @@
             @edges-remove="networkEvent('edges-remove')"
           >
           </network>
-          <input
-            type="range"
-            min="0"
-            max="0.3"
-            value="0.09"
-            step="0.005"
-            style="width:300px"
-            id="graph_BH_damp"
-          />
-          <button @click="addNode">Add node</button>
+
+          <!--button @click="addNode">Add node</button>
           <button @click="addEdge">Add edge</button>
           <button @click="removeNode">Remove Node</button>
-          <button @click="removeEdge">Remove Edge</button>
+          <button @click="removeEdge">Remove Edge</button-->
 
-          <button @click="drawNetwork1">1</button>
-          <button @click="drawNetwork2">2</button>
-          <button @click="drawNetwork3">3</button>
+          <button @click="drawNetwork('1')">1</button>
+          <button @click="drawNetwork('2')">2</button>
+          <button @click="drawNetwork('3')">3</button>
 
-          <input
-            type="range"
-            min="0"
-            max="0.3"
-            value="0.09"
-            step="0.005"
-            style="width:300px"
-            id="graph_BH_damp"
-          />
-
-          <div class="events">
+          <!--div class="events">
             <p>
               Network events: <br />
               {{ networkEvents }}
             </p>
-          </div>
+          </div-->
         </CCardBody>
       </div>
     </div>
@@ -102,9 +84,11 @@
 <script>
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
+
 export default {
   name: "GraphVisjs",
   components: { Network },
+
   data: () => ({
     networkEvents: ""
   }),
@@ -404,18 +388,12 @@ export default {
     removeEdge() {
       this.network.edges.splice(0, 1);
     },
-    drawNetwork1() {
-      this.$store.dispatch("graphVisjs/findAll", "/visjsData1");
-    },
-    drawNetwork2() {
-      this.$store.dispatch("graphVisjs/findAll", "/visjsData2");
-    },
-    drawNetwork3() {
-      this.$store.dispatch("graphVisjs/findAll", "/visjsData3");
+    drawNetwork(n) {
+      this.$store.dispatch("graphVisjs/findAll", "/visjsData" + n);
     }
   },
   created() {
-    this.$store.dispatch("graphVisjs/findAll", "/visjsData1");
+    this.drawNetwork("1");
   }
 };
 </script>

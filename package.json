@@ -34,6 +34,7 @@
     "vue-material-design-icons": "^4.11.0",
     "vue-router": "^3.4.9",
     "vue-select": "^3.10.8",
+    "vue-slide-bar": "^1.2.0",
     "vue-visjs": "^0.4.1",
     "vue2-leaflet": "^2.6.0",
     "vuelidate": "^0.7.6",

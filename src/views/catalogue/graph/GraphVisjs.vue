@@ -389,7 +389,7 @@ export default {
       this.network.edges.splice(0, 1);
     },
     drawNetwork(n) {
-      this.$store.dispatch("graphVisjs/findAll", "/visjsData" + n);
+      this.$store.dispatch("graphVisjs/findAll", n);
     }
   },
   created() {

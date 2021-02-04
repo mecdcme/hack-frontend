@@ -2,9 +2,9 @@ import { axiosHack } from "@/http";
 export const graphVisjsService = {
   findAll
 };
-function findAll(dataname) {
+function findAll(n) {
   return axiosHack
-    .get(dataname)
+    .get("/visjsData" + n)
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

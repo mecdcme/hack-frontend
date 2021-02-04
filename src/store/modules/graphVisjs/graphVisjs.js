@@ -32,6 +32,9 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+  clear({ commit }){
+    commit("SET_GRAPHS", []);
   }
 };
 const getters = {

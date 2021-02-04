@@ -41,7 +41,6 @@
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph CoSe
         </router-link>
       </li>
-
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
@@ -49,6 +48,15 @@
           class="c-sidebar-nav-link"
         >
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph VisJs
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
+          :to="{ name: 'GraphSlider' }"
+          class="c-sidebar-nav-link"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph slider
         </router-link>
       </li>
     </ul>

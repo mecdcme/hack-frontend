@@ -48,8 +48,8 @@ export default {
   data: () => ({
     timer: null,
     counter: 0,
-    ids: [1, 2, 3],
-    delta: 1500,
+    ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    delta: 500,
     disablePlay: false
   }),
   computed: {
@@ -67,10 +67,13 @@ export default {
       this.$store.dispatch("graphVisjs/findById", id);
     },
     play() {
+      this.$store.dispatch("graphVisjs/clear");
       this.timer = setInterval(() => {
         if (this.counter < this.ids.length) {
           this.drawNetwork(this.ids[this.counter]);
           this.counter++;
+        } else {
+          this.stop();
         }
       }, this.delta);
       this.disablePlay = true;
@@ -79,7 +82,6 @@ export default {
       clearInterval(this.timer);
       this.counter = 0;
       this.disablePlay = false;
-      this.$store.dispatch("graphVisjs/clear");
     }
   },
   created(){

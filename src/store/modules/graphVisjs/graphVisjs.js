@@ -22,6 +22,16 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+  findById({ commit }, id) {
+    return graphVisjsService
+      .findById(id)
+      .then(data => {
+        commit("SET_GRAPHS", data.graph);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 const getters = {

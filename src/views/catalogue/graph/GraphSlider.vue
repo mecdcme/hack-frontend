@@ -4,11 +4,6 @@
       <div class="card">
         <header class="card-header">
           Network - Graph
-          <div class="card-header-actions">
-            <router-link tag="a" :to="{ name: 'Map' }">
-              <add-icon />
-            </router-link>
-          </div>
         </header>
         <CCardBody>
           <network
@@ -18,18 +13,25 @@
             :edges="network.edges"
             :options="network.options"
           />
-          <CButton
-            shape="square"
-            size="sm"
-            color="primary"
-            class="mr-2"
-            @click="play"
-            :disabled="disablePlay"
-            >Play</CButton
-          >
-          <CButton shape="square" size="sm" color="danger" @click="stop"
-            >Stop</CButton
-          >
+          <div class="row mt-3">
+            <div class="col-2">
+              <CButton
+                shape="square"
+                size="sm"
+                color="primary"
+                class="mr-2"
+                @click="play"
+                :disabled="disablePlay"
+                >Play</CButton
+              >
+              <CButton shape="square" size="sm" color="danger" @click="stop"
+                >Stop</CButton
+              >
+            </div>
+            <div class="col-10">
+              <vue-slider :adsorb="true" v-model="sliderValue" />
+            </div>
+          </div>
         </CCardBody>
       </div>
     </div>
@@ -38,28 +40,39 @@
 
 <script>
 import { Network } from "vue-visjs";
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
 import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
 
 export default {
   name: "GraphVisjs",
-  components: { Network },
+  components: { Network, VueSlider },
   mixins: [visMixin],
   data: () => ({
     timer: null,
     counter: 0,
     ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    delta: 500,
+    delta: 300,
     disablePlay: false
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
     network() {
-      return {
-        nodes: this.nodes ? this.nodes : [],
-        edges: this.edges ? this.edges : [],
-        options: this.options
-      };
+      return this.nodes && this.edges
+        ? {
+            nodes: this.nodes,
+            edges: this.edges,
+            options: this.options
+          }
+        : {
+            nodes: [],
+            edges: [],
+            options: null
+          };
+    },
+    sliderValue() {
+      return this.counter * 10;
     }
   },
   methods: {
@@ -68,6 +81,7 @@ export default {
     },
     play() {
       this.$store.dispatch("graphVisjs/clear");
+      this.counter = 0;
       this.timer = setInterval(() => {
         if (this.counter < this.ids.length) {
           this.drawNetwork(this.ids[this.counter]);
@@ -80,11 +94,10 @@ export default {
     },
     stop() {
       clearInterval(this.timer);
-      this.counter = 0;
       this.disablePlay = false;
     }
   },
-  created(){
+  created() {
     this.$store.dispatch("graphVisjs/clear");
   }
 };
@@ -97,8 +110,13 @@ export default {
 }
 .network {
   text-align: center;
-  height: 520px;
+  height: 400px;
   border: 1px solid #ccc;
   margin: 5px 0;
+}
+.vue-slider {
+  margin-top: 5px;
+  width: 95% !important;
+  margin-left: -1rem;
 }
 </style>

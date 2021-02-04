@@ -35,6 +35,7 @@
     "vue-router": "^3.4.9",
     "vue-select": "^3.10.8",
     "vue-slide-bar": "^1.2.0",
+    "vue-slider-component": "^3.2.11",
     "vue-visjs": "^0.4.1",
     "vue2-leaflet": "^2.6.0",
     "vuelidate": "^0.7.6",

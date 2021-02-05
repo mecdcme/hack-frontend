@@ -50,6 +50,12 @@ const routes = [
         meta: { authorize: [] }
       },
       {
+        path: "catalogue/chartvisjs",
+        name: "ChartVisjs",
+        component: () => import("../views/catalogue/chart/ChartVisjs"),
+        meta: { authorize: [] }
+      },
+      {
         path: "catalogue/graphcola",
         name: "GraphCola",
         component: () => import("../views/catalogue/graph/GraphCola"),

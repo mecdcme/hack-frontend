@@ -10,6 +10,7 @@ import { geomap } from "./modules/geomap/geomap";
 import { graphCola } from "./modules/graphCola/graphCola";
 import { graphCose } from "./modules/graphCose/graphCose";
 import { graphVisjs } from "./modules/graphVisjs/graphVisjs";
+import { chartVisjs } from "./modules/chartVisjs/chartVisjs";
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     geomap,
     graphCose,
     graphCola,
-    graphVisjs
+    graphVisjs,
+    chartVisjs
   }
 });

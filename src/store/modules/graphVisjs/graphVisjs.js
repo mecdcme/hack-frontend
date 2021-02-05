@@ -33,7 +33,7 @@ const actions = {
         console.log(err);
       });
   },
-  clear({ commit }){
+  clear({ commit }) {
     commit("SET_GRAPHS", []);
   }
 };

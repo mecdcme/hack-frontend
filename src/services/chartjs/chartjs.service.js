@@ -1,11 +1,11 @@
 import { axiosHack } from "@/http";
-export const chartVisjsService = {
+export const chartjsService = {
   findAll,
   findById
 };
 function findAll(n) {
   return axiosHack
-    .get("/visjsData" + n)
+    .get("/chartjsData" + n)
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);
@@ -18,7 +18,7 @@ function findAll(n) {
 
 function findById(id) {
   return axiosHack
-    .get("/visjsData/" + id)
+    .get("/chartjsData/" + id)
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

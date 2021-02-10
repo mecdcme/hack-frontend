@@ -38,7 +38,6 @@ export default {
     colaData() {
       return {
         autounselectify: true,
-
         boxSelectionEnabled: false,
         layout: {
           name: "cola"
@@ -50,7 +49,6 @@ export default {
               "background-color": "#666",
               label: "data(label)"
             },
-
             css: {
               "background-color": "#f92411"
             }
@@ -63,9 +61,9 @@ export default {
           }
         ],
         elements: {
-          //nodes: [this.nodes]
-          //edges:[this.edges]
-
+          nodes: [this.nodes],
+          edges:[this.edges]
+          /*
           nodes: [
             {
               data: {
@@ -366,9 +364,9 @@ export default {
                 id: "189",
                 label: "ATP"
               }
-            }
+            }            
           ],
-          edges: [
+          edges: [            
             {
               data: {
                 source: "2",
@@ -698,8 +696,9 @@ export default {
                 source: "22",
                 target: "104"
               }
-            }
+            }            
           ]
+          */
         }
       };
     }

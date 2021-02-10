@@ -1,4 +1,4 @@
-import { chartVisjsService } from "@/services";
+import { chartjsService } from "@/services";
 
 const state = {
   charts: [],
@@ -8,13 +8,13 @@ const mutations = {
   SET_CHARTS(state, charts) {
     state.charts = charts;
   },
-  SET_CHART(state, chart) {
+  SET_CHARTH(state, chart) {
     state.chart = chart;
   }
 };
 const actions = {
   findAll({ commit }, n) {
-    return chartVisjsService
+    return chartjsService
       .findAll(n)
       .then(data => {
         commit("SET_CHARTS", data);
@@ -24,7 +24,7 @@ const actions = {
       });
   },
   findById({ commit }, id) {
-    return chartVisjsService
+    return chartjsService
       .findById(id)
       .then(data => {
         commit("SET_CHARTS", data.chart);
@@ -34,7 +34,7 @@ const actions = {
       });
   },
   clear({ commit }) {
-    commit("SET_chartS", []);
+    commit("SET_CHARTS", []);
   }
 };
 const getters = {
@@ -51,7 +51,7 @@ const getters = {
     return state.charts ? state.charts.edges : [];
   }
 };
-export const chartVisjs = {
+export const chartjs = {
   namespaced: true,
   state,
   mutations,

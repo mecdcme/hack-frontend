@@ -74,11 +74,11 @@
           <span class="badge float-right badge-success">New</span>
         </header>
         <div class="card-body">
-          This section contains the Chart VisJs .
+          This section contains the Chartjs .
           <br />
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'ChartVisjs' }"
-              ><span>Go to ChartVisjs catalogue <chevron-right-icon /></span>
+            <router-link tag="a" :to="{ name: 'Chartjs' }"
+              ><span>Go to Chartjs catalogue <chevron-right-icon /></span>
             </router-link>
           </p>
         </div>

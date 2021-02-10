@@ -259,8 +259,14 @@ export default {
         europa: { color: { background: "red" }, borderWidth: 2 },
         africa: { color: { background: "yellow" }, borderWidth: 2 }
       },
-      physics: false
-    },
-    main: "A really simple example"
+      interaction: {
+        hideEdgesOnDrag: true,
+        tooltipDelay: 200
+      },
+      configure: {
+        showButton: true
+      },
+      physics: true
+    }
   })
 };

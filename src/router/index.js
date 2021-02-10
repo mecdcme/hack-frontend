@@ -50,12 +50,6 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/chartvisjs",
-        name: "ChartVisjs",
-        component: () => import("../views/catalogue/chart/ChartVisjs"),
-        meta: { authorize: [] }
-      },
-      {
         path: "catalogue/graphcola",
         name: "GraphCola",
         component: () => import("../views/catalogue/graph/GraphCola"),
@@ -77,6 +71,12 @@ const routes = [
         path: "catalogue/graphslider",
         name: "GraphSlider",
         component: () => import("../views/catalogue/graph/GraphSlider"),
+        meta: { authorize: [] }
+      },
+      {
+        path: "catalogue/chartjs",
+        name: "Chartjs",
+        component: () => import("../views/catalogue/chartjs/Chartjs"),
         meta: { authorize: [] }
       },
       {

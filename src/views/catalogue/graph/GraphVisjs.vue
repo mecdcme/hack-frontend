@@ -65,9 +65,9 @@
           <button @click="removeNode">Remove Node</button>
           <button @click="removeEdge">Remove Edge</button-->
 
-          <button @click="drawNetwork('1')">1</button>
-          <button @click="drawNetwork('2')">2</button>
-          <button @click="drawNetwork('3')">3</button>
+          <button @click="drawNetwork('11')">1</button>
+          <button @click="drawNetwork('12')">2</button>
+          <!--button @click="drawNetwork('1')">3</button-->
 
           <!--div class="events">
             <p>
@@ -96,11 +96,17 @@ export default {
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
     network() {
-      return {
-        nodes: this.nodes ? this.nodes : [],
-        edges: this.edges ? this.edges : [],
-        options: this.options
-      };
+      return this.nodes && this.edges
+        ? {
+            nodes: this.nodes,
+            edges: this.edges,
+            options: this.options
+          }
+        : {
+            nodes: [],
+            edges: [],
+            options: null
+          };
     }
   },
   methods: {
@@ -129,11 +135,12 @@ export default {
       this.network.edges.splice(0, 1);
     },
     drawNetwork(id) {
+      //this.$store.dispatch("graphVisjs/clear");
       this.$store.dispatch("graphVisjs/findById", id);
     }
   },
   created() {
-    this.drawNetwork(1);
+    this.drawNetwork(11);
   }
 };
 </script>

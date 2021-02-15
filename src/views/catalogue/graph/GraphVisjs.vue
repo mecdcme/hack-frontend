@@ -60,8 +60,8 @@
           >
           </network>
 
-          <!--button @click="addNode">Add node</button>
-          <button @click="addEdge">Add edge</button>
+          <button @click="togglePhysics">Toggle physics</button>
+          <!--button @click="addEdge">Add edge</button>
           <button @click="removeNode">Remove Node</button>
           <button @click="removeEdge">Remove Edge</button-->
 
@@ -137,6 +137,9 @@ export default {
     drawNetwork(id) {
       //this.$store.dispatch("graphVisjs/clear");
       this.$store.dispatch("graphVisjs/findById", id);
+    },
+    togglePhysics(){
+      this.options.physics = !this.options.physics;
     }
   },
   created() {

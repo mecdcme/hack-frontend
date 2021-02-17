@@ -11,63 +11,89 @@
           </div>
         </header>
         <CCardBody>
-          <network
-            class="network"
-            ref="network"
-            :nodes="network.nodes"
-            :edges="network.edges"
-            :options="network.options"
-            @click="networkEvent('click')"
-            @double-click="networkEvent('doubleClick')"
-            @oncontext="networkEvent('oncontext')"
-            @hold="networkEvent('hold')"
-            @release="networkEvent('release')"
-            @select="networkEvent('select')"
-            @select-node="networkEvent('selectNode')"
-            @select-edge="networkEvent('selectEdge')"
-            @deselect-node="networkEvent('deselectNode')"
-            @deselect-edge="networkEvent('deselectEdge')"
-            @drag-start="networkEvent('dragStart')"
-            @dragging="networkEvent('dragging')"
-            @drag-end="networkEvent('dragEnd')"
-            @hover-node="networkEvent('hoverNode')"
-            @blur-node="networkEvent('blurNode')"
-            @hover-edge="networkEvent('hoverEdge')"
-            @blur-edge="networkEvent('blurEdge')"
-            @zoom="networkEvent('zoom')"
-            @show-popup="networkEvent('showPopup')"
-            @hide-popup="networkEvent('hidePopup')"
-            @start-stabilizing="networkEvent('startStabilizing')"
-            @stabilization-progress="networkEvent('stabilizationProgress')"
-            @stabilization-iterations-done="
-              networkEvent('stabilizationIterationsDone')
-            "
-            @stabilized="networkEvent('stabilized')"
-            @resize="networkEvent('resize')"
-            @init-redraw="networkEvent('initRedraw')"
-            @before-drawing="networkEvent('beforeDrawing')"
-            @after-drawing="networkEvent('afterDrawing')"
-            @animation-finished="networkEvent('animationFinished')"
-            @config-change="networkEvent('configChange')"
-            @nodes-mounted="networkEvent('nodes-mounted')"
-            @nodes-add="networkEvent('nodes-add')"
-            @nodes-update="networkEvent('nodes-update')"
-            @nodes-remove="networkEvent('nodes-remove')"
-            @edges-mounted="networkEvent('edges-mounted')"
-            @edges-add="networkEvent('edges-add')"
-            @edges-update="networkEvent('edges-update')"
-            @edges-remove="networkEvent('edges-remove')"
-          >
-          </network>
+          <div class="row">
+            <div class="col-sm-10 col-md-10">
+              <network
+                class="network"
+                ref="network"
+                :nodes="network.nodes"
+                :edges="network.edges"
+                :options="network.options"
+                @click="networkEvent('click')"
+                @double-click="networkEvent('doubleClick')"
+                @oncontext="networkEvent('oncontext')"
+                @hold="networkEvent('hold')"
+                @release="networkEvent('release')"
+                @select="networkEvent('select')"
+                @select-node="networkEvent('selectNode')"
+                @select-edge="networkEvent('selectEdge')"
+                @deselect-node="networkEvent('deselectNode')"
+                @deselect-edge="networkEvent('deselectEdge')"
+                @drag-start="networkEvent('dragStart')"
+                @dragging="networkEvent('dragging')"
+                @drag-end="networkEvent('dragEnd')"
+                @hover-node="networkEvent('hoverNode')"
+                @blur-node="networkEvent('blurNode')"
+                @hover-edge="networkEvent('hoverEdge')"
+                @blur-edge="networkEvent('blurEdge')"
+                @zoom="networkEvent('zoom')"
+                @show-popup="networkEvent('showPopup')"
+                @hide-popup="networkEvent('hidePopup')"
+                @start-stabilizing="networkEvent('startStabilizing')"
+                @stabilization-progress="networkEvent('stabilizationProgress')"
+                @stabilization-iterations-done="
+                  networkEvent('stabilizationIterationsDone')
+                "
+                @stabilized="networkEvent('stabilized')"
+                @resize="networkEvent('resize')"
+                @init-redraw="networkEvent('initRedraw')"
+                @before-drawing="networkEvent('beforeDrawing')"
+                @after-drawing="networkEvent('afterDrawing')"
+                @animation-finished="networkEvent('animationFinished')"
+                @config-change="networkEvent('configChange')"
+                @nodes-mounted="networkEvent('nodes-mounted')"
+                @nodes-add="networkEvent('nodes-add')"
+                @nodes-update="networkEvent('nodes-update')"
+                @nodes-remove="networkEvent('nodes-remove')"
+                @edges-mounted="networkEvent('edges-mounted')"
+                @edges-add="networkEvent('edges-add')"
+                @edges-update="networkEvent('edges-update')"
+                @edges-remove="networkEvent('edges-remove')"
+              >
+              </network>
+            </div>
+            <div class="col-sm-2 col-md-2">
+              <button class="form-control" @click="drawNetwork('11')">
+                Aprile 2019
+              </button>
+              <button class="form-control" @click="drawNetwork('12')">
+                Aprile 2020
+              </button>
 
-          <button @click="togglePhysics">Toggle physics</button>
-          <!--button @click="addEdge">Add edge</button>
-          <button @click="removeNode">Remove Node</button>
-          <button @click="removeEdge">Remove Edge</button-->
+              <!--button class="form-control" @click="toggleConfig">
+                Toggle config
+              </button-->
 
-          <button @click="drawNetwork('11')">1</button>
-          <button @click="drawNetwork('12')">2</button>
-          <!--button @click="drawNetwork('1')">3</button-->
+              <button class="form-control" @click="togglePhysics">
+                Toggle physics
+              </button>
+              <select
+                class="form-control"
+                name="solver"
+                id="solver"
+                @change="solverChange(solverSelected)"
+                v-model="solverSelected"
+              >
+                <option
+                  v-for="(option, o) in solverOptions"
+                  v-bind:key="o"
+                  v-bind:value="option.value"
+                >
+                  {{ option.text }}</option
+                >
+              </select>
+            </div>
+          </div>
 
           <!--div class="events">
             <p>
@@ -91,7 +117,14 @@ export default {
   components: { Network },
   mixins: [visMixin],
   data: () => ({
-    networkEvents: ""
+    networkEvents: "",
+    solverSelected: "forceAtlas2Based",
+    solverOptions: [
+      { text: "barnesHut", value: "sbarnesHutort" },
+      { text: "forceAtlas2Based", value: "forceAtlas2Based" },
+      { text: "repulsion", value: "repulsion" },
+      { text: "hierarchicalRepulsion", value: "hierarchicalRepulsion" }
+    ]
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
@@ -138,8 +171,16 @@ export default {
       //this.$store.dispatch("graphVisjs/clear");
       this.$store.dispatch("graphVisjs/findById", id);
     },
-    togglePhysics(){
+    togglePhysics() {
       this.options.physics = !this.options.physics;
+    },
+    /*
+    toggleConfig() {
+      this.options.config.enalbled = !this.options.config.enabled;
+    },
+    */
+    solverChange(solverSelected) {
+      this.options.physics.solver = solverSelected;
     }
   },
   created() {
@@ -159,7 +200,7 @@ export default {
 }
 .network {
   text-align: center;
-  height: 520px;
+  height: 650px;
   border: 1px solid #ccc;
   margin: 5px 0;
 }

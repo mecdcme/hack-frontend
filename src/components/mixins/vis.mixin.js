@@ -135,7 +135,8 @@ export default {
             scaleFactor: 1,
             src: undefined,
             type: "arrow"
-          },
+          }
+          /*,
           middle: {
             enabled: true,
             imageHeight: undefined,
@@ -152,6 +153,7 @@ export default {
             src: undefined,
             type: "arrow"
           }
+          */
         },
         endPointOffset: {
           from: 0,
@@ -261,12 +263,25 @@ export default {
       },
       interaction: {
         hideEdgesOnDrag: true,
-        tooltipDelay: 200
+        hideEdgesOnZoom: true,
+        hideNodesOnDrag: true,
+        hover: true,
+        multiselect: true,
+        navigationButtons: true,
+        tooltipDelay: 200,
+        zoomSpeed: 1.4
       },
       configure: {
+        enabled: false,
         showButton: true
       },
-      physics: true
+      physics: {
+        forceAtlas2Based: {
+          springLength: 100
+        },
+        minVelocity: 0.75,
+        solver: "forceAtlas2Based"
+      }
     }
   })
 };

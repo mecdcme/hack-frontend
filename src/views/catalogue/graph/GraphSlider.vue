@@ -52,8 +52,22 @@ export default {
   data: () => ({
     timer: null,
     counter: 0,
-    ids: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    delta: 300,
+    ids: [
+      201910,
+      201911,
+      201912,
+      202001,
+      202002,
+      202003,
+      202004,
+      202005,
+      202006,
+      202007,
+      202008,
+      202009,
+      202010
+    ],
+    delta: 1000,
     disablePlay: false
   }),
   computed: {
@@ -72,7 +86,7 @@ export default {
           };
     },
     sliderValue() {
-      return this.counter * 10;
+      return this.counter * 8;
     }
   },
   methods: {
@@ -110,7 +124,7 @@ export default {
 }
 .network {
   text-align: center;
-  height: 400px;
+  height: 600px;
   border: 1px solid #ccc;
   margin: 5px 0;
 }

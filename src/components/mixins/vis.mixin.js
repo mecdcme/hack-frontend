@@ -159,6 +159,7 @@ export default {
           from: 0,
           to: 0
         },
+
         arrowStrikethrough: true,
         chosen: true,
         color: {
@@ -214,6 +215,7 @@ export default {
         labelHighlightBold: true,
         length: undefined,
         physics: true,
+
         scaling: {
           min: 1,
           max: 15,
@@ -257,9 +259,61 @@ export default {
         width: 1,
         widthConstraint: false
       },
+
+      /*
       groups: {
         europa: { color: { background: "red" }, borderWidth: 2 },
         africa: { color: { background: "yellow" }, borderWidth: 2 }
+      },
+      */
+      physics: {
+        enabled: true,
+        barnesHut: {
+          theta: 0.5,
+          gravitationalConstant: -2000,
+          centralGravity: 0.3,
+          springLength: 95,
+          springConstant: 0.04,
+          damping: 0.09,
+          avoidOverlap: 0
+        },
+        forceAtlas2Based: {
+          theta: 0.5,
+          gravitationalConstant: -50,
+          centralGravity: 0.01,
+          springConstant: 0.08,
+          springLength: 100,
+          damping: 0.4,
+          avoidOverlap: 0
+        },
+        repulsion: {
+          centralGravity: 0.2,
+          springLength: 200,
+          springConstant: 0.05,
+          nodeDistance: 100,
+          damping: 0.09
+        },
+        hierarchicalRepulsion: {
+          centralGravity: 0.0,
+          springLength: 100,
+          springConstant: 0.01,
+          nodeDistance: 120,
+          damping: 0.09,
+          avoidOverlap: 0
+        },
+        maxVelocity: 50,
+        minVelocity: 0.1,
+        solver: "forceAtlas2Based",
+        stabilization: {
+          enabled: true,
+          iterations: 1000,
+          updateInterval: 100,
+          onlyDynamicEdges: false,
+          fit: true
+        },
+        timestep: 0.5,
+        adaptiveTimestep: true,
+        wind: { x: 0, y: 0 }
       },
       interaction: {
         hideEdgesOnDrag: true,
@@ -270,18 +324,25 @@ export default {
         navigationButtons: true,
         tooltipDelay: 200,
         zoomSpeed: 1.4
-      },
-      configure: {
-        enabled: false,
-        showButton: true
-      },
-      physics: {
-        forceAtlas2Based: {
-          springLength: 100
-        },
-        minVelocity: 0.75,
-        solver: "forceAtlas2Based"
       }
+
+      /*,
+      layout: {
+        randomSeed: undefined,
+        improvedLayout:true,
+        hierarchical: {
+          enabled:false,
+          levelSeparation: 150,
+          nodeSpacing: 100,
+          treeSpacing: 200,
+          blockShifting: true,
+          edgeMinimization: true,
+          parentCentralization: true,
+          direction: 'UD',        // UD, DU, LR, RL
+          sortMethod: 'hubsize'   // hubsize, directed
+        }        
+      }
+      */
     }
   })
 };

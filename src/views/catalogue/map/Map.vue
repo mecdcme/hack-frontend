@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       //states: ["Italia", "Germania"],
-      name: "Italia",
+      name: "Italy",
       loading: false,
       show: true,
       enableTooltip: true,

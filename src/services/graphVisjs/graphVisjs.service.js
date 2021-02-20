@@ -3,9 +3,9 @@ export const graphVisjsService = {
   findAll,
   findById
 };
-function findAll(n) {
+function findAll() {
   return axiosHack
-    .get("/visjsData" + n)
+    .get("/visjsData/")
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

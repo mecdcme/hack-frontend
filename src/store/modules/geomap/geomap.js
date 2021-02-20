@@ -33,7 +33,7 @@ const actions = {
     return geomapService
       .findByName(name)
       .then(data => {
-        commit("SET_GEOMAP", data);
+        commit("SET_COVID", data);
       })
       .catch(err => {
         console.log(err);
@@ -52,7 +52,6 @@ const getters = {
     return state.covid;
   }
 };
-
 export const geomap = {
   namespaced: true,
   state,

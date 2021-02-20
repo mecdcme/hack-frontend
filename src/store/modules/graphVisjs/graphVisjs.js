@@ -11,6 +11,14 @@ const mutations = {
   SET_GRAPH(state, graph) {
     state.graph = graph;
   }
+  /*,
+  INCREASE_X(state, graphs) {
+    state.graphs.nodes.x = state.graphs.nodes.x * 100;
+  },
+  INCREASE_y(state, graphs) {
+    state.graphs.nodes.y = state.graphs.nodes.y * 100;
+  }
+  */
 };
 const actions = {
   findAll({ commit }, n) {
@@ -33,7 +41,7 @@ const actions = {
         console.log(err);
       });
   },
-  clear({ commit }){
+  clear({ commit }) {
     commit("SET_GRAPHS", []);
   }
 };

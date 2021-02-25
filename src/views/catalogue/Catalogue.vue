@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-md-4">
+    <!--div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
           Process catalogue
@@ -32,7 +32,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </div-->
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
@@ -101,6 +101,24 @@
         </div>
       </div>
     </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="card">
+        <header class="card-header">
+          Process catalogue
+          <span class="badge float-right badge-success">New</span>
+        </header>
+        <div class="card-body">
+          This section contains the Chartjs Line .
+          <br />
+          <p class="section-link">
+            <router-link tag="a" :to="{ name: 'ChartjsLine' }"
+              ><span>Go to Chartjs Line <chevron-right-icon /></span>
+            </router-link>
+          </p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 

@@ -12,21 +12,31 @@
         </header>
         <CCardBody>
           <div class="small">
-            <scatter-chart :chartData="scatterData" :options="options" />
-            <line-chart :chartData="lineData" :options="options" />
+            <line-chart :chartData="chartData" />
           </div>
+        </CCardBody>
+        <CCardBody>
+          <CDataTable
+            :fields="fields"
+            column-filter
+            :items-per-page="10"
+            sorter
+            hover
+            pagination
+          >
+          </CDataTable>
         </CCardBody>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ScatterChart from "@/components/charts/ScatterChart";
+import LineChart from "@/components/charts/LineChart";
 import { mapGetters } from "vuex";
 export default {
-  name: "ChartjsScatter",
+  name: "ChartjsLine",
   components: {
-    ScatterChart
+    LineChart
   },
   data() {
     return {
@@ -87,7 +97,8 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      fields: []
     };
   },
   methods: {
@@ -106,28 +117,40 @@ export default {
   },
   computed: {
     ...mapGetters("chartjsScatter", ["charts"]),
-    scatterData() {
-      var scatterData = {};
-      scatterData.datasets = [];
+    chartData() {
+      var chartData = {};
+      chartData.datasets = [];
+
       this.charts.forEach(element => {
-        const color = this.getColor();
-        scatterData.datasets.push({
-          label: element.dataname,
-          fill: false,
-          backgroundColor: color.background,
-          borderColor: color.border,
-          data: element.data,
-          showLine: false,
-          pointRadius: 8
-        });
+        if (element.dataname != "01") {
+          const color = this.getColor();
+
+          /*        
+          this.fields.push({
+            key: element.dataname,
+            label: element.dataname,
+            _style: "width:20%;"
+          });
+*/
+
+          chartData.datasets.push({
+            label: element.dataname,
+            fill: false,
+            backgroundColor: color.background,
+            borderColor: color.border,
+            data: element.data,
+            showLine: true,
+            pointRadius: 0
+          });
+        }
       });
       this.clearColor();
-      return scatterData;
+      return chartData;
     }
   },
   created() {
-    this.$store.dispatch("chartjsScatter/findByName", "01");
-    //this.$store.dispatch("chartjsScatter/findAll");
+    //this.$store.dispatch("chartjsScatter/findByName", "01");
+    this.$store.dispatch("chartjsScatter/findAll");
   }
 };
 </script>

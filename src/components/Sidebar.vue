@@ -77,6 +77,15 @@
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Scatter
         </router-link>
       </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
+          :to="{ name: 'ChartjsLine' }"
+          class="c-sidebar-nav-link"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Line
+        </router-link>
+      </li>
     </ul>
   </CSidebar>
 </template>

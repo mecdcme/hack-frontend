@@ -12,7 +12,7 @@
         </header>
         <CCardBody>
           <div class="small">
-            <bar-chart :chartData="chartData" :options="options" />
+            <scatter-chart :chartData="chartData" :options="options" />
           </div>
         </CCardBody>
       </div>
@@ -20,12 +20,13 @@
   </div>
 </template>
 <script>
+import ScatterChart from "@/components/charts/ScatterChart";
+
 import { mapGetters } from "vuex";
-import BarChart from "@/components/charts/BarChart";
 export default {
-  name: "Chartjs",
+  name: "ChartjsScatter",
   components: {
-    BarChart
+    ScatterChart
   },
   data() {
     return {
@@ -56,33 +57,37 @@ export default {
           background: "rgba(206, 210, 216, 0.2)"
         }
       ],
-    options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            },
-            gridLines: {
-              display: true
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              },
+              gridLines: {
+                display: true
+              }
             }
-          }
-        ],
-        xAxes: [
-          {
-            gridLines: {
-              display: true
+          ],
+          xAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              },
+
+              gridLines: {
+                display: false
+              }
             }
-          }
-        ]
-      },
-      legend: {
-        display: true,
-        legendPosition: 'left'
-      },
-      responsive: true,
-      maintainAspectRatio: false
-    }
+          ]
+        },
+        legend: {
+          display: true,
+          legendPosition: "left"
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
     };
   },
   methods: {
@@ -100,24 +105,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("chartjs", { covid: "charts" }),
+    ...mapGetters("chartjsScatter", ["charts"]),
     chartData() {
       var chartData = {};
-      chartData.labels = [];
       chartData.datasets = [];
-      chartData.labels = ["confirmed", "recovered", "deaths"];
-      this.covid.forEach(covid => {
+      this.charts.forEach(element => {
         const color = this.getColor();
         chartData.datasets.push({
-          label: covid.province,
+          label: element.dataname,
+          fill: false,
           backgroundColor: color.background,
           borderColor: color.border,
-          borderWidth: 2,
-          data: [
-            covid.stats.confirmed,
-            covid.stats.recovered,
-            covid.stats.deaths
-          ]
+          data: element.data,
+          showLine: false,
+          pointRadius: 6
         });
       });
       this.clearColor();
@@ -125,8 +126,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("chartjs/findByName", "Italy");
-    //this.$store.dispatch("chartjs/findAll");
+    this.$store.dispatch("chartjsScatter/findByName", "01");
   }
 };
 </script>

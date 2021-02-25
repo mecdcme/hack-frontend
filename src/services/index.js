@@ -4,4 +4,6 @@ export * from "./geomap/geomap.service";
 export * from "./graphCose/graphCose.service";
 export * from "./graphCola/graphCola.service";
 export * from "./graphVisjs/graphVisjs.service";
-export * from "./chartjs/chartjs.service";
+export * from "./chartjsBar/chartjsBar.service";
+export * from "./chartjsScatter/chartjsScatter.service";
+export * from "./chartjsLine/chartjsLine.service";

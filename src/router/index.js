@@ -75,23 +75,20 @@ const routes = [
       },
       {
         path: "catalogue/chartjs",
-        name: "Chartjs",
-        component: () => import("../views/catalogue/chartjs/Chartjs"),
+        name: "ChartjsBar",
+        component: () => import("../views/catalogue/chartjs/ChartjsBar"),
+        meta: { authorize: [] }
+      },
+      {
+        path: "catalogue/chartjs",
+        name: "ChartjsScatter",
+        component: () => import("../views/catalogue/chartjs/ChartjsScatter"),
         meta: { authorize: [] }
       },
       {
         path: "catalogue/geomap",
         name: "GeoMap",
         component: () => import("../views/catalogue/map/GeoMap"),
-        meta: { authorize: [] }
-      },
-      {
-        path: "catalogue/process",
-        name: "BusinessProcessList",
-        component: () =>
-          import(
-            "../views/catalogue/process/businessProcess/BusinessProcessList"
-          ),
         meta: { authorize: [] }
       },
       {

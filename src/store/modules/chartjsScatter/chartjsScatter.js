@@ -1,4 +1,4 @@
-import { chartjsService } from "@/services";
+import { chartjsScatterService } from "@/services";
 
 const state = {
   charts: [],
@@ -6,29 +6,29 @@ const state = {
 };
 
 const mutations = {
-  SET_CHARTS(state, charts) {
+  SET_SCATTER_CHARTS(state, charts) {
     state.charts = charts;
   },
-  SET_CHART(state, chart) {
+  SET_SCATTER_CHART(state, chart) {
     state.chart = chart;
   }
 };
 const actions = {
   findAll({ commit }) {
-    return chartjsService
+    return chartjsScatterService
       .findAll()
       .then(data => {
-        commit("SET_CHARTS", data);
+        commit("SET_SCATTER_CHARTS", data);
       })
       .catch(err => {
         console.log(err);
       });
   },
   findByName({ commit }, name) {
-    return chartjsService
+    return chartjsScatterService
       .findByName(name)
       .then(data => {
-        commit("SET_CHARTS", data);
+        commit("SET_SCATTER_CHARTS", data);
       })
       .catch(err => {
         console.log(err);
@@ -44,7 +44,7 @@ const getters = {
     return state.chart;
   }
 };
-export const chartjs = {
+export const chartjsScatter = {
   namespaced: true,
   state,
   mutations,

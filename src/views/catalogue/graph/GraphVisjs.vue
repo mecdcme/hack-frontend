@@ -125,6 +125,10 @@
                     <button class="form-control" @click="drawNetwork('202010')">
                       2020.10
                     </button>
+
+                    <button class="form-control" @click="drawNetwork('202011')">
+                      2020.11
+                    </button>
                   </div>
                 </div>
               </div>
@@ -160,7 +164,7 @@
                   <div class="form-group form-check">
                     <input
                       type="checkbox"
-                      v-model="options.physics"
+                      v-model="options.physics.enabled"
                       id="checkbox"
                       class="form-check-input"
                     />

@@ -10,15 +10,26 @@ const mutations = {
   },
   SET_GRAPH(state, graph) {
     state.graph = graph;
-  }
-  /*,
-  INCREASE_X(state, graphs) {
-    state.graphs.nodes.x = state.graphs.nodes.x * 100;
   },
-  INCREASE_y(state, graphs) {
-    state.graphs.nodes.y = state.graphs.nodes.y * 100;
+  INCREASE_XY(state, graphs) {
+    graphs.nodes.forEach(node => {
+      node.x = node.x * 314;
+      node.y = node.y * 314;
+    });
+    state.graphs = graphs;
+  },
+  PUSH_FLAG(state, graphs) {
+    graphs.nodes.forEach(node => {
+      graphs.nodes.push({
+        shape: "image",
+        image:
+          "https://flagpedia.net/data/flags/mini/" +
+          node.label.toLowerCase() +
+          ".png"
+      });
+    });
+    state.graphs = graphs;
   }
-  */
 };
 const actions = {
   findAll({ commit }, n) {
@@ -35,6 +46,8 @@ const actions = {
     return graphVisjsService
       .findById(id)
       .then(data => {
+        commit("INCREASE_XY", data.graph);
+        //commit("PUSH_FLAG", data.graph);
         commit("SET_GRAPHS", data.graph);
       })
       .catch(err => {

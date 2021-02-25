@@ -19,10 +19,12 @@ export default {
           }
         },
         opacity: 1,
+
         fixed: {
-          x: false,
-          y: false
+          x: true,
+          y: true
         },
+
         font: {
           color: "#343434",
           size: 14, // px
@@ -39,40 +41,10 @@ export default {
             face: "arial",
             vadjust: 0,
             mod: "bold"
-          },
-          ital: {
-            color: "#343434",
-            size: 14, // px
-            face: "arial",
-            vadjust: 0,
-            mod: "italic"
-          },
-          boldital: {
-            color: "#343434",
-            size: 14, // px
-            face: "arial",
-            vadjust: 0,
-            mod: "bold italic"
-          },
-          mono: {
-            color: "#343434",
-            size: 15, // px
-            face: "courier new",
-            vadjust: 2,
-            mod: ""
           }
         },
-        group: undefined,
         heightConstraint: false,
         hidden: false,
-        icon: {
-          face: "FontAwesome",
-          code: undefined,
-          weight: undefined,
-          size: 50, //50,
-          color: "#2B7CE9"
-        },
-        image: undefined,
         imagePadding: {
           left: 0,
           top: 0,
@@ -83,7 +55,7 @@ export default {
         labelHighlightBold: true,
         level: undefined,
         mass: 1,
-        physics: true,
+        physics: false,
         scaling: {
           min: 10,
           max: 30,
@@ -110,7 +82,9 @@ export default {
           x: 5,
           y: 5
         },
-        shape: "ellipse",
+        //shape: "ellipse",
+        //shape: "",
+
         shapeProperties: {
           borderDashes: false, // only for borders
           borderRadius: 6, // only for box shape
@@ -122,38 +96,15 @@ export default {
         size: 25,
         title: undefined,
         value: undefined,
-        widthConstraint: false,
-        x: undefined,
-        y: undefined
+        widthConstraint: false
       },
       edges: {
         arrows: {
           to: {
             enabled: true,
-            imageHeight: undefined,
-            imageWidth: undefined,
             scaleFactor: 1,
-            src: undefined,
             type: "arrow"
           }
-          /*,
-          middle: {
-            enabled: true,
-            imageHeight: undefined,
-            imageWidth: undefined,
-            scaleFactor: 1,
-            src: undefined,
-            type: "arrow"
-          },
-          from: {
-            enabled: true,
-            imageHeight: undefined,
-            imageWidth: undefined,
-            scaleFactor: 1,
-            src: undefined,
-            type: "arrow"
-          }
-          */
         },
         endPointOffset: {
           from: 0,
@@ -267,7 +218,7 @@ export default {
       },
       */
       physics: {
-        enabled: true,
+        enabled: false,
         barnesHut: {
           theta: 0.5,
           gravitationalConstant: -2000,

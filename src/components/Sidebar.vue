@@ -62,10 +62,19 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'Chartjs' }"
+          :to="{ name: 'ChartjsBar' }"
           class="c-sidebar-nav-link"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Bar
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
+          :to="{ name: 'ChartjsScatter' }"
+          class="c-sidebar-nav-link"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Scatter
         </router-link>
       </li>
     </ul>

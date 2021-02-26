@@ -7,8 +7,8 @@ function findAll() {
   return (
     axiosHack
 
-      .get("/timelaps/")
       //.get("/scatterDemo/")
+      .get("/timelaps/")
       .then(res => {
         var data = res.data ? res.data : {};
         //console.log(data);
@@ -22,8 +22,8 @@ function findAll() {
 function findByName(name) {
   return (
     axiosHack
-      .get("/scatterDemo?dataname=" + name)
-      //.get("/timelaps?dataname=" + name)
+      //.get("/scatterDemo?dataname=" + name)
+      .get("/timelaps?dataname=" + name)
       .then(res => {
         var data = res.data ? res.data : {};
         console.log(data);

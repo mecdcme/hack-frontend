@@ -140,7 +140,7 @@ export default {
           borderColor: color.border,
           data: element.data,
           showLine: true,
-          pointRadius: 1
+          pointRadius: 5
         });
         //}
       });
@@ -149,8 +149,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("chartjsScatter/findByName", "02");
-    //this.$store.dispatch("chartjsScatter/findAll");
+    //this.$store.dispatch("chartjsScatter/findByName", "02");
+    this.$store.dispatch("chartjsLine/findAll");
   }
 };
 </script>

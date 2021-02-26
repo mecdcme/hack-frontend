@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12">
       <div class="card">
         <header class="card-header">
-          Chartjs
+          IT − WO @ T + 6 ; TOTAL (mln. euro)
           <div class="card-header-actions">
             <router-link tag="a" :to="{ name: 'Map' }">
               <add-icon />
@@ -11,9 +11,7 @@
           </div>
         </header>
         <CCardBody>
-          <div class="small">
-            <scatter-chart :chartData="scatterData" :options="options" />
-          </div>
+          <scatter-chart :chartData="scatterData" :options="options" />
         </CCardBody>
       </div>
     </div>
@@ -68,26 +66,22 @@ export default {
               }
             }
           ],
+          */
           xAxes: [
             {
               ticks: {
                 beginAtZero: true
               },
-
               gridLines: {
                 display: false
-              }
-            }
-          ]*/
-          xAxes: [
-            {
+              },
               type: "linear",
               position: "bottom"
             }
           ]
         },
         legend: {
-          display: true,
+          display: false,
           legendPosition: "left"
         },
         responsive: true,
@@ -117,23 +111,65 @@ export default {
       this.charts.forEach(element => {
         console.log(element);
         const color = this.getColor();
-        scatterData.datasets.push({
-          type: "scatter",
-          label: element.dataname,
-          fill: false,
-          backgroundColor: color.background,
-          borderColor: color.border,
-          data: element.data,
-          showLine: false,
-          pointRadius: 6
-        });
+        var str = "";
+        switch (element.dataname) {
+          case "01":
+            str = {
+              label: element.dataname,
+              fill: false,
+              backgroundColor: color.background,
+              borderColor: color.border,
+              data: element.data,
+              showLine: false,
+              pointRadius: 12
+            };
+            break;
+          case "04":
+            str = {
+              label: element.dataname,
+              fill: false,
+              backgroundColor: "red", //color.background,
+              borderColor: "red", // color.border,
+              data: element.data,
+              showLine: true,
+              lineTension: 0,
+              pointRadius: 0,
+              borderDash: [5, 5]
+            };
+            break;
+          case "05":
+            str = {
+              label: element.dataname,
+              fill: false,
+              backgroundColor: color.background,
+              borderColor: color.border,
+              data: element.data,
+              showLine: true,
+              lineTension: 0,
+              pointRadius: 0,
+              borderDash: [5, 5]
+            };
+            break;
+          default:
+            str = {
+              label: element.dataname,
+              fill: false,
+              backgroundColor: "red", //color.background,
+              borderColor: "red", //color.border,
+              data: element.data,
+              showLine: true,
+              lineTension: 0,
+              pointRadius: 0
+            };
+            break;
+        }
+        scatterData.datasets.push(str);
       });
       this.clearColor();
       return scatterData;
     }
   },
   created() {
-    //this.$store.dispatch("chartjsScatter/findByName", "01");
     this.$store.dispatch("chartjsScatter/findAll");
   }
 };

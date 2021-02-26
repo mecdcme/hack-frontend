@@ -20,14 +20,17 @@ function findAll() {
   );
 }
 function findByName(name) {
-  return axiosHack
-    .get("/timelaps?dataname=" + name)
-    .then(res => {
-      var data = res.data ? res.data : {};
-      console.log(data);
-      return data;
-    })
-    .catch(err => {
-      throw err;
-    });
+  return (
+    axiosHack
+      .get("/scatterDemo?dataname=" + name)
+      //.get("/timelaps?dataname=" + name)
+      .then(res => {
+        var data = res.data ? res.data : {};
+        console.log(data);
+        return data;
+      })
+      .catch(err => {
+        throw err;
+      })
+  );
 }

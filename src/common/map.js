@@ -31,6 +31,12 @@ export function buildInfo(props) {
     : "Hover over a state";
   return div;
 }
+export function callGraph(props) {
+  var div = props
+    ? "State of " + "<b>" + props.properties.display_name + "</b><br/>"
+    : "Hover over a state";
+  return div;
+}
 export function getColor(d) {
   return d > 10000000
     ? "#800026"

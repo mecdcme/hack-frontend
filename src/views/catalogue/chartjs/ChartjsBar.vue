@@ -126,7 +126,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("chartjsBar/findByName", "Italy");
+    //this.$store.dispatch("chartjsBar/findByName", "Italy");
+    this.$store.dispatch("chartjsBar/findAll");
   }
 };
 </script>

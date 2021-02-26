@@ -7,7 +7,7 @@ function findAll() {
   return (
     axiosHack
       //.get("/mondo/")
-      .get("/mondo/")
+      .get("/country/")
       .then(res => {
         var data = res.data ? res.data : {};
         //console.log(data);
@@ -20,7 +20,7 @@ function findAll() {
 }
 function findByName(name) {
   return axiosHack
-    .get("/mondo?country=" + name)
+    .get("/country?country=" + name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

@@ -13,7 +13,6 @@
         <CCardBody>
           <div class="small">
             <scatter-chart :chartData="scatterData" :options="options" />
-            <line-chart :chartData="lineData" :options="options" />
           </div>
         </CCardBody>
       </div>
@@ -59,7 +58,7 @@ export default {
       ],
       options: {
         scales: {
-          yAxes: [
+          /*yAxes: [
             {
               ticks: {
                 beginAtZero: true
@@ -78,6 +77,12 @@ export default {
               gridLines: {
                 display: false
               }
+            }
+          ]*/
+          xAxes: [
+            {
+              type: "linear",
+              position: "bottom"
             }
           ]
         },
@@ -110,15 +115,17 @@ export default {
       var scatterData = {};
       scatterData.datasets = [];
       this.charts.forEach(element => {
+        console.log(element);
         const color = this.getColor();
         scatterData.datasets.push({
+          type: "scatter",
           label: element.dataname,
           fill: false,
           backgroundColor: color.background,
           borderColor: color.border,
           data: element.data,
           showLine: false,
-          pointRadius: 8
+          pointRadius: 6
         });
       });
       this.clearColor();
@@ -126,8 +133,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("chartjsScatter/findByName", "01");
-    //this.$store.dispatch("chartjsScatter/findAll");
+    //this.$store.dispatch("chartjsScatter/findByName", "01");
+    this.$store.dispatch("chartjsScatter/findAll");
   }
 };
 </script>

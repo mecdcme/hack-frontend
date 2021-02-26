@@ -23,7 +23,7 @@
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Map
         </router-link>
       </li>
-      <li class="c-sidebar-nav-item">
+      <!--li class="c-sidebar-nav-item">
         <router-link
           tag="a"
           :to="{ name: 'GraphCola' }"
@@ -40,7 +40,7 @@
         >
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph CoSe
         </router-link>
-      </li>
+      </li-->
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"

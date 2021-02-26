@@ -12,10 +12,10 @@
         </header>
         <CCardBody>
           <div class="small">
-            <line-chart :chartData="chartData" />
+            <line-chart :chartData="chartData" :options="options" />
           </div>
         </CCardBody>
-        <CCardBody>
+        <!--CCardBody>
           <CDataTable
             :fields="fields"
             column-filter
@@ -25,7 +25,7 @@
             pagination
           >
           </CDataTable>
-        </CCardBody>
+        </CCardBody-->
       </div>
     </div>
   </div>
@@ -68,37 +68,40 @@ export default {
         }
       ],
       options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "ITALY"
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false
+        },
+        hover: {
+          mode: "nearest",
+          intersect: true
+        },
         scales: {
-          yAxes: [
+          xAxes: [
             {
-              ticks: {
-                beginAtZero: true
-              },
-              gridLines: {
-                display: true
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: "Time"
               }
             }
           ],
-          xAxes: [
+          yAxes: [
             {
-              ticks: {
-                beginAtZero: true
-              },
-
-              gridLines: {
-                display: false
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: "Value"
               }
             }
           ]
-        },
-        legend: {
-          display: true,
-          legendPosition: "left"
-        },
-        responsive: true,
-        maintainAspectRatio: false
-      },
-      fields: []
+        }
+      }
     };
   },
   methods: {
@@ -120,37 +123,34 @@ export default {
     chartData() {
       var chartData = {};
       chartData.datasets = [];
-
       this.charts.forEach(element => {
-        if (element.dataname != "01") {
-          const color = this.getColor();
-
-          /*        
+        //if (element.dataname != "01") {
+        const color = this.getColor();
+        /*        
           this.fields.push({
             key: element.dataname,
             label: element.dataname,
             _style: "width:20%;"
           });
-*/
-
-          chartData.datasets.push({
-            label: element.dataname,
-            fill: false,
-            backgroundColor: color.background,
-            borderColor: color.border,
-            data: element.data,
-            showLine: true,
-            pointRadius: 0
-          });
-        }
+          */
+        chartData.datasets.push({
+          label: element.dataname,
+          fill: false,
+          backgroundColor: color.background,
+          borderColor: color.border,
+          data: element.data,
+          showLine: true,
+          pointRadius: 1
+        });
+        //}
       });
       this.clearColor();
       return chartData;
     }
   },
   created() {
-    //this.$store.dispatch("chartjsScatter/findByName", "01");
-    this.$store.dispatch("chartjsScatter/findAll");
+    this.$store.dispatch("chartjsScatter/findByName", "02");
+    //this.$store.dispatch("chartjsScatter/findAll");
   }
 };
 </script>

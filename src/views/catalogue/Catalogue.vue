@@ -33,7 +33,7 @@
         </div>
       </div>
     </div-->
-    <div class="col-sm-6 col-md-4">
+    <!--div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
           Process catalogue
@@ -49,7 +49,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </div-->
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
@@ -118,7 +118,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 

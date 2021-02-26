@@ -147,3 +147,49 @@ button:focus {
 .spinner > div {
   background-color: $primary !important;
 }
+
+/* Map */
+.info {
+  line-height: 15px;
+  color: #555;
+  padding: 6px 8px;
+  font: 16px/18px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: auto;
+  height: auto;
+  margin-right: 6px;
+  opacity: 0.7;
+}
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+.legend {
+  line-height: 15px;
+  color: #555;
+  padding: 6px 8px;
+  font: 16px/18px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: auto;
+  height: auto;
+  margin-right: 6px;
+  opacity: 0.7;
+}
+.legend ul {
+  display: block;
+  padding-inline-start: 25px !important;
+  padding-inline-end: 25px !important;
+}
+.legend li {
+  list-style-type: none;
+}
+
+.tooltip-span{
+  padding: 1rem 1rem;
+}

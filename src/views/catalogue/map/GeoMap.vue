@@ -1,10 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <CCard>
-        <CCardHeader>
+    <div class="col-sm-12 col-md-12">
+      <div class="card">
+        <header class="card-header">
           Map
-        </CCardHeader>
+        </header>
         <CCardBody>
           <l-map
             :zoom="zoom"
@@ -12,43 +12,82 @@
             style="height: 650px; width: 100%"
           >
             <l-tile-layer :url="url" :attribution="attribution" />
-            <l-geo-json
-              :geojson="geojson"
-              :options="options"
-              :options-style="styleFunction"
-            />
-            <l-marker :lat-lng="marker" />
+            <l-circle-marker
+              v-for="(marker, i) in markers"
+              v-bind:key="i"
+              :lat-lng="[
+                marker.coordinates.latitude,
+                marker.coordinates.longitude
+              ]"
+              :radius="scale(100000)"
+              :color="getColor(1000000)"
+              :fillColor="getColor(1000000)"
+            >
+              <l-tooltip :options="{ interactive: true, permanent: false }">
+                <span class="tooltip-span">{{ marker.name }} </span>
+              </l-tooltip>
+              <l-popup>
+                <br />
+                {{ marker.country }}
+                {{ marker.name }} <br />
 
+                <br />
+                <span
+                  @click="callGraph(marker)"
+                  style="color:blue;cursor:pointer"
+                  >more...</span
+                >
+                <br />
+              </l-popup>
+            </l-circle-marker>
             <l-control position="topright">
               <div class="legend">
-                <CCard>
-                  <CCardBody>
-                    I am a beautiful legend
-                  </CCardBody>
-                </CCard>
-              </div></l-control
-            >
-            <l-control position="bottomright">
-              <div class="legend">
-                <CCard class="text-white bg-success">
-                  <CCardBody>
-                    I am a wonderful legend
-                  </CCardBody>
-                </CCard>
-              </div></l-control
-            >
+                <div>{{ legend.title }}</div>
+                <ul class="px-2">
+                  <li v-for="(row, r) in legend.series" v-bind:key="r">
+                    <div class="row px-0">
+                      <span
+                        class="px-1"
+                        v-bind:style="{
+                          height: '15px',
+                          width: '15px',
+                          backgroundColor: row.color
+                        }"
+                      >
+                      </span>
+                      <div class="px-1 text-right">
+                        {{ row.fromNumber }}
+                      </div>
+                      <div v-show="row.toNumber" class="px-0">
+                        <b>:</b>
+                      </div>
+                      <div class="px-1 text-left">
+                        {{ row.toNumber }}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </l-control>
           </l-map>
         </CCardBody>
-      </CCard>
+      </div>
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
-import { Map } from "@/common";
-import { latLng } from "leaflet";
-import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+
+import {
+  LMap,
+  LTileLayer,
+  LControl,
+  LTooltip,
+  LPopup,
+  LCircleMarker
+} from "vue2-leaflet";
+
+import mapMixin from "@/components/mixins/map.mixin";
 
 export default {
   name: "GeoMap",
@@ -56,55 +95,22 @@ export default {
     LMap,
     LTileLayer,
     LControl,
-    LGeoJson,
-    LMarker
+    LCircleMarker,
+    LTooltip,
+    LPopup
   },
-  data() {
-    return {
-      enableTooltip: true,
-      zoom: 3,
-      center: [45.861347, 57.405578],
-      url: Map.Url,
-      attribution: Map.Attribution,
-      marker: latLng(41.86956082699455, 12.436523437500002)
-    };
-  },
+  mixins: [mapMixin],
   computed: {
-    ...mapGetters("geomap", { geojson: "geomap" }),
-    options() {
-      return {
-        onEachFeature: this.onEachFeatureFunction
-      };
-    },
-    styleFunction() {
-      return () => {
-        return {
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.6
-        };
-      };
-    },
-    onEachFeatureFunction() {
-      if (!this.enableTooltip) {
-        return () => {};
-      }
-      return (feature, layer) => {
-        layer.bindTooltip(
-          "<div>" +
-            "<div>" +
-            feature.properties.display_name +
-            " </div>" +
-            "</div>",
-          { permanent: false, sticky: true }
-        );
-        layer.options.fillColor = "	#2eb85c";
-        layer.options.color = "	#2eb85c";
-      };
+    ...mapGetters("geomap", { markers: "covid" })
+  },
+  methods: {
+    callGraph(marker) {
+      console.log(marker.name);
     }
   },
   created() {
-    this.$store.dispatch("geomap/findByName", "Italy");
+    this.buildLegend();
+    this.$store.dispatch("geomap/findAll");
   }
 };
 </script>

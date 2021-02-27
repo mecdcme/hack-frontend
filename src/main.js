@@ -8,13 +8,10 @@ import store from "@/store";
 //Vue global plugins
 import Vuelidate from "vuelidate";
 import vSelect from "vue-select";
+import VueCytoscape from "vue-cytoscape";
 
 //CoreUI components
 import "@/coreui";
-
-import VueCytoscape from "vue-cytoscape";
-Vue.use(VueCytoscape);
-Vue.config.productionTip = false;
 
 //Icons
 import { iconsSet as icons } from "@/assets/icons/coreui.js";
@@ -33,6 +30,7 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.component("v-select", vSelect);
+Vue.use(VueCytoscape);
 
 new Vue({
   router,

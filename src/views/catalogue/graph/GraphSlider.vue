@@ -4,6 +4,20 @@
       <div class="card">
         <header class="card-header">
           Network - Graph
+          <div class="card-header-actions">
+            <CButton
+              shape="square"
+              size="sm"
+              color="primary"
+              class="mr-2"
+              @click="play"
+              :disabled="disablePlay"
+              >Play</CButton
+            >
+            <CButton shape="square" size="sm" color="danger" @click="stop"
+              >Stop</CButton
+            >
+          </div>
         </header>
         <CCardBody>
           <network
@@ -13,25 +27,12 @@
             :edges="network.edges"
             :options="network.options"
           />
-          <div class="row mt-3">
-            <div class="col-2">
-              <CButton
-                shape="square"
-                size="sm"
-                color="primary"
-                class="mr-2"
-                @click="play"
-                :disabled="disablePlay"
-                >Play</CButton
-              >
-              <CButton shape="square" size="sm" color="danger" @click="stop"
-                >Stop</CButton
-              >
-            </div>
-            <div class="col-10">
-              <vue-slider :adsorb="true" v-model="sliderValue" />
-            </div>
-          </div>
+          <vue-slider
+            :adsorb="true"
+            v-model="sliderValue"
+            :interval="10"
+            :marks="true"
+          />
         </CCardBody>
       </div>
     </div>
@@ -124,13 +125,11 @@ export default {
 }
 .network {
   text-align: center;
-  height: 600px;
+  height: 450px;
   border: 1px solid #ccc;
   margin: 5px 0;
 }
 .vue-slider {
-  margin-top: 5px;
-  width: 95% !important;
-  margin-left: -1rem;
+  margin: 1rem 0.5rem;
 }
 </style>

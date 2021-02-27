@@ -29,9 +29,10 @@
           />
           <vue-slider
             :adsorb="true"
-            v-model="sliderValue"
+            v-model="counter"
             :interval="10"
             :marks="true"
+            @change="handleChange"
           />
         </CCardBody>
       </div>
@@ -40,10 +41,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import { Network } from "vue-visjs";
 import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
-import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
 
 export default {
@@ -91,6 +92,10 @@ export default {
     }
   },
   methods: {
+    handleChange(val) {
+      console.log("Slider value: " + val);
+      //Now you can draw the network
+    },
     drawNetwork(id) {
       this.$store.dispatch("graphVisjs/findById", id);
     },
@@ -118,7 +123,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+/* Slider theme color */
+$themeColor: #321fdb;
+
+/* Slider theme */
+@import "~vue-slider-component/lib/theme/material.scss";
+
 .events {
   text-align: left;
   height: 50px;

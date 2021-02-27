@@ -102,4 +102,17 @@ export default {
 </script>
 <style>
 @import "~leaflet/dist/leaflet.css";
+
+/* Modal */
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 5rem auto;
+  }
+}
+.modal-footer {
+  padding: 0.4rem 0.75rem;
+}
+.modal-header {
+  padding: 0.75rem 1rem;
+}
 </style>

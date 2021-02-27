@@ -1,54 +1,71 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <CCard>
-        <CCardHeader>
+    <div class="col-sm-12 col-md-12">
+      <div class="card">
+        <header class="card-header">
           Map
-        </CCardHeader>
+        </header>
         <CCardBody>
           <l-map
             :zoom="zoom"
             :center="center"
             style="height: 650px; width: 100%"
           >
+            <!-- Attribution -->
             <l-tile-layer :url="url" :attribution="attribution" />
-            <l-geo-json
-              :geojson="geojson"
-              :options="options"
-              :options-style="styleFunction"
-            />
-            <l-marker :lat-lng="marker" />
 
+            <!-- Circle markers -->
+            <l-circle-marker
+              v-for="(marker, i) in markers"
+              v-bind:key="i"
+              :lat-lng="[
+                marker.coordinates.latitude,
+                marker.coordinates.longitude
+              ]"
+              :radius="scale(100000)"
+              :color="getColor(1000000)"
+              :fillColor="getColor(1000000)"
+              @click="openModal(marker)"
+            >
+              <l-tooltip :options="{ interactive: true, permanent: false }">
+                <span class="tooltip-span">{{ marker.name }} </span>
+              </l-tooltip>
+            </l-circle-marker>
+
+            <!-- Legend -->
             <l-control position="topright">
-              <div class="legend">
-                <CCard>
-                  <CCardBody>
-                    I am a beautiful legend
-                  </CCardBody>
-                </CCard>
-              </div></l-control
-            >
-            <l-control position="bottomright">
-              <div class="legend">
-                <CCard class="text-white bg-success">
-                  <CCardBody>
-                    I am a wonderful legend
-                  </CCardBody>
-                </CCard>
-              </div></l-control
-            >
+              <app-legend :legend="legend" />
+            </l-control>
           </l-map>
         </CCardBody>
-      </CCard>
+      </div>
     </div>
+
+    <!-- Marker modal -->
+    <CModal :title="modalTitle" :show.sync="markerModal">
+      <!-- Add trade charts -->
+      Trade charts go here!
+      <template #footer>
+        <CButton color="outline-primary" square size="sm" @click="closeModal"
+          >Close</CButton
+        >
+      </template>
+    </CModal>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
-import { Map } from "@/common";
-import { latLng } from "leaflet";
-import { LMap, LTileLayer, LControl, LMarker, LGeoJson } from "vue2-leaflet";
+
+import {
+  LMap,
+  LTileLayer,
+  LControl,
+  LTooltip,
+  LCircleMarker
+} from "vue2-leaflet";
+
+import MapLegend from "@/components/MapLegend";
+import mapMixin from "@/components/mixins/map.mixin";
 
 export default {
   name: "GeoMap",
@@ -56,58 +73,49 @@ export default {
     LMap,
     LTileLayer,
     LControl,
-    LGeoJson,
-    LMarker
+    LCircleMarker,
+    LTooltip,
+    "app-legend": MapLegend
   },
-  data() {
-    return {
-      enableTooltip: true,
-      zoom: 3,
-      center: [45.861347, 57.405578],
-      url: Map.Url,
-      attribution: Map.Attribution,
-      marker: latLng(41.86956082699455, 12.436523437500002)
-    };
-  },
+  mixins: [mapMixin],
+  data: () => ({
+    markerModal: false,
+    modalTitle: ""
+  }),
   computed: {
-    ...mapGetters("geomap", { geojson: "geomap" }),
-    options() {
-      return {
-        onEachFeature: this.onEachFeatureFunction
-      };
+    ...mapGetters("geomap", { markers: "covid" })
+  },
+  methods: {
+    openModal(marker) {
+      this.markerModal = true;
+      this.modalTitle = marker.name;
     },
-    styleFunction() {
-      return () => {
-        return {
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.6
-        };
-      };
-    },
-    onEachFeatureFunction() {
-      if (!this.enableTooltip) {
-        return () => {};
-      }
-      return (feature, layer) => {
-        layer.bindTooltip(
-          "<div>" +
-            "<div>" +
-            feature.properties.display_name +
-            " </div>" +
-            "</div>",
-          { permanent: false, sticky: true }
-        );
-        layer.options.fillColor = "	#2eb85c";
-        layer.options.color = "	#2eb85c";
-      };
+    closeModal() {
+      this.markerModal = false;
     }
   },
   created() {
-    this.$store.dispatch("geomap/findByName", "Italy");
+    this.buildLegend();
+    this.$store.dispatch("geomap/findAll");
   }
 };
 </script>
-<style>
+<style scoped>
 @import "~leaflet/dist/leaflet.css";
+.card-body {
+  padding: 0;
+}
+
+/* Modal */
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 5rem auto;
+  }
+}
+.modal-footer {
+  padding: 0.4rem 0.75rem;
+}
+.modal-header {
+  padding: 0.75rem 1rem;
+}
 </style>

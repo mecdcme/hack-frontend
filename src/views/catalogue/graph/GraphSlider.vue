@@ -1,9 +1,33 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-2">
+      <CCard>
+        <CCardHeader>
+          Search filters
+        </CCardHeader>
+        <CCardBody>
+          Add your filters here!
+        </CCardBody>
+      </CCard>
+    </div>
+    <div class="col-10">
       <div class="card">
         <header class="card-header">
           Network - Graph
+          <div class="card-header-actions">
+            <CButton
+              shape="square"
+              size="sm"
+              color="primary"
+              class="mr-2"
+              @click="play"
+              :disabled="disablePlay"
+              >Play</CButton
+            >
+            <CButton shape="square" size="sm" color="danger" @click="stop"
+              >Stop</CButton
+            >
+          </div>
         </header>
         <CCardBody>
           <network
@@ -13,25 +37,13 @@
             :edges="network.edges"
             :options="network.options"
           />
-          <div class="row mt-3">
-            <div class="col-2">
-              <CButton
-                shape="square"
-                size="sm"
-                color="primary"
-                class="mr-2"
-                @click="play"
-                :disabled="disablePlay"
-                >Play</CButton
-              >
-              <CButton shape="square" size="sm" color="danger" @click="stop"
-                >Stop</CButton
-              >
-            </div>
-            <div class="col-10">
-              <vue-slider :adsorb="true" v-model="sliderValue" />
-            </div>
-          </div>
+          <vue-slider
+            :adsorb="true"
+            v-model="counter"
+            :interval="10"
+            :marks="true"
+            @change="handleChange"
+          />
         </CCardBody>
       </div>
     </div>
@@ -39,10 +51,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import { Network } from "vue-visjs";
 import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
-import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
 
 export default {
@@ -90,6 +102,10 @@ export default {
     }
   },
   methods: {
+    handleChange(val) {
+      console.log("Slider value: " + val);
+      //Now you can draw the network
+    },
     drawNetwork(id) {
       this.$store.dispatch("graphVisjs/findById", id);
     },
@@ -117,20 +133,24 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+/* Slider theme color */
+$themeColor: #321fdb;
+
+/* Slider theme */
+@import "~vue-slider-component/lib/theme/material.scss";
+
 .events {
   text-align: left;
   height: 50px;
 }
 .network {
   text-align: center;
-  height: 600px;
+  height: 450px;
   border: 1px solid #ccc;
   margin: 5px 0;
 }
 .vue-slider {
-  margin-top: 5px;
-  width: 95% !important;
-  margin-left: -1rem;
+  margin: 1rem 0.5rem;
 }
 </style>

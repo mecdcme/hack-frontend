@@ -102,6 +102,9 @@ export default {
 </script>
 <style>
 @import "~leaflet/dist/leaflet.css";
+.card-body {
+  padding: 0;
+}
 
 /* Modal */
 @media (min-width: 576px) {

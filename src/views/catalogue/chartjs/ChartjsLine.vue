@@ -11,21 +11,8 @@
           </div>
         </header>
         <CCardBody>
-          <div class="small">
             <line-chart :chartData="chartData" :options="options" />
-          </div>
         </CCardBody>
-        <!--CCardBody>
-          <CDataTable
-            :fields="fields"
-            column-filter
-            :items-per-page="10"
-            sorter
-            hover
-            pagination
-          >
-          </CDataTable>
-        </CCardBody-->
       </div>
     </div>
   </div>
@@ -69,13 +56,15 @@ export default {
       ],
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+
         title: {
           display: true,
           text: "ITALY"
         },
         tooltips: {
           mode: "index",
-          intersect: false
+          intersect: true
         },
         hover: {
           mode: "nearest",
@@ -119,38 +108,33 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("chartjsScatter", ["charts"]),
+    ...mapGetters("chartjsLine", ["charts"]),
     chartData() {
       var chartData = {};
       chartData.datasets = [];
-      this.charts.forEach(element => {
-        //if (element.dataname != "01") {
-        const color = this.getColor();
-        /*        
-          this.fields.push({
-            key: element.dataname,
+      chartData.labels = [];
+
+      if (this.charts) {
+        this.charts.data.forEach(element => {
+          const color = this.getColor();
+          //chartData.labels.push(element.dataname);
+          chartData.datasets.push({
             label: element.dataname,
-            _style: "width:20%;"
+            fill: false,
+            backgroundColor: color.background,
+            borderColor: color.border,
+            data: element.data,
+            //showLine: true,
+            pointRadius: 5
           });
-          */
-        chartData.datasets.push({
-          label: element.dataname,
-          fill: false,
-          backgroundColor: color.background,
-          borderColor: color.border,
-          data: element.data,
-          showLine: true,
-          pointRadius: 5
         });
-        //}
-      });
+      }
       this.clearColor();
       return chartData;
     }
   },
   created() {
-    //this.$store.dispatch("chartjsScatter/findByName", "02");
-    this.$store.dispatch("chartjsLine/findAll");
+    this.$store.dispatch("chartjsLine/findByName", "AT");
   }
 };
 </script>

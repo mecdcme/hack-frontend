@@ -12,6 +12,7 @@ import { graphCose } from "./modules/graphCose/graphCose";
 import { graphVisjs } from "./modules/graphVisjs/graphVisjs";
 import { chartjsBar } from "./modules/chartjsBar/chartjsBar";
 import { chartjsScatter } from "./modules/chartjsScatter/chartjsScatter";
+import { chartjsLine } from "./modules/chartjsLine/chartjsLine";
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     graphCola,
     graphVisjs,
     chartjsBar,
-    chartjsScatter
+    chartjsScatter,
+    chartjsLine
   }
 });

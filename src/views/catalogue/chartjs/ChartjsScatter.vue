@@ -81,8 +81,8 @@ export default {
           ]
         },
         legend: {
-          display: false,
-          legendPosition: "left"
+          display: true,
+        
         },
         responsive: true,
         maintainAspectRatio: false

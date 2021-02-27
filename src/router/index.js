@@ -74,19 +74,19 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/chartjs",
+        path: "catalogue/bar",
         name: "ChartjsBar",
         component: () => import("../views/catalogue/chartjs/ChartjsBar"),
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/chartjs",
+        path: "catalogue/scatter",
         name: "ChartjsScatter",
         component: () => import("../views/catalogue/chartjs/ChartjsScatter"),
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/chartjs",
+        path: "catalogue/line",
         name: "ChartjsLine",
         component: () => import("../views/catalogue/chartjs/ChartjsLine"),
         meta: { authorize: [] }

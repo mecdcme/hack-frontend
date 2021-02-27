@@ -8,7 +8,7 @@ function findAll() {
     axiosHack
 
       //.get("/scatterDemo/")
-      .get("/timelaps/")
+      .get("/ImportVariazioneQuote/")
       .then(res => {
         var data = res.data ? res.data : {};
         //console.log(data);
@@ -20,17 +20,14 @@ function findAll() {
   );
 }
 function findByName(name) {
-  return (
-    axiosHack
-      //.get("/scatterDemo?dataname=" + name)
-      .get("/timelaps?dataname=" + name)
-      .then(res => {
-        var data = res.data ? res.data : {};
-        console.log(data);
-        return data;
-      })
-      .catch(err => {
-        throw err;
-      })
-  );
+  return axiosHack
+    .get("/export/" + name)
+    .then(res => {
+      var data = res.data ? res.data : {};
+      console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }

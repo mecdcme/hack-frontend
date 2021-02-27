@@ -1,7 +1,7 @@
 import { chartjsLineService } from "@/services";
 
 const state = {
-  charts: [],
+  charts: null,
   chart: null
 };
 

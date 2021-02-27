@@ -77,7 +77,7 @@ export default {
         : "#FFEDA0";
     },
     buildLegend() {
-      this.legend.title = "State";
+      this.legend.title = "Trade";
       var grades = [10000, 20000, 50000, 100000, 200000, 500000, 1000000],
         from,
         to;

@@ -11,7 +11,6 @@ import vSelect from "vue-select";
 
 //CoreUI components
 import "@/coreui";
-//
 
 import VueCytoscape from "vue-cytoscape";
 Vue.use(VueCytoscape);

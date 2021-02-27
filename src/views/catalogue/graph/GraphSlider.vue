@@ -1,6 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-2">
+      <CCard>
+        <CCardHeader>
+          Search filters
+        </CCardHeader>
+        <CCardBody>
+          Add your filters here!
+        </CCardBody>
+      </CCard>
+    </div>
+    <div class="col-10">
       <div class="card">
         <header class="card-header">
           Network - Graph

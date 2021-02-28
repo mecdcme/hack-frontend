@@ -92,7 +92,7 @@ export default {
           useBorderWithImage: false, // only for image shape
           coordinateOrigin: "center" // only for image and circularImage shapes
         },
-        size: 25,
+        size: 30,
         title: undefined,
         value: undefined,
         widthConstraint: false

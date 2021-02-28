@@ -10,25 +10,6 @@ const mutations = {
   },
   SET_GRAPH(state, graph) {
     state.graph = graph;
-  },
-  INCREASE_XY(state, graphs) {
-    graphs.nodes.forEach(node => {
-      node.x = node.x * 314;
-      node.y = node.y * 314;
-    });
-    state.graphs = graphs;
-  },
-  PUSH_FLAG(state, graphs) {
-    graphs.nodes.forEach(node => {
-      graphs.nodes.push({
-        shape: "image",
-        image:
-          "https://flagpedia.net/data/flags/mini/" +
-          node.label.toLowerCase() +
-          ".png"
-      });
-    });
-    state.graphs = graphs;
   }
 };
 const actions = {
@@ -46,9 +27,17 @@ const actions = {
     return graphVisjsService
       .findById(id)
       .then(data => {
-        commit("INCREASE_XY", data.graph);
-        //commit("PUSH_FLAG", data.graph);
-        commit("SET_GRAPHS", data.graph);
+        data.graph.nodes.forEach(node => {
+          node.x = node.x * 314;
+          node.y = node.y * 314;
+          node.shape = "image";
+          node.image =
+            "https://flagpedia.net/data/flags/mini/" +
+            node.label.toLowerCase() +
+            ".png";
+          node.size = 15;
+        });
+        commit("SET_GRAPH", data.graph);
       })
       .catch(err => {
         console.log(err);
@@ -66,10 +55,10 @@ const getters = {
     return state.graph;
   },
   nodes: state => {
-    return state.graphs ? state.graphs.nodes : [];
+    return state.graph ? state.graph.nodes : [];
   },
   edges: state => {
-    return state.graphs ? state.graphs.edges : [];
+    return state.graph ? state.graph.edges : [];
   }
 };
 export const graphVisjs = {

@@ -1,5 +1,30 @@
 <template>
   <div class="row">
+    <div class="col-9">
+      <CCard>
+        <CCardHeader>
+          Network - Graph
+        </CCardHeader>
+        <CCardBody>
+          <network
+            class="network"
+            ref="network"
+            :nodes="network.nodes"
+            :edges="network.edges"
+            :options="network.options"
+            @select-node="handleSelectNode"
+            @select-edge="handleSelectEdge"
+          />
+          <vue-slider
+            :adsorb="true"
+            v-model="counter"
+            :interval="10"
+            :marks="true"
+            @change="handleCounterChange"
+          />
+        </CCardBody>
+      </CCard>
+    </div>
     <div class="col-3">
       <CCard>
         <CCardHeader>
@@ -30,22 +55,14 @@
           />
         </CCardBody>
       </CCard>
-    </div>
-    <div class="col-9">
       <CCard>
         <CCardHeader>
-          Network - Graph
+          Graph - filters
         </CCardHeader>
         <CCardBody>
-          <network
-            class="network"
-            ref="network"
-            :nodes="network.nodes"
-            :edges="network.edges"
-            :options="network.options"
-            @select-node="handleSelectNode"
-            @select-edge="handleSelectEdge"
-          />
+          <label for="smooth" class="card-label">Transport</label>
+          <br />
+          <label for="smooth" class="card-label mt-3">Product</label>
         </CCardBody>
       </CCard>
     </div>
@@ -56,11 +73,15 @@
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
+import VueSlider from "vue-slider-component";
 
 export default {
   name: "GraphVisjs",
-  components: { Network },
+  components: { Network, VueSlider },
   mixins: [visMixin],
+  data: () => ({
+    counter: 0
+  }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
     network() {
@@ -100,14 +121,18 @@ export default {
         this.options.physics.solver = this.solverSelected.value;
       }
     },
-    toggleFixed(){
+    toggleFixed() {
       this.options.nodes.fixed.x = !this.options.physics.enabled;
       this.options.nodes.fixed.y = !this.options.physics.enabled;
     },
     smoothTypeChange() {
       if (this.smoothTypeSelected)
         this.options.edges.smooth.type = this.smoothTypeSelected.value;
-    }
+    },
+    handleCounterChange(val) {
+      console.log("Slider value: " + val);
+      //Now you can draw the network
+    },
   },
   created() {
     this.drawNetwork("201910");
@@ -115,19 +140,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .events {
   text-align: left;
   height: 50px;
 }
 .network {
   text-align: center;
-  height: 450px;
+  height: 400px;
   border: 1px solid #ccc;
   margin: 5px 0;
 }
 .card-label {
   color: #321fdb;
   font-size: 0.9em;
+}
+.vue-slider {
+  margin: 2.2rem 0.5rem;
 }
 </style>

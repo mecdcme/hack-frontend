@@ -7,7 +7,7 @@ export default {
         brokenImage: undefined,
         chosen: true,
         color: {
-          border: "#2B7CE9",
+          border: "#ebedef",
           background: "#97C2FC",
           highlight: {
             border: "#2B7CE9",
@@ -81,15 +81,12 @@ export default {
           x: 5,
           y: 5
         },
-        //shape: "ellipse",
-        //shape: "",
-
         shapeProperties: {
           borderDashes: false, // only for borders
           borderRadius: 6, // only for box shape
           interpolation: false, // only for image and circularImage shapes
           useImageSize: false, // only for image and circularImage shapes
-          useBorderWithImage: false, // only for image shape
+          useBorderWithImage: true, // only for image shape
           coordinateOrigin: "center" // only for image and circularImage shapes
         },
         size: 30,

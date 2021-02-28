@@ -192,3 +192,14 @@ button:focus {
 .tooltip-span{
   padding: 1rem 1rem;
 }
+
+/*Slider */
+/* Theme color */
+$themeColor: #321fdb;
+
+/* Style */
+@import "~vue-slider-component/lib/theme/material.scss";
+
+.vue-slider {
+  margin: 1rem 0.5rem;
+}

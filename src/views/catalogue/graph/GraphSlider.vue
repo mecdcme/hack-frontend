@@ -133,13 +133,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-/* Slider theme color */
-$themeColor: #321fdb;
-
-/* Slider theme */
-@import "~vue-slider-component/lib/theme/material.scss";
-
+<style>
 .events {
   text-align: left;
   height: 50px;
@@ -149,8 +143,5 @@ $themeColor: #321fdb;
   height: 450px;
   border: 1px solid #ccc;
   margin: 5px 0;
-}
-.vue-slider {
-  margin: 1rem 0.5rem;
 }
 </style>

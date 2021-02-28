@@ -10,11 +10,11 @@ export default {
           border: "#ebedef",
           background: "#97C2FC",
           highlight: {
-            border: "#2B7CE9",
+            border: "#768192",
             background: "#D2E5FF"
           },
           hover: {
-            border: "#2B7CE9",
+            border: "#768192",
             background: "#D2E5FF"
           }
         },
@@ -106,13 +106,12 @@ export default {
           from: 0,
           to: 0
         },
-
         arrowStrikethrough: true,
         chosen: true,
         color: {
-          color: "#848484",
-          highlight: "#848484",
-          hover: "#848484",
+          color: "#b1b7c1",
+          highlight: "#768192",
+          hover: "#768192",
           inherit: "from",
           opacity: 1.0
         },

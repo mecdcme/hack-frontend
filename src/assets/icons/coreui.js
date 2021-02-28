@@ -1,3 +1,4 @@
+import { cifUs, cifBr, cifIn, cifFr, cifEs, cifPl } from "@coreui/icons";
 import {
   cilAt,
   cilHome,
@@ -7,11 +8,14 @@ import {
   cilUser
 } from "@coreui/icons";
 
-export const iconsSet = Object.assign({
-  cilAt,
-  cilHome,
-  cilLayers,
-  cilLockLocked,
-  cilTerminal,
-  cilUser
-});
+export const iconsSet = Object.assign(
+  { cifUs, cifBr, cifIn, cifFr, cifEs, cifPl },
+  {
+    cilAt,
+    cilHome,
+    cilLayers,
+    cilLockLocked,
+    cilTerminal,
+    cilUser
+  }
+);

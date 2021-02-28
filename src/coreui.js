@@ -29,7 +29,8 @@ import {
   CAlert,
   CDataTable,
   CTab,
-  CTabs
+  CTabs,
+  CInputCheckbox
 } from "@coreui/vue";
 
 Vue.component("CContainer", CContainer);
@@ -61,3 +62,4 @@ Vue.component("CAlert", CAlert);
 Vue.component("CDataTable", CDataTable);
 Vue.component("CTab", CTab);
 Vue.component("CTabs", CTabs);
+Vue.component("CInputCheckbox", CInputCheckbox);

@@ -55,7 +55,6 @@ export default {
         labelHighlightBold: true,
         level: undefined,
         mass: 1,
-        physics: false,
         scaling: {
           min: 10,
           max: 30,
@@ -165,8 +164,6 @@ export default {
         label: undefined,
         labelHighlightBold: true,
         length: undefined,
-        physics: true,
-
         scaling: {
           min: 1,
           max: 15,
@@ -187,7 +184,6 @@ export default {
           }
         },
         selectionWidth: 1,
-        selfReferenceSize: 20,
         selfReference: {
           size: 20,
           angle: Math.PI / 4,
@@ -210,13 +206,6 @@ export default {
         width: 1,
         widthConstraint: false
       },
-
-      /*
-      groups: {
-        europa: { color: { background: "red" }, borderWidth: 2 },
-        africa: { color: { background: "yellow" }, borderWidth: 2 }
-      },
-      */
       physics: {
         enabled: false,
         barnesHut: {
@@ -276,24 +265,26 @@ export default {
         tooltipDelay: 200,
         zoomSpeed: 1.4
       }
-
-      /*,
-      layout: {
-        randomSeed: undefined,
-        improvedLayout:true,
-        hierarchical: {
-          enabled:false,
-          levelSeparation: 150,
-          nodeSpacing: 100,
-          treeSpacing: 200,
-          blockShifting: true,
-          edgeMinimization: true,
-          parentCentralization: true,
-          direction: 'UD',        // UD, DU, LR, RL
-          sortMethod: 'hubsize'   // hubsize, directed
-        }        
-      }
-      */
-    }
+    },
+    solverSelected: "forceAtlas2Based",
+    solverOptions: [
+      { text: "barnesHut", value: "barnesHut" },
+      { text: "forceAtlas2Based", value: "forceAtlas2Based" },
+      { text: "repulsion", value: "repulsion" },
+      { text: "hierarchicalRepulsion", value: "hierarchicalRepulsion" }
+    ],
+    smoothTypeSelected: "continuous",
+    smoothTypeOptions: [
+      { text: "dynamic", value: "dynamic" },
+      { text: "continuous", value: "continuous" },
+      { text: "discrete", value: "discrete" },
+      { text: "diagonalCross", value: "diagonalCross" },
+      { text: "straightCross", value: "straightCross" },
+      { text: "horizontal", value: "horizontal" },
+      { text: "vertical", value: "vertical" },
+      { text: "curvedCW", value: "curvedCW" },
+      { text: "curvedCCW", value: "curvedCCW" },
+      { text: "cubicBezier", value: "cubicBezier" }
+    ]
   })
 };

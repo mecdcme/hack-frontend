@@ -9,11 +9,12 @@ const axiosHack = axios.create({
   baseURL: process.env.VUE_APP_DEV_SERVER
 });
 
-const axiosMap = axios.create({
-  baseURL: process.env.VUE_APP_MAP_SERVER
+const axiosR = axios.create({
+  baseURL: process.env.VUE_APP_R_SERVER
 });
-const axiosGraph = axios.create({
-  baseURL: process.env.VUE_APP_MAP_SERVER
+
+const axiosPython = axios.create({
+  baseURL: process.env.VUE_APP_PYTHON_SERVER
 });
 
 //request interceptor
@@ -45,7 +46,7 @@ axiosHack.interceptors.response.use(
 );
 
 //response interceptor
-axiosMap.interceptors.response.use(
+axiosR.interceptors.response.use(
   response => {
     store.dispatch("coreui/loading", false);
     return response;
@@ -58,7 +59,7 @@ axiosMap.interceptors.response.use(
 );
 
 //response interceptor
-axiosGraph.interceptors.response.use(
+axiosPython.interceptors.response.use(
   response => {
     store.dispatch("coreui/loading", false);
     return response;
@@ -70,7 +71,7 @@ axiosGraph.interceptors.response.use(
   }
 );
 
-export { axiosAuth, axiosHack, axiosMap, axiosGraph };
+export { axiosAuth, axiosHack, axiosR, axiosPython };
 
 function manageResponseError(error) {
   console.log("Error status", error.response.status);

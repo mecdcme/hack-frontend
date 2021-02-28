@@ -1,7 +1,7 @@
 <template>
   <CContainer class="d-flex align-items-center min-vh-100">
-    <CRow class="w-100 justify-content-center">
-      <CCol md="6">
+    <div class="row w-100 justify-content-center">
+      <div class="col-6">
         <div class="clearfix">
           <h1 class="float-left display-3 mr-4">500</h1>
           <h4 class="pt-3">Houston, we have a problem!</h4>
@@ -19,8 +19,8 @@
             <span>&nbsp;Go to home page</span>
           </router-link>
         </div>
-      </CCol>
-    </CRow>
+      </div>
+    </div>
   </CContainer>
 </template>
 

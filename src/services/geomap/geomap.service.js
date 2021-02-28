@@ -7,7 +7,7 @@ function findAll() {
   return (
     axiosHack
       //.get("/mondo/")
-      .get("/country/")
+      .get("/country")
       .then(res => {
         var data = res.data ? res.data : {};
         //console.log(data);

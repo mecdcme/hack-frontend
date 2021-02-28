@@ -2,10 +2,7 @@
   <div class="row">
     <div class="col-9">
       <CCard>
-        <CCardHeader>
-          Network - Graph
-        </CCardHeader>
-        <CCardBody>
+        <CCardBody class="card-no-border">
           <network
             class="network"
             ref="network"
@@ -48,6 +45,7 @@
           <v-select
             v-if="options.physics.enabled"
             label="text"
+            class="mt-2"
             :options="solverOptions"
             placeholder="Solver"
             v-model="solverSelected"
@@ -148,14 +146,16 @@ export default {
 .network {
   text-align: center;
   height: 400px;
-  border: 1px solid #ccc;
   margin: 5px 0;
+}
+.card-no-border {
+  padding: 0;
 }
 .card-label {
   color: #321fdb;
   font-size: 0.9em;
 }
 .vue-slider {
-  margin: 2.2rem 0.5rem;
+  margin: 2.5rem 1.5rem;
 }
 </style>

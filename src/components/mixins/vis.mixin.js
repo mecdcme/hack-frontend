@@ -253,11 +253,11 @@ export default {
         wind: { x: 0, y: 0 }
       },
       interaction: {
-        hideEdgesOnDrag: true,
-        hideEdgesOnZoom: true,
-        hideNodesOnDrag: true,
+        hideEdgesOnDrag: false,
+        hideEdgesOnZoom: false,
+        hideNodesOnDrag: false,
         hover: true,
-        multiselect: true,
+        multiselect: false,
         navigationButtons: true,
         tooltipDelay: 200,
         zoomSpeed: 1.4

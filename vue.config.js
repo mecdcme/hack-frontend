@@ -2,7 +2,10 @@ var path = require("path");
 module.exports = {
   devServer: {
     host: "localhost",
-    port: 8070
+    port: 8070,
+    compress: true,
+    disableHostCheck: true
+
   },
   configureWebpack: {
     resolve: {

@@ -27,7 +27,9 @@ import {
   CTextarea,
   CButton,
   CAlert,
-  CDataTable
+  CDataTable,
+  CTab,
+  CTabs
 } from "@coreui/vue";
 
 Vue.component("CContainer", CContainer);
@@ -57,3 +59,5 @@ Vue.component("CTextarea", CTextarea);
 Vue.component("CButton", CButton);
 Vue.component("CAlert", CAlert);
 Vue.component("CDataTable", CDataTable);
+Vue.component("CTab", CTab);
+Vue.component("CTabs", CTabs);

@@ -2,14 +2,11 @@
   <div class="row">
     <div class="col-sm-12 col-md-12">
       <div class="card">
-        <header class="card-header">
-          Map
-        </header>
         <CCardBody>
           <l-map
             :zoom="zoom"
             :center="center"
-            style="height: 650px; width: 100%"
+            style="height: 450px; width: 100%"
           >
             <!-- Attribution -->
             <l-tile-layer :url="url" :attribution="attribution" />
@@ -38,6 +35,17 @@
             </l-control>
           </l-map>
         </CCardBody>
+        <CCardFooter>
+          <vue-slider
+            :adsorb="true"
+            :tooltip="'none'"
+            v-model="periodValue"
+            :data="timePeriod"
+            :data-value="'id'"
+            :data-label="'name'"
+            @change="handleCounterChange"
+          />
+        </CCardFooter>
       </div>
     </div>
 
@@ -45,7 +53,12 @@
     <CModal :title="modalTitle" :show.sync="markerModal">
       <CTabs variant="tabs" :active-tab="0">
         <CTab title="Main">
-          <CDataTable :items="mainItems" :fields="mainFields" hover />
+          <CDataTable
+            :items="micro"
+            :fields="mainFields"
+            hover
+            v-if="markerData"
+          />
         </CTab>
         <CTab title="Import partners">
           <CDataTable :items="importItems" :fields="importFields" hover />
@@ -75,6 +88,8 @@ import {
 
 import MapLegend from "@/components/MapLegend";
 import mapMixin from "@/components/mixins/map.mixin";
+import sliderMixin from "@/components/mixins/slider.mixin";
+import VueSlider from "vue-slider-component";
 
 export default {
   name: "GeoMap",
@@ -84,35 +99,17 @@ export default {
     LControl,
     LCircleMarker,
     LTooltip,
-    "app-legend": MapLegend
+    "app-legend": MapLegend,
+    VueSlider
   },
-  mixins: [mapMixin],
+  mixins: [mapMixin, sliderMixin],
   data: () => ({
     markerModal: false,
     modalTitle: "",
     mainFields: [
-      { key: "name", label: "" },
-      { key: "year_2019", label: "2019" },
-      { key: "year_2020", label: "2020" }
-    ],
-    mainItems: [
-      { name: "Population", year_2019: "8.858.775", year_2020: "8.901.064" },
-      {
-        name: "Industrial Production",
-        year_2019: "113,39",
-        year_2020: "106,15"
-      },
-      { name: "Unemployment", year_2019: "4.5", year_2020: "5.3" },
-      {
-        name: "Export",
-        year_2019: "159.588.478.070",
-        year_2020: "136.215.753.263"
-      },
-      {
-        name: "Import",
-        year_2019: "165.008.279.125",
-        year_2020: "138.565.863.434"
-      }
+      { key: "Year", label: "" },
+      { key: "2019", label: "2019" },
+      { key: "2020", label: "2020" }
     ],
     importFields: [
       {
@@ -132,16 +129,25 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters("geomap", { markers: "geomap" })
+    ...mapGetters("geomap", { markers: "geomap", markerData: "markerData" }),
+    micro() {
+      return this.markerData ? this.markerData[0].MI : [];
+    }
   },
   methods: {
     openModal(marker) {
-      this.markerModal = true;
-      this.modalTitle = marker.name;
+      this.$store.dispatch("geomap/getMarker", marker.country).then(() => {
+        this.markerModal = true;
+        this.modalTitle = marker.name;
+      });
     },
     closeModal() {
       this.markerModal = false;
-    }
+    },
+    handleCounterChange(val) {
+      console.log("Slider value: " + val);
+      this.drawNetwork(val);
+    },
   },
   created() {
     this.buildLegend();
@@ -153,6 +159,9 @@ export default {
 @import "~leaflet/dist/leaflet.css";
 .card-body {
   padding: 0;
+}
+.card-footer {
+  background-color: #ebedef;
 }
 
 /* Modal */

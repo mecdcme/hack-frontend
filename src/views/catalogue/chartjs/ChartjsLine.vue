@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-10">
       <div class="card">
         <header class="card-header">
-          {{ countryName }} - Export trade data
+          {{ countryName }} - {{ flow }} trade data
         </header>
         <CCardBody>
           <line-chart :chartData="chartData" :options="options" />
@@ -13,7 +13,7 @@
     <div class="col-2">
       <CCard>
         <CCardHeader>
-          Data filter
+          Trade filter
         </CCardHeader>
         <CCardBody>
           <label for="country" class="card-label">Country:</label>
@@ -22,8 +22,22 @@
             :options="countries"
             placeholder="Country"
             v-model="countrySelected"
-            @input="countryChange"
           />
+          <label for="country" class="card-label mt-3">Flows:</label>
+          <v-select
+            label="descr"
+            :options="flows"
+            placeholder="Flows"
+            v-model="flowSelected"
+          />
+          <CButton
+            color="primary"
+            shape="square"
+            size="sm"
+            @click="handleSubmit"
+            class="mt-3"
+            >Go!</CButton
+          >
         </CCardBody>
       </CCard>
     </div>
@@ -43,18 +57,16 @@ export default {
   data: () => ({
     countrySelected: {
       country: "IT",
-      coordinates: {
-        latitude: "41.89277044",
-        longitude: "12.48366722"
-      },
       name: "Italy"
     },
-    countryOptions: [],
+    flowSelected: { id: 2, descr: "Export" },
     countryName: "Italy",
+    flow: "Export",
+
+    //Chart options
     options: {
       responsive: true,
       maintainAspectRatio: false,
-
       title: {
         display: false,
         text: ""
@@ -93,19 +105,8 @@ export default {
       }
     }
   }),
-  methods: {
-    countryChange() {
-      if (this.countrySelected) {
-        this.$store.dispatch(
-          "chartjsLine/findByName",
-          this.countrySelected.country
-        );
-        this.countryName = this.countrySelected.name;
-      }
-    }
-  },
   computed: {
-    ...mapGetters("classification", ["countries"]),
+    ...mapGetters("classification", ["countries", "flows"]),
     ...mapGetters("chartjsLine", ["charts"]),
     chartData() {
       var chartData = {};
@@ -131,9 +132,21 @@ export default {
       return chartData;
     }
   },
+  methods: {
+    handleSubmit() {
+      if (this.countrySelected && this.flowSelected) {
+        this.$store.dispatch("chartjsLine/findByName", {
+          name: this.countrySelected.country,
+          flow: this.flowSelected.id
+        });
+        this.countryName = this.countrySelected.name;
+        this.flow = this.flowSelected.descr;
+      }
+    }
+  },
   created() {
     this.$store.dispatch("classification/getCountries");
-    this.$store.dispatch("chartjsLine/findByName", "IT");
+    this.$store.dispatch("chartjsLine/findByName", { name: "IT", flow: 2 });
   }
 };
 </script>

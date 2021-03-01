@@ -105,12 +105,13 @@
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
+import sliderMixin from "@/components/mixins/slider.mixin";
 import VueSlider from "vue-slider-component";
 
 export default {
   name: "GraphVisjs",
   components: { Network, VueSlider },
-  mixins: [visMixin],
+  mixins: [visMixin, sliderMixin],
   data: () => ({
     //Form fields
     selectedPeriod: null,
@@ -120,24 +121,7 @@ export default {
     flow: null,
     weight: null,
 
-    //Slider
-    periodValue: "201910",
-    timePeriod: [
-      { id: "201910", name: "Oct 19" },
-      { id: "201911", name: "Nov 19" },
-      { id: "201912", name: "Dec 19" },
-      { id: "202001", name: "Jan 20" },
-      { id: "202002", name: "Feb 20" },
-      { id: "202003", name: "Mar 20" },
-      { id: "202004", name: "Apr 20" },
-      { id: "202005", name: "May 20" },
-      { id: "202006", name: "Jun 20" },
-      { id: "202007", name: "Jul 20" },
-      { id: "202008", name: "Aug 20" },
-      { id: "202009", name: "Sep 20" },
-      { id: "202010", name: "Oct 20" },
-      { id: "202011", name: "Nov 20" }
-    ],
+    //Graph modal
     edgeModal: false,
     sourceNode: {},
     destinationNode: {}

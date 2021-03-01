@@ -1,16 +1,16 @@
 import { geomapService } from "@/services";
 
 const state = {
-  geomaps: [],
-  geomap: null
+  geomap: null,
+  markerData: null
 };
 
 const mutations = {
-  SET_GEOMAPS(state, geomaps) {
-    state.geomaps = geomaps;
-  },
   SET_GEOMAP(state, geomap) {
     state.geomap = geomap;
+  },
+  SET_MARKER(state, markerData) {
+    state.markerData = markerData;
   }
 };
 
@@ -25,11 +25,11 @@ const actions = {
         console.log(err);
       });
   },
-  findByName({ commit }, name) {
+  getMarker({ commit }, name) {
     return geomapService
       .findByName(name)
       .then(data => {
-        commit("SET_GEOMAP", data);
+        commit("SET_MARKER", data);
       })
       .catch(err => {
         console.log(err);
@@ -38,11 +38,11 @@ const actions = {
 };
 
 const getters = {
-  geomaps: state => {
-    return state.geomaps;
-  },
   geomap: state => {
     return state.geomap;
+  },
+  markerData: state => {
+    return state.markerData;
   }
 };
 export const geomap = {

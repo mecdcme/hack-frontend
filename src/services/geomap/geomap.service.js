@@ -17,7 +17,7 @@ function findAll() {
 }
 function findByName(name) {
   return axiosHack
-    .get("/countries/" + name)
+    .get("/iemarkers?Country_Code=" + name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

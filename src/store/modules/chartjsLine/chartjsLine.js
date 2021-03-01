@@ -24,9 +24,9 @@ const actions = {
         console.log(err);
       });
   },
-  findByName({ commit }, name) {
+  findByName({ commit }, filter) {
     return chartjsLineService
-      .findByName(name)
+      .findByName(filter)
       .then(data => {
         commit("SET_LINE_CHARTS", data);
       })

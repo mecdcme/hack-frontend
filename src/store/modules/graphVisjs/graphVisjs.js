@@ -37,7 +37,7 @@ const actions = {
             ".png";
           node.size = 15;
         });
-        commit("SET_GRAPH", data.graph);
+        commit("SET_GRAPH", data);
       })
       .catch(err => {
         console.log(err);
@@ -47,7 +47,7 @@ const actions = {
     return graphVisjsService
       .postGraph(form)
       .then(data => {
-        data.graph.nodes.forEach(node => {
+        data.nodes.forEach(node => {
           node.x = node.x * 314;
           node.y = node.y * 314;
           node.shape = "image";
@@ -57,7 +57,7 @@ const actions = {
             ".png";
           node.size = 15;
         });
-        commit("SET_GRAPH", data.graph);
+        commit("SET_GRAPH", data);
       })
       .catch(err => {
         console.log(err);

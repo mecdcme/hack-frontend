@@ -15,9 +15,10 @@ function findAll() {
       throw err;
     });
 }
-function findByName(name) {
+function findByName(filter) {
+  const endpoint = filter.flow == 1 ? "importvqs" : "exportvqs";
   return axiosHack
-    .get("/exportvqs/" + name)
+    .get("/" + endpoint + "/" + filter.name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

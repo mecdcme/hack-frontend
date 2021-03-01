@@ -3,12 +3,7 @@
     <div class="col-sm-12 col-md-10">
       <div class="card">
         <header class="card-header">
-          Chartjs
-          <div class="card-header-actions">
-            <router-link tag="a" :to="{ name: 'Map' }">
-              <add-icon />
-            </router-link>
-          </div>
+          {{ countryName }} - Export trade data
         </header>
         <CCardBody>
           <line-chart :chartData="chartData" :options="options" />
@@ -18,15 +13,14 @@
     <div class="col-2">
       <CCard>
         <CCardHeader>
-          filter by
+          Data filter
         </CCardHeader>
         <CCardBody>
-          <label for="country" class="card-label mt-3">Country:</label>
+          <label for="country" class="card-label">Country:</label>
           <v-select
-            label="text"
-            class="mt-2"
-            :options="countryOptions"
-            placeholder="country"
+            label="name"
+            :options="countries"
+            placeholder="Country"
             v-model="countrySelected"
             @input="countryChange"
           />
@@ -47,15 +41,23 @@ export default {
   },
   mixins: [chartMixin, paletteMixin],
   data: () => ({
-    countrySelected: "IT",
+    countrySelected: {
+      country: "IT",
+      coordinates: {
+        latitude: "41.89277044",
+        longitude: "12.48366722"
+      },
+      name: "Italy"
+    },
     countryOptions: [],
+    countryName: "Italy",
     options: {
       responsive: true,
       maintainAspectRatio: false,
 
       title: {
-        display: true,
-        text: "ITALY"
+        display: false,
+        text: ""
       },
       tooltips: {
         mode: "index",
@@ -92,27 +94,18 @@ export default {
     }
   }),
   methods: {
-    buildSelectCountry() {
-      if (this.geomap) {
-        this.geomap.forEach(element => {
-          this.countryOptions.push({
-            text: element.name,
-            value: element.country
-          });
-        });
-      }
-    },
     countryChange() {
       if (this.countrySelected) {
         this.$store.dispatch(
           "chartjsLine/findByName",
-          this.countrySelected.value
+          this.countrySelected.country
         );
+        this.countryName = this.countrySelected.name;
       }
     }
   },
   computed: {
-    ...mapGetters("geomap", ["geomap"]),
+    ...mapGetters("classification", ["countries"]),
     ...mapGetters("chartjsLine", ["charts"]),
     chartData() {
       var chartData = {};
@@ -139,9 +132,15 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("geomap/findAll");
-    this.buildSelectCountry();
-    this.$store.dispatch("chartjsLine/findByName", "DE");
+    this.$store.dispatch("classification/getCountries");
+    this.$store.dispatch("chartjsLine/findByName", "IT");
   }
 };
 </script>
+
+<style scoped>
+.card-label {
+  color: #321fdb;
+  font-size: 0.9em;
+}
+</style>

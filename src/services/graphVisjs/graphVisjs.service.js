@@ -5,7 +5,7 @@ export const graphVisjsService = {
 };
 function findAll() {
   return axiosHack
-    .get("/visjsData/")
+    .get("/pythongraph/")
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);
@@ -18,7 +18,7 @@ function findAll() {
 
 function findById(id) {
   return axiosHack
-    .get("/visjsData/" + id)
+    .get("/pythongraph/" + id)
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

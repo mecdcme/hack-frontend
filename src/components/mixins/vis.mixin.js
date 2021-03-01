@@ -291,7 +291,7 @@ export default {
       console.log("Selected node: " + selectedNode.label);
       return selectedNode ? selectedNode : null;
     },
-    getEdge(network, edgeId){
+    getEdge(network, edgeId) {
       const selectedEdge = network.edges.find(edge => {
         return edge.id == edgeId;
       });

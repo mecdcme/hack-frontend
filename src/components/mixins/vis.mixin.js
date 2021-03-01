@@ -111,7 +111,7 @@ export default {
         color: {
           color: "#b1b7c1",
           highlight: "#768192",
-          hover: "#768192",
+          hover: "#FE0000", //"#768192",
           inherit: "from",
           opacity: 1.0
         },

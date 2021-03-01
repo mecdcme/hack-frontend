@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-sm-12 col-md-10">
       <div class="card">
         <header class="card-header">
           Chartjs
@@ -14,6 +14,24 @@
           <line-chart :chartData="chartData" :options="options" />
         </CCardBody>
       </div>
+    </div>
+    <div class="col-2">
+      <CCard>
+        <CCardHeader>
+          filter by
+        </CCardHeader>
+        <CCardBody>
+          <label for="country" class="card-label mt-3">Country:</label>
+          <v-select
+            label="text"
+            class="mt-2"
+            :options="countryOptions"
+            placeholder="country"
+            v-model="countrySelected"
+            @input="countryChange"
+          />
+        </CCardBody>
+      </CCard>
     </div>
   </div>
 </template>
@@ -29,6 +47,8 @@ export default {
   },
   mixins: [chartMixin, paletteMixin],
   data: () => ({
+    countrySelected: "IT",
+    countryOptions: [],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -60,8 +80,6 @@ export default {
             ticks: {
               min: -100,
               max: 200
-              //,
-              //stepSize: 15
             },
             display: true,
             scaleLabel: {
@@ -73,7 +91,28 @@ export default {
       }
     }
   }),
+  methods: {
+    buildSelectCountry() {
+      if (this.geomap) {
+        this.geomap.forEach(element => {
+          this.countryOptions.push({
+            text: element.name,
+            value: element.country
+          });
+        });
+      }
+    },
+    countryChange() {
+      if (this.countrySelected) {
+        this.$store.dispatch(
+          "chartjsLine/findByName",
+          this.countrySelected.value
+        );
+      }
+    }
+  },
   computed: {
+    ...mapGetters("geomap", ["geomap"]),
     ...mapGetters("chartjsLine", ["charts"]),
     chartData() {
       var chartData = {};
@@ -100,7 +139,9 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("chartjsLine/findByName", "AT");
+    this.$store.dispatch("geomap/findAll");
+    this.buildSelectCountry();
+    this.$store.dispatch("chartjsLine/findByName", "DE");
   }
 };
 </script>

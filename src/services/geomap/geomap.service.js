@@ -17,7 +17,7 @@ function findAll() {
 }
 function findByName(name) {
   return axiosHack
-    .get("/country?country=" + name)
+    .get("/countries/" + name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

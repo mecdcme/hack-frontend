@@ -7,6 +7,8 @@ const flows = require("./clsFlow");
 const products = require("./clsProducts");
 const product3s = require("./clsProducts3");
 const transports = require("./clsTransport");
+const expVar = require("./expvar");
+const impVar = require("./impvar");
 
 module.exports = () => ({
   countries,
@@ -17,5 +19,7 @@ module.exports = () => ({
   flows,
   transports,
   products,
-  product3s
+  product3s,
+  expVar,
+  impVar
 });

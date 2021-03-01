@@ -1,11 +1,13 @@
 const countries = require("./countries");
-const ieindicators = require("./ieindicators");
+const iemarkers = require("./iemarkers");
 const exportvqs = require("./exportvqs");
 const pythongraph = require("./pythongraph");
+const timelapse = require("./timelapse");
 
 module.exports = () => ({
   countries,
-  ieindicators,
+  iemarkers,
   exportvqs,
-  pythongraph
+  pythongraph,
+  timelapse
 });

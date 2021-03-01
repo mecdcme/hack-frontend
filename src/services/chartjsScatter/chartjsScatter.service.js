@@ -4,34 +4,28 @@ export const chartjsScatterService = {
   findByName
 };
 function findAll() {
-  return (
-    axiosHack
+  return axiosHack
+    .get("/timelapse/")
 
-      .get("/timelaps/")
-      //.get("/scatterDemo/")
-      .then(res => {
-        var data = res.data ? res.data : {};
-        //console.log(data);
-        return data;
-      })
-      .catch(err => {
-        throw err;
-      })
-  );
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
 function findByName(name) {
-  return (
-    axiosHack
+  return axiosHack
+    .get("/timelapse?dataname=" + name)
 
-      .get("/timelaps?dataname=" + name)
-      //.get("/scatterDemo?dataname=" + name)
-      .then(res => {
-        var data = res.data ? res.data : {};
-        console.log(data);
-        return data;
-      })
-      .catch(err => {
-        throw err;
-      })
-  );
+    .then(res => {
+      var data = res.data ? res.data : {};
+      console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }

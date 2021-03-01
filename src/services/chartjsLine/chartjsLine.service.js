@@ -4,24 +4,20 @@ export const chartjsLineService = {
   findByName
 };
 function findAll() {
-  return (
-    axiosHack
-
-      //.get("/scatterDemo/")
-      .get("/ImportVariazioneQuote/")
-      .then(res => {
-        var data = res.data ? res.data : {};
-        //console.log(data);
-        return data;
-      })
-      .catch(err => {
-        throw err;
-      })
-  );
+  return axiosHack
+    .get("/importvqs/")
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
 function findByName(name) {
   return axiosHack
-    .get("/export/" + name)
+    .get("/exportvqs/" + name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

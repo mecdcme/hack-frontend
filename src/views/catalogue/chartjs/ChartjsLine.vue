@@ -11,7 +11,7 @@
           </div>
         </header>
         <CCardBody>
-            <line-chart :chartData="chartData" :options="options" />
+          <line-chart :chartData="chartData" :options="options" />
         </CCardBody>
       </div>
     </div>
@@ -123,7 +123,7 @@ export default {
             fill: false,
             backgroundColor: color.background,
             borderColor: color.border,
-            data: element.data,
+            data: element.value,
             //showLine: true,
             pointRadius: 5
           });

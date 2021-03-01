@@ -15,8 +15,8 @@
           <vue-slider
             :adsorb="true"
             :tooltip="'none'"
-            v-model="sliderValue"
-            :data="sliderData"
+            v-model="periodValue"
+            :data="timePeriod"
             :data-value="'id'"
             :data-label="'name'"
             @change="handleCounterChange"
@@ -27,42 +27,59 @@
     <div class="col-3">
       <CCard>
         <CCardHeader>
-          Graph - properties
-        </CCardHeader>
-        <CCardBody>
-          <label for="smooth" class="card-label">Edges</label>
-          <v-select
-            label="text"
-            :options="smoothTypeOptions"
-            placeholder="Edges type"
-            v-model="smoothTypeSelected"
-            @input="smoothTypeChange"
-          />
-          <label for="smooth" class="card-label mt-3">Physics</label>
-          <CInputCheckbox
-            label="Physics"
-            :checked.sync="options.physics.enabled"
-            @update:checked="toggleFixed"
-          />
-          <v-select
-            v-if="options.physics.enabled"
-            label="text"
-            class="mt-2"
-            :options="solverOptions"
-            placeholder="Solver"
-            v-model="sliderValue"
-            @input="solverChange"
-          />
-        </CCardBody>
-      </CCard>
-      <CCard>
-        <CCardHeader>
           Graph - filters
         </CCardHeader>
         <CCardBody>
-          <label for="smooth" class="card-label">Transport</label>
-          <br />
-          <label for="smooth" class="card-label mt-3">Product</label>
+          <label class="card-label">Period</label>
+          <v-select
+            label="name"
+            :options="timePeriod"
+            placeholder="Select period"
+            v-model="selectedPeriod"
+          />
+          <CInput
+            label="Percentage"
+            placeholder="Set percentage"
+            class="card-label mt-2"
+            v-model="percentage"
+          />
+          <label class="card-label mt-2">Transport</label>
+          <v-select
+            label="descr"
+            multiple
+            :options="transports"
+            placeholder="Select transport"
+            v-model="transport"
+          />
+          <label class="card-label mt-2">Product</label>
+          <v-select
+            label="descr"
+            :options="products"
+            placeholder="Select a product"
+            v-model="product"
+          />
+          <label class="card-label mt-2">Flows</label>
+          <v-select
+            label="descr"
+            :options="flows"
+            placeholder="Select a flow"
+            v-model="flow"
+          />
+          <label class="card-label mt-2">Weights</label>
+          <v-select
+            label="descr"
+            :options="weights"
+            placeholder="Weights"
+            v-model="weight"
+          />
+          <CButton
+            color="primary"
+            shape="square"
+            size="sm"
+            @click="handleSubmit"
+            class="mt-3"
+            >Go!</CButton
+          >
         </CCardBody>
       </CCard>
     </div>
@@ -95,8 +112,17 @@ export default {
   components: { Network, VueSlider },
   mixins: [visMixin],
   data: () => ({
-    sliderValue: "201910",
-    sliderData: [
+    //Form fields
+    selectedPeriod: null,
+    percentage: 0,
+    transport: null,
+    product: null,
+    flow: null,
+    weight: null,
+
+    //Slider
+    periodValue: "201910",
+    timePeriod: [
       { id: "201910", name: "Oct 19" },
       { id: "201911", name: "Nov 19" },
       { id: "201912", name: "Dec 19" },
@@ -118,6 +144,12 @@ export default {
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
+    ...mapGetters("classification", [
+      "transports",
+      "products",
+      "flows",
+      "weights"
+    ]),
     network() {
       return this.nodes && this.edges
         ? {
@@ -160,26 +192,34 @@ export default {
     drawNetwork(id) {
       this.$store.dispatch("graphVisjs/findById", id);
     },
-    solverChange() {
-      if (this.solverSelected) {
-        this.options.physics.solver = this.solverSelected.value;
-      }
-    },
-    toggleFixed() {
-      this.options.nodes.fixed.x = !this.options.physics.enabled;
-      this.options.nodes.fixed.y = !this.options.physics.enabled;
-    },
-    smoothTypeChange() {
-      if (this.smoothTypeSelected)
-        this.options.edges.smooth.type = this.smoothTypeSelected.value;
-    },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
       this.drawNetwork(val);
+    },
+    handleSubmit() {
+      const form = {
+        tg_period: this.selectedPeriod.id,
+        tg_perc: this.percentage,
+        listaMezzi: this.getIds(this.transport),
+        product: this.product.id,
+        flow: this.flow.id,
+        weight_flag: this.weight.descr,
+        pos: "None",
+        selezioneMezziEdges: "None"
+      };
+      this.$store.dispatch("graphVisjs/postGraph", form);
+    },
+    getIds(selectedTransports) {
+      var ids = [];
+      selectedTransports.forEach(element => {
+        ids.push(element.id);
+      });
+      return ids;
     }
   },
   created() {
-    this.drawNetwork("201910");
+    this.$store.dispatch("classification/getTransports");
+    this.$store.dispatch("classification/getProducts");
   }
 };
 </script>

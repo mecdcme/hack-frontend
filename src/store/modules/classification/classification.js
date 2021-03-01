@@ -3,7 +3,15 @@ import { classificationService } from "@/services";
 const state = {
   countries: [],
   products: [],
-  transport: []
+  transports: [],
+  flows: [
+    { id: 1, descr: "Import" },
+    { id: 2, descr: "Export" }
+  ],
+  weights: [
+    { id: 1, descr: true },
+    { id: 2, descr: false }
+  ]
 };
 
 const mutations = {
@@ -13,8 +21,8 @@ const mutations = {
   SET_PRODUCTS(state, products) {
     state.products = products;
   },
-  SET_TRANSPORT(state, transport) {
-    state.transport = transport;
+  SET_TRANSPORTS(state, transports) {
+    state.transports = transports;
   }
 };
 
@@ -31,7 +39,7 @@ const actions = {
   },
   getProducts({ commit }) {
     return classificationService
-      .findAll("products")
+      .findAll("product3s")
       .then(data => {
         commit("SET_PRODUCTS", data);
       })
@@ -39,11 +47,11 @@ const actions = {
         console.log(err);
       });
   },
-  getTransport({ commit }) {
+  getTransports({ commit }) {
     return classificationService
-      .findAll("transport")
+      .findAll("transports")
       .then(data => {
-        commit("SET_TRANSPORT", data);
+        commit("SET_TRANSPORTS", data);
       })
       .catch(err => {
         console.log(err);
@@ -58,8 +66,14 @@ const getters = {
   products: state => {
     return state.products;
   },
-  transport: state => {
-    return state.transport;
+  transports: state => {
+    return state.transports;
+  },
+  flows: state => {
+    return state.flows;
+  },
+  weights: state => {
+    return state.weights;
   }
 };
 export const classification = {

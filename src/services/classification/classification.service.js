@@ -1,5 +1,5 @@
 import { axiosHack } from "@/http";
-export const geomapService = {
+export const classificationService = {
   findAll
 };
 function findAll(classification) {

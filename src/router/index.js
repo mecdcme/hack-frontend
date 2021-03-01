@@ -52,7 +52,7 @@ const routes = [
       {
         path: "catalogue/graphvisjs",
         name: "GraphVisjs",
-        component: () => import("../views/catalogue/graph/GraphVis"),
+        component: () => import("../views/catalogue/graph/GraphForm"),
         meta: { authorize: [] }
       },
       {

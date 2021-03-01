@@ -1,10 +1,12 @@
-import { axiosHack } from "@/http";
+import { axiosPython } from "@/http";
+
 export const graphVisjsService = {
   findAll,
-  findById
+  findById,
+  postGraph
 };
 function findAll() {
-  return axiosHack
+  return axiosPython
     .get("/pythongraph/")
     .then(res => {
       var data = res.data ? res.data : {};
@@ -17,8 +19,21 @@ function findAll() {
 }
 
 function findById(id) {
-  return axiosHack
+  return axiosPython
     .get("/pythongraph/" + id)
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
+}
+
+function postGraph(formData) {
+  return axiosPython
+    .post("/wordtradegraph", formData)
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);

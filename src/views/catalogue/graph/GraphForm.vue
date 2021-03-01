@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-9">
       <CCard>
+        <CCardHeader>
+          Metrics:
+        </CCardHeader>
         <CCardBody class="card-no-border">
           <network
             class="network"
@@ -11,15 +14,6 @@
             :options="network.options"
             @select-node="handleSelectNode"
             @select-edge="handleSelectEdge"
-          />
-          <vue-slider
-            :adsorb="true"
-            :tooltip="'none'"
-            v-model="periodValue"
-            :data="timePeriod"
-            :data-value="'id'"
-            :data-label="'name'"
-            @change="handleCounterChange"
           />
         </CCardBody>
       </CCard>
@@ -89,6 +83,14 @@
         >Are you sure you want to remove trade relation betweew
         {{ sourceNode.label }} - {{ destinationNode.label }}?</span
       >
+      <label class="card-label mt-2">Transport</label>
+      <v-select
+        label="descr"
+        multiple
+        :options="transports"
+        placeholder="Select transport"
+        v-model="transportConstraint"
+      />
       <template #footer>
         <CButton color="outline-primary" square size="sm" @click="deleteEdge"
           >Yes</CButton
@@ -105,13 +107,11 @@
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
-import sliderMixin from "@/components/mixins/slider.mixin";
-import VueSlider from "vue-slider-component";
 
 export default {
   name: "GraphVisjs",
-  components: { Network, VueSlider },
-  mixins: [visMixin, sliderMixin],
+  components: { Network },
+  mixins: [visMixin],
   data: () => ({
     //Form fields
     selectedPeriod: null,
@@ -124,10 +124,11 @@ export default {
     //Graph modal
     edgeModal: false,
     sourceNode: {},
-    destinationNode: {}
+    destinationNode: {},
+    transportConstraint: null
   }),
   computed: {
-    ...mapGetters("graphVisjs", ["nodes", "edges"]),
+    ...mapGetters("graphVisjs", ["nodes", "edges", "metrics"]),
     ...mapGetters("classification", [
       "transports",
       "products",
@@ -152,6 +153,7 @@ export default {
     handleSelectNode(selectedGraph) {
       const selectedId = selectedGraph.nodes[0];
       this.getNode(this.network, selectedId);
+      //Update metrics
     },
     handleSelectEdge(selectedGraph) {
       const selectedId = selectedGraph.edges[0];

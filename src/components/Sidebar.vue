@@ -7,7 +7,7 @@
   >
     <CSidebarBrand class="d-md-down-none" to="/">
       <CIcon name="cil-terminal" size="lg"></CIcon>
-      <span class="brand">Hack</span>
+      <span class="brand">2021 Hackathon</span>
     </CSidebarBrand>
 
     <ul class="c-sidebar-nav h-100 ps" style="position: relative;">

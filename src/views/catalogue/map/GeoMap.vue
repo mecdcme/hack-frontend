@@ -146,8 +146,7 @@ export default {
     },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
-      this.drawNetwork(val);
-    },
+    }
   },
   created() {
     this.buildLegend();

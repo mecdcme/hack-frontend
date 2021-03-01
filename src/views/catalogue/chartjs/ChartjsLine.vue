@@ -18,6 +18,8 @@
   </div>
 </template>
 <script>
+import chartMixin from "@/components/mixins/chart.mixin";
+import paletteMixin from "@/components/mixins/palette.mixin";
 import LineChart from "@/components/charts/LineChart";
 import { mapGetters } from "vuex";
 export default {
@@ -25,95 +27,59 @@ export default {
   components: {
     LineChart
   },
-  data() {
-    return {
-      currentColor: 0,
-      colorPalette: [
-        {
-          border: "rgba(46, 184, 92, 1)", //green
-          background: "rgba(46, 184, 92, 0.2)"
-        },
-        {
-          border: "rgba(50, 31, 219, 1)", //blue
-          background: "rgba(50, 31, 219, 0.2)"
-        },
-        {
-          border: "rgba(229, 83, 83, 1)", //red
-          background: "rgba(229, 83, 83, 0.2)"
-        },
-        {
-          border: "rgba(249, 177, 21, 1)", //orange
-          background: "rgba(249, 177, 21, 0.2)"
-        },
-        {
-          border: "rgba(51, 153, 255, 1)", //cyan
-          background: "rgba(51, 153, 255, 0.2)"
-        },
-        {
-          border: "rgba(206, 210, 216, 1)", //gray
-          background: "rgba(206, 210, 216, 0.2)"
-        }
-      ],
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
+  mixins: [chartMixin, paletteMixin],
+  data: () => ({
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
 
-        title: {
-          display: true,
-          text: "ITALY"
-        },
-        tooltips: {
-          mode: "index",
-          intersect: true
-        },
-        hover: {
-          mode: "nearest",
-          intersect: true
-        },
-        scales: {
-          xAxes: [
-            {
+      title: {
+        display: true,
+        text: "ITALY"
+      },
+      tooltips: {
+        mode: "index",
+        intersect: true
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            scaleLabel: {
               display: true,
-              scaleLabel: {
-                display: true,
-                labelString: "Time"
-              }
+              labelString: "Time"
             }
-          ],
-          yAxes: [
-            {
+          }
+        ],
+        yAxes: [
+          {
+            ticks: {
+              min: -100,
+              max: 200
+              //,
+              //stepSize: 15
+            },
+            display: true,
+            scaleLabel: {
               display: true,
-              scaleLabel: {
-                display: true,
-                labelString: "Value"
-              }
+              labelString: "Value"
             }
-          ]
-        }
+          }
+        ]
       }
-    };
-  },
-  methods: {
-    getColor() {
-      this.currentColor =
-        this.currentColor >= this.colorPalette.length - 1
-          ? 0
-          : this.currentColor;
-      const color = this.colorPalette[this.currentColor];
-      this.currentColor++;
-      return color;
-    },
-    clearColor() {
-      this.currentColor = 0;
     }
-  },
+  }),
   computed: {
     ...mapGetters("chartjsLine", ["charts"]),
     chartData() {
       var chartData = {};
       chartData.datasets = [];
-      chartData.labels = [];
-
+      //chartData.labels = [];
+      chartData.labels = this.months;
       if (this.charts) {
         this.charts.data.forEach(element => {
           const color = this.getColor();
@@ -125,7 +91,7 @@ export default {
             borderColor: color.border,
             data: element.value,
             //showLine: true,
-            pointRadius: 5
+            pointRadius: 3
           });
         });
       }

@@ -6,7 +6,7 @@ export const chartjsBarService = {
 function findAll() {
   return axiosHack
 
-    .get("/covid/")
+    .get("/exportvqs/")
     .then(res => {
       var data = res.data ? res.data : {};
       //console.log(data);
@@ -18,7 +18,7 @@ function findAll() {
 }
 function findByName(name) {
   return axiosHack
-    .get("/covid?country=" + name)
+    .get("/exportvqs/" + name)
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

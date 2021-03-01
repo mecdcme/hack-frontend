@@ -185,17 +185,14 @@ export default {
 </script>
 
 <style scoped>
-.events {
-  text-align: left;
-  height: 50px;
-}
 .network {
   text-align: center;
-  height: 400px;
+  height: 550px;
   margin: 5px 0;
 }
 .card-no-border {
   padding: 0;
+  border: none;
 }
 .card-label {
   color: #321fdb;

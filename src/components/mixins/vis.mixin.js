@@ -282,5 +282,21 @@ export default {
       { text: "curvedCCW", value: "curvedCCW" },
       { text: "cubicBezier", value: "cubicBezier" }
     ]
-  })
+  }),
+  methods: {
+    getNode(network, nodeId) {
+      const selectedNode = network.nodes.find(node => {
+        return node.id == nodeId;
+      });
+      console.log("Selected node: " + selectedNode.label);
+      return selectedNode ? selectedNode : null;
+    },
+    getEdge(network, edgeId){
+      const selectedEdge = network.edges.find(edge => {
+        return edge.id == edgeId;
+      });
+      console.log("From: " + selectedEdge.from + ", To: " + selectedEdge.to);
+      return selectedEdge ? selectedEdge : null;
+    }
+  }
 };

@@ -14,9 +14,11 @@
           />
           <vue-slider
             :adsorb="true"
-            v-model="counter"
-            :interval="10"
-            :marks="true"
+            :tooltip="'none'"
+            v-model="sliderValue"
+            :data="sliderData"
+            :data-value="'id'"
+            :data-label="'name'"
             @change="handleCounterChange"
           />
         </CCardBody>
@@ -64,6 +66,21 @@
         </CCardBody>
       </CCard>
     </div>
+    <!-- Edge modal -->
+    <CModal title="Edge modal" :show.sync="edgeModal">
+      <span
+        >Are you sure you want to remove trade relation betweew
+        {{ sourceNode.label }} - {{ destinationNode.label }}?</span
+      >
+      <template #footer>
+        <CButton color="outline-primary" square size="sm" @click="deleteEdge"
+          >Yes</CButton
+        >
+        <CButton color="outline-primary" square size="sm" @click="closeModal"
+          >No</CButton
+        >
+      </template>
+    </CModal>
   </div>
 </template>
 
@@ -78,7 +95,26 @@ export default {
   components: { Network, VueSlider },
   mixins: [visMixin],
   data: () => ({
-    counter: 0
+    sliderValue: "201910",
+    sliderData: [
+      { id: "201910", name: "Oct 19" },
+      { id: "201911", name: "Nov 19" },
+      { id: "201912", name: "Dec 19" },
+      { id: "202001", name: "Jan 20" },
+      { id: "202002", name: "Feb 20" },
+      { id: "202003", name: "Mar 20" },
+      { id: "202004", name: "Apr 20" },
+      { id: "202005", name: "May 20" },
+      { id: "202006", name: "Jun 20" },
+      { id: "202007", name: "Jul 20" },
+      { id: "202008", name: "Aug 20" },
+      { id: "202009", name: "Sep 20" },
+      { id: "202010", name: "Oct 20" },
+      { id: "202011", name: "Nov 20" }
+    ],
+    edgeModal: false,
+    sourceNode: {},
+    destinationNode: {}
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges"]),
@@ -97,19 +133,29 @@ export default {
     }
   },
   methods: {
-    handleSelectNode(graph) {
-      const selectedId = graph.nodes[0];
-      const selectedNode = this.network.nodes.find(node => {
-        return node.id == selectedId;
-      });
-      console.log("Selected node: " + selectedNode.label);
+    handleSelectNode(selectedGraph) {
+      const selectedId = selectedGraph.nodes[0];
+      this.getNode(this.network, selectedId);
     },
-    handleSelectEdge(graph) {
-      const selectedId = graph.edges[0];
-      const selectedEdge = this.network.edges.find(edge => {
-        return edge.id == selectedId;
-      });
-      console.log("From: " + selectedEdge.from + ", To: " + selectedEdge.to);
+    handleSelectEdge(selectedGraph) {
+      const selectedId = selectedGraph.edges[0];
+      const selectedEdge = this.getEdge(this.network, selectedId);
+      this.sourceNode = this.getNode(this.network, selectedEdge.from);
+      this.destinationNode = this.getNode(this.network, selectedEdge.to);
+      this.edgeModal = true;
+    },
+    deleteEdge() {
+      //Send data to the server
+      console.log(
+        "I am asking the server to delete connection " +
+          this.sourceNode.label +
+          " - " +
+          this.destinationNode.label
+      );
+      this.closeModal();
+    },
+    closeModal() {
+      this.edgeModal = false;
     },
     drawNetwork(id) {
       this.$store.dispatch("graphVisjs/findById", id);
@@ -129,8 +175,8 @@ export default {
     },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
-      //Now you can draw the network
-    },
+      this.drawNetwork(val);
+    }
   },
   created() {
     this.drawNetwork("201910");

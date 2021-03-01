@@ -50,18 +50,6 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/graphcola",
-        name: "GraphCola",
-        component: () => import("../views/catalogue/graph/GraphCola"),
-        meta: { authorize: [] }
-      },
-      {
-        path: "catalogue/graphcose",
-        name: "GraphCose",
-        component: () => import("../views/catalogue/graph/GraphCose"),
-        meta: { authorize: [] }
-      },
-      {
         path: "catalogue/graphvisjs",
         name: "GraphVisjs",
         component: () => import("../views/catalogue/graph/GraphVis"),

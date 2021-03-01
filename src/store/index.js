@@ -6,8 +6,6 @@ import { error } from "./modules/error";
 import { coreui } from "./modules/coreui";
 import { message } from "./modules/message";
 import { geomap } from "./modules/geomap/geomap";
-import { graphCola } from "./modules/graphCola/graphCola";
-import { graphCose } from "./modules/graphCose/graphCose";
 import { graphVisjs } from "./modules/graphVisjs/graphVisjs";
 import { chartjsBar } from "./modules/chartjsBar/chartjsBar";
 import { chartjsScatter } from "./modules/chartjsScatter/chartjsScatter";
@@ -23,8 +21,6 @@ export default new Vuex.Store({
     coreui,
     message,
     geomap,
-    graphCose,
-    graphCola,
     graphVisjs,
     chartjsBar,
     chartjsScatter,

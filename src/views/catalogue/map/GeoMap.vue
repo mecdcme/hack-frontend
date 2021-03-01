@@ -33,6 +33,19 @@
             <l-control position="topright">
               <app-legend :legend="legend" />
             </l-control>
+            <l-control position="bottomleft">
+              <CButton
+                color="primary"
+                shape="square"
+                size="sm"
+                class="mr-2"
+                @click="play"
+                >Play</CButton
+              >
+              <CButton color="danger" shape="square" size="sm" @click="stop"
+                >Stop</CButton
+              >
+            </l-control>
           </l-map>
         </CCardBody>
         <CCardFooter>
@@ -60,9 +73,9 @@
             v-if="markerData"
           />
         </CTab>
-        <CTab title="Import partners">
+        <!--CTab title="Import partners">
           <CDataTable :items="importItems" :fields="importFields" hover />
-        </CTab>
+        </CTab-->
         <!--CTab title="Export partners">
           <CDataTable :items="exportItems" :fields="exportFields" hover />
         </CTab-->
@@ -119,14 +132,10 @@ export default {
       { key: "partner_2020" },
       { key: "import_2020" }
     ],
-    importItems: [
-      {
-        partner_2019: "DE",
-        import_2019: "55,09%",
-        partner_2020: "DE",
-        import_2020: "55,09%"
-      }
-    ]
+
+    //Player
+    delta: 2000,
+    disablePlay: false
   }),
   computed: {
     ...mapGetters("geomap", { markers: "geomap", markerData: "markerData" }),
@@ -146,6 +155,24 @@ export default {
     },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
+    },
+    play() {
+      this.counter = 0;
+      this.timer = setInterval(() => {
+        if (this.counter < this.timePeriod.length) {
+          //do something
+          this.periodValue = this.timePeriod[this.counter].id;
+          console.log(this.periodValue);
+          this.counter++;
+        } else {
+          this.stop();
+        }
+      }, this.delta);
+      this.disablePlay = true;
+    },
+    stop() {
+      clearInterval(this.timer);
+      this.disablePlay = false;
     }
   },
   created() {

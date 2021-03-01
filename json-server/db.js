@@ -1,9 +1,9 @@
 const countries = require("./countries");
-const ieindicators = require("./ieindicators");
+const iemarkers = require("./iemarkers");
 const exportvqs = require("./exportvqs");
 
 module.exports = () => ({
   countries,
-  ieindicators,
+  iemarkers,
   exportvqs
 });

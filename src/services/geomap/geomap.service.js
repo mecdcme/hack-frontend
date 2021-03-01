@@ -4,19 +4,16 @@ export const geomapService = {
   findByName
 };
 function findAll() {
-  return (
-    axiosHack
-      //.get("/mondo/")
-      .get("/country")
-      .then(res => {
-        var data = res.data ? res.data : {};
-        //console.log(data);
-        return data;
-      })
-      .catch(err => {
-        throw err;
-      })
-  );
+  return axiosHack
+    .get("/countries")
+    .then(res => {
+      var data = res.data ? res.data : {};
+      //console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
 }
 function findByName(name) {
   return axiosHack

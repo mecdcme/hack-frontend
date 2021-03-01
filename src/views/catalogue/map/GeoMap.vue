@@ -50,9 +50,9 @@
         <CTab title="Import partners">
           <CDataTable :items="importItems" :fields="importFields" hover />
         </CTab>
-        <CTab title="Export partners">
+        <!--CTab title="Export partners">
           <CDataTable :items="exportItems" :fields="exportFields" hover />
-        </CTab>
+        </CTab-->
       </CTabs>
       <template #footer>
         <CButton color="outline-primary" square size="sm" @click="closeModal"
@@ -132,7 +132,7 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters("geomap", { markers: "covid" })
+    ...mapGetters("geomap", { markers: "geomap" })
   },
   methods: {
     openModal(marker) {

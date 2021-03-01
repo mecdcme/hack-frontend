@@ -2,8 +2,7 @@ import { geomapService } from "@/services";
 
 const state = {
   geomaps: [],
-  geomap: null,
-  covid: []
+  geomap: null
 };
 
 const mutations = {
@@ -12,9 +11,6 @@ const mutations = {
   },
   SET_GEOMAP(state, geomap) {
     state.geomap = geomap;
-  },
-  SET_COVID(state, data) {
-    state.covid = data;
   }
 };
 
@@ -23,7 +19,7 @@ const actions = {
     return geomapService
       .findAll()
       .then(data => {
-        commit("SET_COVID", data);
+        commit("SET_GEOMAP", data);
       })
       .catch(err => {
         console.log(err);
@@ -33,7 +29,7 @@ const actions = {
     return geomapService
       .findByName(name)
       .then(data => {
-        commit("SET_COVID", data);
+        commit("SET_GEOMAP", data);
       })
       .catch(err => {
         console.log(err);
@@ -47,9 +43,6 @@ const getters = {
   },
   geomap: state => {
     return state.geomap;
-  },
-  covid: state => {
-    return state.covid;
   }
 };
 export const geomap = {

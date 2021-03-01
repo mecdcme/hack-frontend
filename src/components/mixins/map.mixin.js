@@ -3,10 +3,10 @@ import { latLng } from "leaflet";
 export default {
   data: () => ({
     enableTooltip: true,
-    zoom: 3,
+    zoom: 4,
     center: [45.861347, 57.405578],
     fillColor: "#e4ce7f",
-    marker: latLng(41.86956082699455, 12.436523437500002),
+    marker: latLng(41.89277044, 12.48366722),
     legend: {
       title: null,
       series: [

@@ -5,6 +5,7 @@ const pythongraph = require("./pythongraph");
 const timelapse = require("./timelapse");
 const flows = require("./clsFlow");
 const products = require("./clsProducts");
+const product3s = require("./clsProducts3");
 const transports = require("./clsTransport");
 
 module.exports = () => ({
@@ -15,5 +16,6 @@ module.exports = () => ({
   timelapse,
   flows,
   transports,
-  products
+  products,
+  product3s
 });

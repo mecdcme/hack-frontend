@@ -4,8 +4,8 @@ const exportvqs = require("./exportvqs");
 const pythongraph = require("./pythongraph");
 const timelapse = require("./timelapse");
 const flows = require("./clsFlow");
-const transports = require("./clsProducts");
-const products = require("./clsTransport");
+const products = require("./clsProducts");
+const transports = require("./clsTransport");
 
 module.exports = () => ({
   countries,

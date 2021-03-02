@@ -10,6 +10,8 @@ const product3s = require("./clsProducts3");
 const transports = require("./clsTransport");
 const expVar = require("./expvar");
 const impVar = require("./impvar");
+const importseries = require("./importseries");
+const exportseries = require("./exportseries");
 
 module.exports = () => ({
   countries,
@@ -23,5 +25,7 @@ module.exports = () => ({
   products,
   product3s,
   expVar,
-  impVar
+  impVar,
+  importseries,
+  exportseries
 });

@@ -81,7 +81,7 @@ const getters = {
     return state.graph ? state.graph.edges : [];
   },
   metrics: state => {
-    return state.graph ? state.graph.metriche : {};
+    return state.graph ? state.graph.metriche : null;
   }
 };
 export const graphVisjs = {

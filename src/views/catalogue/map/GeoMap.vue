@@ -7,7 +7,6 @@
             :zoom="zoom"
             :center="center"
             style="height: 550px; width: 100%"
-          
           >
             <l-tile-layer :url="url" :attribution="attribution" />
 
@@ -104,8 +103,8 @@ export default {
   },
   mixins: [mapMixin, sliderMixin],
   data: () => ({
-    center: [51.16423,10.45412],
-    zoom:4,
+    center: [51.16423, 10.45412],
+    zoom: 4,
     markerModal: false,
     modalTitle: "",
     mainFields: [
@@ -131,7 +130,11 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters("geomap", { markers: "geomap", markerData: "markerData" }),
+    ...mapGetters("geomap", {
+      markers: "geomap",
+      markerData: "markerData",
+      exportData: "exportData"
+    }),
     micro() {
       return this.markerData ? this.markerData[0].MI : [];
     }
@@ -153,6 +156,7 @@ export default {
   created() {
     this.buildLegend();
     this.$store.dispatch("geomap/findAll");
+    this.$store.dispatch("geomap/getExportTimeSeries");
   }
 };
 </script>

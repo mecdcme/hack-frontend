@@ -2,7 +2,9 @@ import { geomapService } from "@/services";
 
 const state = {
   geomap: null,
-  markerData: null
+  markerData: null,
+  exportData: null,
+  importData: null
 };
 
 const mutations = {
@@ -11,6 +13,12 @@ const mutations = {
   },
   SET_MARKER(state, markerData) {
     state.markerData = markerData;
+  },
+  SET_EXPORT(state, exportData) {
+    state.exportData = exportData;
+  },
+  SET_IMPORT(state, importData) {
+    state.importData = importData;
   }
 };
 
@@ -34,6 +42,26 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+  getExportTimeSeries({ commit }) {
+    return geomapService
+      .getExportTimeSeries()
+      .then(data => {
+        commit("SET_EXPORT", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  getImportTimeSeries({ commit }) {
+    return geomapService
+      .getImportTimeSeries()
+      .then(data => {
+        commit("SET_IMPORT", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 
@@ -43,6 +71,12 @@ const getters = {
   },
   markerData: state => {
     return state.markerData;
+  },
+  exportData: state => {
+    return state.exportData;
+  },
+  importData: state => {
+    return state.importData;
   }
 };
 export const geomap = {

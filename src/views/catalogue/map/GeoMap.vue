@@ -19,7 +19,7 @@
                 marker.coordinates.longitude
               ]"
               :radius="scale(marker.export)"
-              :color="getColor(marker.export)"
+              :color="getColor(Math.round(marker.export))"
               :fillColor="getColor(marker.export)"
               @click="openModal(marker)"
             >

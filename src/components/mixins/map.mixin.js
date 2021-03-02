@@ -59,6 +59,7 @@ export default {
         : "Hover over a state";
       return div;
     },
+    /*
     getColor(d) {
       return d > 10000000
         ? "#800026"
@@ -76,6 +77,74 @@ export default {
         ? "#FED976"
         : "#FFEDA0";
     },
+    */
+    /*1 steel blue	#4682B4	(70,130,180)
+      2 corn flower blue	#6495ED	(100,149,237)
+      3 deep sky blue	#00BFFF	(0,191,255)
+      4 dodger blue #1E90FF	(30,144,255)
+      5 light blue	#ADD8E6	(173,216,230)
+      6 sky blue	#87CEEB	(135,206,235)
+      7 light sky blue	#87CEFA	(135,206,250)
+      */
+
+    getColor(d) {
+      return d > 15
+        ? "#4682B4"
+        : d > 10
+        ? "#6495ED"
+        : d > 5
+        ? "#00BFFF"
+        : d > 3
+        ? "#ADD8E6"
+        : d > 2
+        ? "#87CEFA"
+        : d > 1
+        ? "#1E90FF"
+        : d < -15
+        ? "#800026"
+        : d < -10
+        ? "#BD0026"
+        : d < -5
+        ? "#E31A1C"
+        : d < -3
+        ? "#FC4E2A"
+        : d < -2
+        ? "#FD8D3C"
+        : d < -1
+        ? "#FED976"
+        : "#FFEDA0";
+    },
+    buildLegend() {
+      this.legend.title = "Trade";
+      var grades = [
+          15,
+          10,
+          5,
+          3,
+          2,
+          1,
+          0,
+          
+          -15,
+          -10,
+          -5,
+          -3,
+          -2,
+          -1
+        ],
+        from,
+        to;
+      for (var i = 0; i < grades.length; i++) {
+        from = grades[i];
+        to = grades[i + 1];
+        this.legend.series.push({
+          color: this.getColor(from + 1),
+          fromNumber: from,
+          toNumber: to
+        });
+      }
+    }
+    /*
     buildLegend() {
       this.legend.title = "Trade";
       var grades = [10000, 20000, 50000, 100000, 200000, 500000, 1000000],
@@ -91,5 +160,6 @@ export default {
         });
       }
     }
+    */
   }
 };

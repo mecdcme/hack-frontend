@@ -118,6 +118,7 @@ export default {
   mixins: [mapMixin, sliderMixin],
   data: () => ({
     markerModal: false,
+    center: [ 41.89277044, 12.48366722 ],
     modalTitle: "",
     mainFields: [
       { key: "Year", label: "" },

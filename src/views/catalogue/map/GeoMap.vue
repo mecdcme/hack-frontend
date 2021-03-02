@@ -12,15 +12,15 @@
 
             <!-- Circle markers -->
             <l-circle-marker
-              v-for="(marker, i) in markers"
+              v-for="(marker, i) in markerTimeSeries"
               v-bind:key="i"
               :lat-lng="[
                 marker.coordinates.latitude,
                 marker.coordinates.longitude
               ]"
-              :radius="scale(100000)"
-              :color="getColor(1000000)"
-              :fillColor="getColor(1000000)"
+              :radius="scale(marker.export)"
+              :color="getColor(marker.export)"
+              :fillColor="getColor(marker.export)"
               @click="openModal(marker)"
             >
               <l-tooltip :options="{ interactive: true, permanent: false }">
@@ -31,6 +31,19 @@
             <!-- Legend -->
             <l-control position="topright">
               <app-legend :legend="legend" />
+            </l-control>
+            <l-control position="bottomleft">
+              <CButton
+                color="primary"
+                shape="square"
+                size="sm"
+                class="mr-2"
+                @click="play"
+                >Play</CButton
+              >
+              <CButton color="danger" shape="square" size="sm" @click="stop"
+                >Stop</CButton
+              >
             </l-control>
           </l-map>
         </CCardBody>
@@ -105,6 +118,7 @@ export default {
   data: () => ({
     center: [51.16423, 10.45412],
     zoom: 4,
+    markerTimeSeries: [],
     markerModal: false,
     modalTitle: "",
     mainFields: [
@@ -127,7 +141,11 @@ export default {
         partner_2020: "DE",
         import_2020: "55,09%"
       }
-    ]
+    ],
+
+    //Player
+    delta: 2000,
+    disablePlay: false
   }),
   computed: {
     ...mapGetters("geomap", {
@@ -151,12 +169,57 @@ export default {
     },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
+    },
+    getExport(marker, exportData, periodValue) {
+      const localExp = exportData.find(exp => {
+        return exp.country == marker.country;
+      });
+      return localExp ? localExp[periodValue] : 100;
+    },
+    buildTimeSeries(markers, exportData, periodValue) {
+      return markers.map(marker => {
+        return {
+          ...marker,
+          export: this.getExport(marker, exportData, periodValue)
+        };
+      });
+    },
+    play() {
+      this.counter = 0;
+      this.timer = setInterval(() => {
+        if (this.counter < this.timePeriod.length) {
+          //do something
+          this.periodValue = this.timePeriod[this.counter].id;
+          console.log(this.periodValue);
+          this.markerTimeSeries = this.buildTimeSeries(
+            this.markers,
+            this.exportData,
+            this.periodValue
+          );
+          this.counter++;
+        } else {
+          this.stop();
+        }
+      }, this.delta);
+      this.disablePlay = true;
+    },
+    stop() {
+      clearInterval(this.timer);
+      this.disablePlay = false;
     }
   },
   created() {
     this.buildLegend();
-    this.$store.dispatch("geomap/findAll");
-    this.$store.dispatch("geomap/getExportTimeSeries");
+    this.$store.dispatch("geomap/findAll").then(() => {
+      this.$store.dispatch("geomap/getExportTimeSeries").then(() => {
+        this.markerTimeSeries = this.buildTimeSeries(
+          this.markers,
+          this.exportData,
+          this.periodValue
+        );
+        console.log(this.markerTimeSeries.length);
+      });
+    });
   }
 };
 </script>

@@ -1,9 +1,7 @@
 export default {
   data: () => ({
-    periodValue: "201910",
+    periodValue: "201912",
     timePeriod: [
-      { id: "201910", name: "Oct 19" },
-      { id: "201911", name: "Nov 19" },
       { id: "201912", name: "Dec 19" },
       { id: "202001", name: "Jan 20" },
       { id: "202002", name: "Feb 20" },

@@ -3,7 +3,15 @@
     <div class="col-9">
       <CCard>
         <CCardHeader>
-          Metrics:
+          <span v-if="graphDensity > 0"
+            ><span class="text-primary">Graph density: </span>
+            {{ graphDensity }}</span
+          >
+          <span v-else>Graph metrics</span>
+          <span class="pl-2 float-right" v-if="nodeCentrality > 0"
+            ><span class="text-primary">Node centrality:</span>
+            {{ nodeCentrality }}</span
+          >
         </CCardHeader>
         <CCardBody class="card-no-border">
           <network
@@ -12,8 +20,8 @@
             :nodes="network.nodes"
             :edges="network.edges"
             :options="network.options"
-            @select-node="handleSelectNode"
             @select-edge="handleSelectEdge"
+            @hover-node="handleOverNode"
           />
         </CCardBody>
       </CCard>
@@ -21,7 +29,7 @@
     <div class="col-3">
       <CCard>
         <CCardHeader>
-          Graph - filters
+          Graph filters
         </CCardHeader>
         <CCardBody>
           <label class="card-label">Period</label>
@@ -78,12 +86,23 @@
       </CCard>
     </div>
     <!-- Edge modal -->
-    <CModal title="Edge modal" :show.sync="edgeModal">
-      <span
-        >Are you sure you want to remove trade relation betweew
-        {{ sourceNode.label }} - {{ destinationNode.label }}?</span
-      >
-      <label class="card-label mt-2">Transport</label>
+    <CModal
+      title="Change graph constraints?"
+      :show.sync="edgeModal"
+      :closeOnBackdrop="false"
+    >
+      <label class="card-label mt-2">Edges</label>
+      <CListGroup>
+        <CListGroupItem
+          color="light"
+          href="#"
+          v-for="(node, index) in selectedNodes"
+          :key="index"
+        >
+          {{ node.source.label }} - {{ node.destination.label }}
+        </CListGroupItem>
+      </CListGroup>
+      <label class="card-label mt-3">Transport</label>
       <v-select
         label="descr"
         multiple
@@ -92,7 +111,11 @@
         v-model="transportConstraint"
       />
       <template #footer>
-        <CButton color="outline-primary" square size="sm" @click="deleteEdge"
+        <CButton
+          color="outline-primary"
+          square
+          size="sm"
+          @click="applyConstraints"
           >Yes</CButton
         >
         <CButton color="outline-primary" square size="sm" @click="closeModal"
@@ -107,11 +130,12 @@
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 import visMixin from "@/components/mixins/vis.mixin";
+import sliderMixin from "@/components/mixins/slider.mixin";
 
 export default {
   name: "GraphVisjs",
   components: { Network },
-  mixins: [visMixin],
+  mixins: [visMixin, sliderMixin],
   data: () => ({
     //Form fields
     selectedPeriod: null,
@@ -123,9 +147,12 @@ export default {
 
     //Graph modal
     edgeModal: false,
-    sourceNode: {},
-    destinationNode: {},
-    transportConstraint: null
+    selectedEdges: [],
+    selectedNodes: [],
+    transportConstraint: null,
+
+    //Metrics
+    nodeCentrality: 0
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges", "metrics"]),
@@ -147,29 +174,56 @@ export default {
             edges: [],
             options: null
           };
+    },
+    graphDensity() {
+      return this.metrics ? this.metrics.density.toPrecision(4) : 0;
     }
   },
   methods: {
-    handleSelectNode(selectedGraph) {
-      const selectedId = selectedGraph.nodes[0];
-      this.getNode(this.network, selectedId);
-      //Update metrics
-    },
     handleSelectEdge(selectedGraph) {
-      const selectedId = selectedGraph.edges[0];
-      const selectedEdge = this.getEdge(this.network, selectedId);
-      this.sourceNode = this.getNode(this.network, selectedEdge.from);
-      this.destinationNode = this.getNode(this.network, selectedEdge.to);
+      this.selectedEdges = [];
+      this.selectedNodes = [];
+      selectedGraph.edges.forEach(edgeId => {
+        const selectedEdge = this.getEdge(this.network, edgeId);
+        const sourceNode = this.getNode(this.network, selectedEdge.from);
+        const destinationNode = this.getNode(this.network, selectedEdge.to);
+        this.selectedEdges.push(selectedEdge);
+        this.selectedNodes.push({
+          source: sourceNode,
+          destination: destinationNode
+        });
+      });
       this.edgeModal = true;
     },
-    deleteEdge() {
-      //Send data to the server
-      console.log(
-        "I am asking the server to delete connection " +
-          this.sourceNode.label +
-          " - " +
-          this.destinationNode.label
+    handleOverNode(event) {
+      const nodeId = event.node;
+      this.nodeCentrality = this.getCentrality(
+        this.network,
+        nodeId,
+        this.metrics
       );
+    },
+    applyConstraints() {
+      const constraints = [];
+      this.selectedEdges.forEach(edge => {
+        constraints.push({
+          from: edge.from,
+          to: edge.to,
+          exclude: this.getIds(this.transportConstraint)
+        });
+      });
+
+      const form = {
+        tg_period: this.selectedPeriod.id,
+        tg_perc: this.percentage,
+        listaMezzi: this.getIds(this.transport),
+        product: this.product.id,
+        flow: this.flow.id,
+        weight_flag: this.weight.descr,
+        pos: { nodes: this.nodes },
+        selezioneMezziEdges: constraints
+      };
+      this.$store.dispatch("graphVisjs/postGraph", form);
       this.closeModal();
     },
     closeModal() {
@@ -224,7 +278,7 @@ export default {
   color: #321fdb;
   font-size: 0.9em;
 }
-.vue-slider {
-  margin: 2.5rem 1.5rem;
+.list-group-item {
+  padding: 0.5rem 1rem;
 }
 </style>

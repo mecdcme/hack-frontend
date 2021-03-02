@@ -297,6 +297,12 @@ export default {
       });
       console.log("From: " + selectedEdge.from + ", To: " + selectedEdge.to);
       return selectedEdge ? selectedEdge : null;
+    },
+    getCentrality(network, nodeId, metrics){
+      const selectedNode = this.getNode(network, nodeId);
+      return selectedNode
+        ? metrics.degree_centrality[selectedNode.label].toPrecision(4)
+        : 0;
     }
   }
 };

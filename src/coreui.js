@@ -30,7 +30,9 @@ import {
   CDataTable,
   CTab,
   CTabs,
-  CInputCheckbox
+  CInputCheckbox,
+  CListGroup,
+  CListGroupItem
 } from "@coreui/vue";
 
 Vue.component("CContainer", CContainer);
@@ -63,3 +65,5 @@ Vue.component("CDataTable", CDataTable);
 Vue.component("CTab", CTab);
 Vue.component("CTabs", CTabs);
 Vue.component("CInputCheckbox", CInputCheckbox);
+Vue.component("CListGroup", CListGroup);
+Vue.component("CListGroupItem", CListGroupItem);

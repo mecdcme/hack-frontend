@@ -3,7 +3,10 @@
     <div class="col-sm-12 col-md-10">
       <div class="card">
         <header class="card-header">
-          {{ countryName }} - {{ flow }} trade data
+          <span>Trade data 2020</span>
+          <span class="float-right text-primary"
+            >{{ countryName }} - {{ flow }}</span
+          >
         </header>
         <CCardBody>
           <line-chart :chartData="chartData" :options="options" />

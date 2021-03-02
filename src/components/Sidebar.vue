@@ -29,7 +29,7 @@
           :to="{ name: 'GraphVisjs' }"
           class="c-sidebar-nav-link"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph VisJs
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -65,7 +65,7 @@
           :to="{ name: 'ChartjsLine' }"
           class="c-sidebar-nav-link"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Line
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
         </router-link>
       </li>
     </ul>

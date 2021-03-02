@@ -1,6 +1,7 @@
 const countries = require("./countries");
 const iemarkers = require("./iemarkers");
 const exportvqs = require("./exportvqs");
+const importvqs = require("./importvqs");
 const pythongraph = require("./pythongraph");
 const timelapse = require("./timelapse");
 const flows = require("./clsFlow");
@@ -14,6 +15,7 @@ module.exports = () => ({
   countries,
   iemarkers,
   exportvqs,
+  importvqs,
   pythongraph,
   timelapse,
   flows,

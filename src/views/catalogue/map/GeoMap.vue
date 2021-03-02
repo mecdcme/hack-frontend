@@ -6,9 +6,9 @@
           <l-map
             :zoom="zoom"
             :center="center"
-            style="height: 450px; width: 100%"
+            style="height: 550px; width: 100%"
+          
           >
-            <!-- Attribution -->
             <l-tile-layer :url="url" :attribution="attribution" />
 
             <!-- Circle markers -->
@@ -32,19 +32,6 @@
             <!-- Legend -->
             <l-control position="topright">
               <app-legend :legend="legend" />
-            </l-control>
-            <l-control position="bottomleft">
-              <CButton
-                color="primary"
-                shape="square"
-                size="sm"
-                class="mr-2"
-                @click="play"
-                >Play</CButton
-              >
-              <CButton color="danger" shape="square" size="sm" @click="stop"
-                >Stop</CButton
-              >
             </l-control>
           </l-map>
         </CCardBody>
@@ -73,9 +60,9 @@
             v-if="markerData"
           />
         </CTab>
-        <!--CTab title="Import partners">
+        <CTab title="Import partners">
           <CDataTable :items="importItems" :fields="importFields" hover />
-        </CTab-->
+        </CTab>
         <!--CTab title="Export partners">
           <CDataTable :items="exportItems" :fields="exportFields" hover />
         </CTab-->
@@ -117,8 +104,9 @@ export default {
   },
   mixins: [mapMixin, sliderMixin],
   data: () => ({
+    center: [51.16423,10.45412],
+    zoom:4,
     markerModal: false,
-    center: [ 41.89277044, 12.48366722 ],
     modalTitle: "",
     mainFields: [
       { key: "Year", label: "" },
@@ -133,10 +121,14 @@ export default {
       { key: "partner_2020" },
       { key: "import_2020" }
     ],
-
-    //Player
-    delta: 2000,
-    disablePlay: false
+    importItems: [
+      {
+        partner_2019: "DE",
+        import_2019: "55,09%",
+        partner_2020: "DE",
+        import_2020: "55,09%"
+      }
+    ]
   }),
   computed: {
     ...mapGetters("geomap", { markers: "geomap", markerData: "markerData" }),
@@ -156,24 +148,6 @@ export default {
     },
     handleCounterChange(val) {
       console.log("Slider value: " + val);
-    },
-    play() {
-      this.counter = 0;
-      this.timer = setInterval(() => {
-        if (this.counter < this.timePeriod.length) {
-          //do something
-          this.periodValue = this.timePeriod[this.counter].id;
-          console.log(this.periodValue);
-          this.counter++;
-        } else {
-          this.stop();
-        }
-      }, this.delta);
-      this.disablePlay = true;
-    },
-    stop() {
-      clearInterval(this.timer);
-      this.disablePlay = false;
     }
   },
   created() {

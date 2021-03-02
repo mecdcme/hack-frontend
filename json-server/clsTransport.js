@@ -20,10 +20,6 @@ module.exports = [
    {
     id: 5,
     descr: "Post"
-  },
-   {
-    id: 6,
-    descr: "Sea"
   },{
     id: 7,
     descr: "Fixed Mechanism"

@@ -18,7 +18,8 @@
                 marker.coordinates.latitude,
                 marker.coordinates.longitude
               ]"
-              :radius="scale(Math.abs(marker.export) * 200)"
+              :fillOpacity="0.65"
+              :radius="scale(Math.abs(marker.export) * 400)"
               :color="getColor(Math.round(marker.export))"
               :fillColor="getColor(Math.round(marker.export))"
               @click="openModal(marker)"

@@ -138,7 +138,7 @@ export default {
         to;
       for (var i = 0; i < grades.length; i++) {
         from = grades[i];
-        to = grades[i + 1];
+        //to = grades[i + 1];
         this.legend.series.push({
           color: this.getColor(from + 1),
           fromNumber: from,

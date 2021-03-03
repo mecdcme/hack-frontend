@@ -50,8 +50,8 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/graphvisjs",
-        name: "GraphVisjs",
+        path: "catalogue/graph",
+        name: "Graph",
         component: () => import("../views/catalogue/graph/GraphForm"),
         meta: { authorize: [] }
       },
@@ -68,14 +68,14 @@ const routes = [
         meta: { authorize: [] }
       },
       {
-        path: "catalogue/scatter",
-        name: "ChartjsScatter",
+        path: "catalogue/policy",
+        name: "Policy",
         component: () => import("../views/catalogue/chartjs/ChartjsScatter"),
         meta: { authorize: [] }
       },
       {
         path: "catalogue/line",
-        name: "ChartjsLine",
+        name: "Trade",
         component: () => import("../views/catalogue/chartjs/ChartjsLine"),
         meta: { authorize: [] }
       },

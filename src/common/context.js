@@ -1,5 +1,7 @@
 export const Context = {
-  Referential: "REFERENTIAL",
-  Structural: "STRUCTURAL",
-  Process: "PROCESS"
+  Home: "HOME",
+  Map: "MAP",
+  Graph: "GRAPH",
+  Policy: "POLICY",
+  Trade: "TRADE"
 };

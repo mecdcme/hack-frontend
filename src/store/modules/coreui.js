@@ -4,10 +4,12 @@ const state = {
   sidebarShow: "responsive",
   sidebarMinimize: false,
   context: "",
+  isHome: false,
   isLoading: false,
-  isReferential: false,
-  isStructural: false,
-  isProcess: false,
+  isMap: false,
+  isGraph: false,
+  isPolicy: false,
+  isTrade: false,
   breadcrumbs: [
     {
       path: "metadata",
@@ -31,14 +33,20 @@ const mutations = {
   SET_CONTEXT(state, context) {
     state.context = context;
     switch (context) {
-      case Context.Referential:
-        state.isReferential = true;
+      case Context.Home:
+        state.isHome = true;
         break;
-      case Context.Structural:
-        state.isStructural = true;
+      case Context.Map:
+        state.isMap = true;
         break;
-      case Context.Process:
-        state.isProcess = true;
+      case Context.Graph:
+        state.isGraph = true;
+        break;
+      case Context.Policy:
+        state.isPolicy = true;
+        break;
+      case Context.Trade:
+        state.isTrade = true;
         break;
       default:
         break;
@@ -46,9 +54,11 @@ const mutations = {
   },
   CLEAR_CONTEXT(state) {
     state.context = "";
-    state.isReferential = false;
-    state.isProcess = false;
-    state.isStructural = false;
+    state.isHome = false;
+    state.isMap = false;
+    state.isGraph = false;
+    state.isPolicy = false;
+    state.isTrade = false;
   },
   CREATE_BREADCRUMBS(state, breadcrumbs) {
     state.breadcrumbs = breadcrumbs;
@@ -69,6 +79,7 @@ const actions = {
     commit("SET_LOADING", isLoading);
   },
   setContext({ commit }, context) {
+    commit("CLEAR_CONTEXT");
     commit("SET_CONTEXT", context);
   },
   clearContext({ commit }) {
@@ -114,14 +125,20 @@ const getters = {
   isLoading: state => {
     return state.isLoading;
   },
-  isReferential: state => {
-    return state.isReferential;
+  isHome: state => {
+    return state.isHome;
   },
-  isStructural: state => {
-    return state.isStructural;
+  isMap: state => {
+    return state.isMap;
   },
-  isProcess: state => {
-    return state.isProcess;
+  isGraph: state => {
+    return state.isGraph;
+  },
+  isPolicy: state => {
+    return state.isPolicy;
+  },
+  isTrade: state => {
+    return state.isTrade;
   },
   breadcrumbs: state => {
     return state.breadcrumbs;

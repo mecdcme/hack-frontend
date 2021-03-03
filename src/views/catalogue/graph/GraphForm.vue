@@ -129,6 +129,7 @@
 <script>
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
+import { Context } from "@/common";
 import visMixin from "@/components/mixins/vis.mixin";
 import sliderMixin from "@/components/mixins/slider.mixin";
 
@@ -207,8 +208,8 @@ export default {
       const constraints = [];
       this.selectedEdges.forEach(edge => {
         constraints.push({
-          from: edge.from,
-          to: edge.to,
+          from: this.getNode(this.network, edge.from).label,
+          to: this.getNode(this.network, edge.to).label,
           exclude: this.getIds(this.transportConstraint)
         });
       });
@@ -258,6 +259,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("coreui/setContext", Context.Graph);
     this.$store.dispatch("classification/getTransports");
     this.$store.dispatch("classification/getProducts");
   }

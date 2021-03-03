@@ -18,9 +18,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { Context } from "@/common";
 import paletteMixin from "@/components/mixins/palette.mixin";
 import ScatterChart from "@/components/charts/ScatterChart";
-import { mapGetters } from "vuex";
+
 export default {
   name: "ChartjsScatter",
   components: {
@@ -128,6 +130,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("coreui/setContext", Context.Policy);
     this.$store.dispatch("chartjsScatter/findAll");
   }
 };

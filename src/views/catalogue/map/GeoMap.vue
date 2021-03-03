@@ -39,6 +39,7 @@
                 size="sm"
                 class="mr-2"
                 @click="play"
+                :disabled="disablePlay"
                 >Play</CButton
               >
               <CButton color="danger" shape="square" size="sm" @click="stop"
@@ -89,6 +90,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { Context } from "@/common";
 
 import {
   LMap,
@@ -167,35 +169,35 @@ export default {
     closeModal() {
       this.markerModal = false;
     },
+
     handleCounterChange(val) {
-      console.log("Slider value: " + val);
+      this.periodValue = val;
+      this.buildTimeSeries();
     },
+
     getExport(marker, exportData, periodValue) {
       const localExp = exportData.find(exp => {
         return exp.country == marker.country;
       });
       return localExp ? localExp[periodValue] : 100;
     },
-    buildTimeSeries(markers, exportData, periodValue) {
-      return markers.map(marker => {
+
+    buildTimeSeries() {
+      this.markerTimeSeries = this.markers.map(marker => {
         return {
           ...marker,
-          export: this.getExport(marker, exportData, periodValue)
+          export: this.getExport(marker, this.exportData, this.periodValue)
         };
       });
     },
+
     play() {
       this.counter = 0;
       this.timer = setInterval(() => {
         if (this.counter < this.timePeriod.length) {
           //do something
           this.periodValue = this.timePeriod[this.counter].id;
-          console.log(this.periodValue);
-          this.markerTimeSeries = this.buildTimeSeries(
-            this.markers,
-            this.exportData,
-            this.periodValue
-          );
+          this.buildTimeSeries();
           this.counter++;
         } else {
           this.stop();
@@ -203,21 +205,18 @@ export default {
       }, this.delta);
       this.disablePlay = true;
     },
+
     stop() {
       clearInterval(this.timer);
       this.disablePlay = false;
     }
   },
   created() {
-    this.buildLegend();
+    this.$store.dispatch("coreui/setContext", Context.Map);
     this.$store.dispatch("geomap/findAll").then(() => {
       this.$store.dispatch("geomap/getExportTimeSeries").then(() => {
-        this.markerTimeSeries = this.buildTimeSeries(
-          this.markers,
-          this.exportData,
-          this.periodValue
-        );
-        console.log(this.markerTimeSeries.length);
+        this.buildTimeSeries();
+        this.buildLegend();
       });
     });
   }
@@ -243,5 +242,11 @@ export default {
 }
 .modal-header {
   padding: 0.75rem 1rem;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  color: #fff;
+  background-color: #8f85ed;
+  border-color: #321fdb;
 }
 </style>

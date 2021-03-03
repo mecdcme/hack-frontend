@@ -12,15 +12,26 @@
 
     <ul class="c-sidebar-nav h-100 ps" style="position: relative;">
       <li class="c-sidebar-nav-item">
-        <router-link tag="a" :to="{ name: 'Home' }" class="c-sidebar-nav-link">
+        <router-link
+          tag="a"
+          :to="{ name: 'Home' }"
+          class="c-sidebar-nav-link"
+          :class="{ 'c-active': isHome }"
+        >
           <CIcon name="cil-home" class="c-sidebar-nav-icon" />Home
           <span class="badge badge-primary">Alpha</span>
         </router-link>
       </li>
-      <li class="c-sidebar-nav-title">Catalogue</li>
+      <li class="c-sidebar-nav-title">Analysis</li>
       <li class="c-sidebar-nav-item">
-        <router-link tag="a" :to="{ name: 'Map' }" class="c-sidebar-nav-link">
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Map
+        <router-link
+          tag="a"
+          :to="{ name: 'Map' }"
+          class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-primary': isMap }"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
+          indicators
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -28,6 +39,7 @@
           tag="a"
           :to="{ name: 'GraphVisjs' }"
           class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-success': isGraph }"
         >
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph
         </router-link>
@@ -35,28 +47,11 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'GraphSlider' }"
-          class="c-sidebar-nav-link"
-        >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph slider
-        </router-link>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <router-link
-          tag="a"
-          :to="{ name: 'ChartjsBar' }"
-          class="c-sidebar-nav-link"
-        >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Bar
-        </router-link>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <router-link
-          tag="a"
           :to="{ name: 'ChartjsScatter' }"
           class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-warning': isPolicy }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Chartjs Scatter
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Policy
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -64,6 +59,7 @@
           tag="a"
           :to="{ name: 'ChartjsLine' }"
           class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-danger': isTrade }"
         >
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
         </router-link>
@@ -79,7 +75,12 @@ export default {
   computed: {
     ...mapGetters("coreui", {
       show: "sidebarShow",
-      minimize: "sidebarMinimize"
+      minimize: "sidebarMinimize",
+      isHome: "isHome",
+      isMap: "isMap",
+      isGraph: "isGraph",
+      isPolicy: "isPolicy",
+      isTrade: "isTrade"
     })
   }
 };
@@ -88,5 +89,17 @@ export default {
 .brand {
   font-size: 1.2em;
   padding-left: 1rem;
+}
+.c-active-primary {
+  border-left: 3px solid#321fdb;
+}
+.c-active-success {
+  border-left: 3px solid#2eb85c;
+}
+.c-active-warning {
+  border-left: 3px solid#f9b115;
+}
+.c-active-danger {
+  border-left: 3px solid#e55353;
 }
 </style>

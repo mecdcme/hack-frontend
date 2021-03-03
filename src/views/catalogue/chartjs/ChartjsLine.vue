@@ -47,10 +47,12 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { Context } from "@/common";
 import chartMixin from "@/components/mixins/chart.mixin";
 import paletteMixin from "@/components/mixins/palette.mixin";
 import LineChart from "@/components/charts/LineChart";
-import { mapGetters } from "vuex";
+
 export default {
   name: "ChartjsLine",
   components: {
@@ -148,6 +150,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("coreui/setContext", Context.Trade);
     this.$store.dispatch("classification/getCountries");
     this.$store.dispatch("chartjsLine/findByName", { name: "IT", flow: 2 });
   }

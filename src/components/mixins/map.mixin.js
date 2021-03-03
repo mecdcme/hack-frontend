@@ -9,6 +9,7 @@ export default {
     marker: latLng(41.89277044, 12.48366722),
     legend: {
       title: null,
+      subTitle: null,
       series: [
         {
           color: "",
@@ -59,78 +60,79 @@ export default {
         : "Hover over a state";
       return div;
     },
-    /*
     getColor(d) {
-      return d > 10000000
-        ? "#800026"
-        : d > 500000
-        ? "#BD0026"
-        : d > 200000
-        ? "#E31A1C"
-        : d > 100000
-        ? "#FC4E2A"
-        : d > 50000
-        ? "#FD8D3C"
-        : d > 20000
-        ? "#FEB24C"
-        : d > 10000
-        ? "#FED976"
-        : "#FFEDA0";
-    },
-    */
-    /*1 steel blue	#4682B4	(70,130,180)
-      2 corn flower blue	#6495ED	(100,149,237)
-      3 deep sky blue	#00BFFF	(0,191,255)
-      4 dodger blue #1E90FF	(30,144,255)
-      5 light blue	#ADD8E6	(173,216,230)
-      6 sky blue	#87CEEB	(135,206,235)
-      7 light sky blue	#87CEFA	(135,206,250)
-      */
-
-    getColor(d) {
-      return d > 15
-        ? "#4682B4"
+      return d > 18
+        ? "#06188a"
+        : d > 16
+        ? "#4260aa"
+        : d > 14
+        ? "#8999cc"
+        : d > 12
+        ? "#94c4f5"
         : d > 10
-        ? "#6495ED"
-        : d > 5
-        ? "#00BFFF"
-        : d > 3
-        ? "#ADD8E6"
+        ? "	#726dff"
+        : d > 8
+        ? "#7faac6"
+        : d > 6
+        ? "#94bed9"
+        : d > 4
+        ? "#abd2ec"
         : d > 2
-        ? "#87CEFA"
+        ? "#c1e7ff"
         : d > 1
-        ? "#1E90FF"
-        : d < -15
-        ? "#800026"
-        : d < -10
+        ? "#c1e7ff"
+        : d < -18
+        ? "#fa0404"
+        : d < -16
+        ? "#820101"
+        : d < -14
         ? "#BD0026"
-        : d < -5
-        ? "#E31A1C"
-        : d < -3
+        : d < -12
         ? "#FC4E2A"
-        : d < -2
+        : d < -10
         ? "#FD8D3C"
-        : d < -1
+        : d < -8
+        ? "#FEB24C"
+        : d < -6
+        ? "#ff10c5"
+        : d < -4
+        ? "#bb379b"
+        : d < -2
         ? "#FED976"
-        : "#FFEDA0";
+        : d < -1
+        ? "#FFEDA0"
+        : d < 1
+        
+        ? "#FFEDA0"
+        : d > -0.99999999999999999999999999999
+        ? "#43BE4F"
+        : d < 0.99999999999999999999999999999
+        ? "#43BE4F"
+        : "#43BE4F";
     },
     buildLegend() {
-      this.legend.title = "Trade";
+      this.legend.title = "Trade Variation (%)";
+      this.legend.subTitle = "(Base=Nov 2019)";
       var grades = [
-          15,
+          18,
+          16,
+          14,
+          12,
           10,
-          5,
-          3,
+          8,
+          6,
+          4,
           2,
-          1,
           0,
-          
-          -15,
-          -10,
-          -5,
-          -3,
           -2,
-          -1
+          -4,
+          -6,
+          -8,
+          -10,
+          -12,
+          -14,
+          -16,
+          -18
         ],
         from,
         to;
@@ -144,22 +146,5 @@ export default {
         });
       }
     }
-    /*
-    buildLegend() {
-      this.legend.title = "Trade";
-      var grades = [10000, 20000, 50000, 100000, 200000, 500000, 1000000],
-        from,
-        to;
-      for (var i = 0; i < grades.length; i++) {
-        from = grades[i];
-        to = grades[i + 1];
-        this.legend.series.push({
-          color: this.getColor(from + 1),
-          fromNumber: from,
-          toNumber: to
-        });
-      }
-    }
-    */
   }
 };

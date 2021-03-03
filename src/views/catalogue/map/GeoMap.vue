@@ -18,9 +18,9 @@
                 marker.coordinates.latitude,
                 marker.coordinates.longitude
               ]"
-              :radius="scale(marker.export)"
+              :radius="scale(Math.abs(marker.export) * 200)"
               :color="getColor(Math.round(marker.export))"
-              :fillColor="getColor(marker.export)"
+              :fillColor="getColor(Math.round(marker.export))"
               @click="openModal(marker)"
             >
               <l-tooltip :options="{ interactive: true, permanent: false }">

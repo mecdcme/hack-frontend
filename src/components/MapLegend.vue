@@ -1,6 +1,7 @@
 <template>
   <div class="legend">
-    <div>{{ legend.title }}</div>
+    <div class="px-1 text-center ">{{ legend.title }}</div>
+    <div class="px-1 text-center">{{ legend.subTitle }}</div>
     <ul class="px-2">
       <li v-for="(row, r) in legend.series" v-bind:key="r">
         <div class="row px-0">
@@ -13,6 +14,7 @@
             }"
           >
           </span>
+
           <div class="px-1 text-right">
             {{ row.fromNumber }}
           </div>

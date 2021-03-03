@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-10">
+    <div class="col-9">
       <div class="card">
         <header class="card-header">
           <span>Trade data 2020</span>
@@ -13,7 +13,7 @@
         </CCardBody>
       </div>
     </div>
-    <div class="col-2">
+    <div class="col-3">
       <CCard>
         <CCardHeader>
           Trade filter
@@ -51,6 +51,7 @@ import { mapGetters } from "vuex";
 import { Context } from "@/common";
 import chartMixin from "@/components/mixins/chart.mixin";
 import paletteMixin from "@/components/mixins/palette.mixin";
+import tradeMixin from "@/components/mixins/trade.mixin";
 import LineChart from "@/components/charts/LineChart";
 
 export default {
@@ -58,7 +59,7 @@ export default {
   components: {
     LineChart
   },
-  mixins: [chartMixin, paletteMixin],
+  mixins: [chartMixin, tradeMixin, paletteMixin],
   data: () => ({
     countrySelected: {
       country: "IT",
@@ -66,49 +67,7 @@ export default {
     },
     flowSelected: { id: 2, descr: "Export" },
     countryName: "Italy",
-    flow: "Export",
-
-    //Chart options
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      title: {
-        display: false,
-        text: ""
-      },
-      tooltips: {
-        mode: "index",
-        intersect: true
-      },
-      hover: {
-        mode: "nearest",
-        intersect: true
-      },
-      scales: {
-        xAxes: [
-          {
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: "Time"
-            }
-          }
-        ],
-        yAxes: [
-          {
-            ticks: {
-              min: -100,
-              max: 200
-            },
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: "Value"
-            }
-          }
-        ]
-      }
-    }
+    flow: "Export"
   }),
   computed: {
     ...mapGetters("classification", ["countries", "flows"]),
@@ -116,12 +75,10 @@ export default {
     chartData() {
       var chartData = {};
       chartData.datasets = [];
-      //chartData.labels = [];
       chartData.labels = this.months;
       if (this.charts) {
         this.charts.data.forEach(element => {
           const color = this.getColor();
-          //chartData.labels.push(element.dataname);
           chartData.datasets.push({
             label: element.dataname,
             fill: false,
@@ -156,10 +113,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.card-label {
-  color: #321fdb;
-  font-size: 0.9em;
-}
-</style>

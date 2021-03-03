@@ -1,19 +1,91 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-12">
+    <div class="col-9">
       <div class="card">
         <header class="card-header">
           IT − WO @ T + 6 ; TOTAL (mln. euro)
-          <div class="card-header-actions">
-            <router-link tag="a" :to="{ name: 'Map' }">
-              <add-icon />
-            </router-link>
-          </div>
         </header>
         <CCardBody>
           <scatter-chart :chartData="scatterData" :options="options" />
+          <vue-slider
+            v-if="showSlider"
+            :adsorb="true"
+            :tooltip="'none'"
+            v-model="policyPeriodValue"
+            :data="sliderPeriod"
+            :data-value="'id'"
+            :data-label="'name'"
+            @change="handleCounterChange"
+          />
         </CCardBody>
       </div>
+    </div>
+    <div class="col-3">
+      <CCard>
+        <CCardHeader>
+          Trade filter
+        </CCardHeader>
+        <CCardBody>
+          <label for="country" class="card-label">Flows:</label>
+          <v-select
+            label="descr"
+            :options="flows"
+            placeholder="Flows"
+            v-model="flowSelected"
+          />
+          <label for="country" class="card-label mt-3">Country:</label>
+          <v-select
+            label="name"
+            :options="countries"
+            placeholder="Country"
+            v-model="countrySelected"
+          />
+          <label for="country" class="card-label mt-3">Partner:</label>
+          <v-select
+            label="descr"
+            :options="partners"
+            placeholder="Partner"
+            v-model="partnerSelected"
+          />
+          <label for="country" class="card-label mt-3">Bec:</label>
+          <v-select
+            label="descr"
+            :options="becs"
+            placeholder="Bec"
+            v-model="becSelected"
+          />
+          <label for="country" class="card-label mt-3">Prevision:</label>
+          <v-select
+            label="descr"
+            :options="previsions"
+            placeholder="Prevision"
+            v-model="previsionSelected"
+          />
+          <template v-if="isForecasting">
+            <label for="country" class="card-label mt-3">Time:</label>
+            <v-select
+              label="descr"
+              :options="timeNext"
+              placeholder="Prevision"
+              v-model="timeSelected"
+            />
+            <CInput
+              label="Restriction"
+              placeholder="Set restriction"
+              class="card-label mt-2"
+              v-model="restriction"
+            />
+          </template>
+          <CButton
+            color="primary"
+            shape="square"
+            size="sm"
+            @click="handleSubmit"
+            class="mt-3"
+            >Go!</CButton
+          >
+        </CCardBody>
+      </CCard>
     </div>
   </div>
 </template>
@@ -21,50 +93,53 @@
 import { mapGetters } from "vuex";
 import { Context } from "@/common";
 import paletteMixin from "@/components/mixins/palette.mixin";
+import scatterMixin from "@/components/mixins/scatter.mixin";
+import sliderMixin from "@/components/mixins/slider.mixin";
+
 import ScatterChart from "@/components/charts/ScatterChart";
+import VueSlider from "vue-slider-component";
 
 export default {
   name: "ChartjsScatter",
   components: {
-    ScatterChart
+    ScatterChart,
+    VueSlider
   },
-  mixins: [paletteMixin],
+  mixins: [paletteMixin, scatterMixin, sliderMixin],
   data: () => ({
-    options: {
-      scales: {
-        /*yAxes: [
-            {
-              ticks: {
-                beginAtZero: true
-              },
-              gridLines: {
-                display: true
-              }
-            }
-          ],
-          */
-        xAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            },
-            gridLines: {
-              display: false
-            },
-            type: "linear",
-            position: "bottom"
-          }
-        ]
-      },
-      legend: {
-        display: true
-      },
-      responsive: true,
-      maintainAspectRatio: false
-    }
+    //Form fields
+    flowSelected: null,
+    countrySelected: null,
+    partnerSelected: null,
+    becSelected: null,
+    previsionSelected: null,
+    timeSelected: null,
+    restriction: 0
   }),
   computed: {
+    ...mapGetters("classification", [
+      "countries",
+      "partners",
+      "becs",
+      "flows",
+      "previsions",
+      "timeNext"
+    ]),
     ...mapGetters("chartjsScatter", ["charts"]),
+    isForecasting() {
+      var forecast = false;
+      if (this.previsionSelected)
+        forecast = this.previsionSelected.id == 2 ? true : false;
+      return forecast;
+    },
+    showSlider() {
+      return this.timeSelected ? true : false;
+    },
+    sliderPeriod() {
+      return this.timeSelected
+        ? this.getSliderPeriod(this.timeSelected.value)
+        : [];
+    },
     scatterData() {
       var scatterData = {};
       scatterData.datasets = [];
@@ -129,8 +204,19 @@ export default {
       return scatterData;
     }
   },
+  methods: {
+    handleCounterChange(val) {
+      console.log("Val " + val);
+    },
+    handleSubmit() {
+      console.log("Submit!");
+    }
+  },
   created() {
     this.$store.dispatch("coreui/setContext", Context.Policy);
+    this.$store.dispatch("classification/getCountries");
+    this.$store.dispatch("classification/getPartners");
+    this.$store.dispatch("classification/getBecs");
     this.$store.dispatch("chartjsScatter/findAll");
   }
 };

@@ -30,8 +30,7 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-primary': isMap }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
-          indicators
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Interactive map
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">

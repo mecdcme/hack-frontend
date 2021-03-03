@@ -75,10 +75,10 @@
           />
         </CTab>
         <CTab title="Import partners">
-          <CDataTable :items="importData" :fields="importFields" hover />
+          <CDataTable :items="importDataItems" :fields="importFields" hover />
         </CTab>
         <CTab title="Export partners">
-          <CDataTable :items="exportData" :fields="exportFields" hover />
+          <CDataTable :items="exportDataItems" :fields="exportFields" hover />
         </CTab>
         <CTab title="Import goods">
           <CDataTable :items="importGoods" :fields="importGoodsFields" hover />
@@ -173,10 +173,10 @@ export default {
     micro() {
       return this.markerData ? this.markerData[0].MI : [];
     },
-    importData() {
+    importDataItems() {
       return this.markerData ? this.markerData[0].ImpP : [];
     },
-    exportData() {
+    exportDataItems() {
       return this.markerData ? this.markerData[0].ExpP : [];
     },
     importGoods() {

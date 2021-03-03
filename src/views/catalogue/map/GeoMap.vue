@@ -63,7 +63,7 @@
     </div>
 
     <!-- Marker modal -->
-    <CModal :title="modalTitle" :show.sync="markerModal">
+    <CModal :title="modalTitle" :show.sync="markerModal" size="lg">
       <CTabs variant="tabs" :active-tab="0">
         <CTab title="Main">
           <CDataTable
@@ -74,11 +74,17 @@
           />
         </CTab>
         <CTab title="Import partners">
-          <CDataTable :items="importItems" :fields="importFields" hover />
+          <CDataTable :items="importData" :fields="importFields" hover />
         </CTab>
-        <!--CTab title="Export partners">
-          <CDataTable :items="exportItems" :fields="exportFields" hover />
-        </CTab-->
+        <CTab title="Export partners">
+          <CDataTable :items="exportData" :fields="exportFields" hover />
+        </CTab>
+        <CTab title="Import goods">
+          <CDataTable :items="importGoods" :fields="importGoodsFields" hover />
+        </CTab>
+        <CTab title="Export goods">
+          <CDataTable :items="exportGoods" :fields="exportGoodsFields" hover />
+        </CTab>
       </CTabs>
       <template #footer>
         <CButton color="outline-primary" square size="sm" @click="closeModal"
@@ -129,20 +135,28 @@ export default {
       { key: "2020", label: "2020" }
     ],
     importFields: [
-      {
-        key: "partner_2019"
-      },
-      { key: "import_2019" },
-      { key: "partner_2020" },
-      { key: "import_2020" }
+      { key: "main_p_2019", label: "Main partner 2019" },
+      { key: "tot_imp_2019", label: "Total import 2019" },
+      { key: "main_p_2020", label: "Main partner 2020" },
+      { key: "tot_imp_2020", label: "Total import 2019" }
     ],
-    importItems: [
-      {
-        partner_2019: "DE",
-        import_2019: "55,09%",
-        partner_2020: "DE",
-        import_2020: "55,09%"
-      }
+    exportFields: [
+      { key: "main_p_2019", label: "Main partner 2019" },
+      { key: "tot_exp_2019", label: "Total export 2019" },
+      { key: "main_p_2020", label: "Main partner 2020" },
+      { key: "tot_exp_2020", label: "Total export 2019" }
+    ],
+    importGoodsFields: [
+      { key: "main_g_2019", label: "Main goods 2019" },
+      { key: "tot_imp_2019", label: "Total import 2019" },
+      { key: "main_g_2020", label: "Main goods 2020" },
+      { key: "tot_imp_2020", label: "Total import 2019" }
+    ],
+    exportGoodsFields: [
+      { key: "main_g_2019", label: "Main goods 2019" },
+      { key: "tot_exp_2019", label: "Total export 2019" },
+      { key: "main_g_2020", label: "Main goods 2020" },
+      { key: "tot_exp_2020", label: "Total export 2019" }
     ],
 
     //Player
@@ -157,6 +171,18 @@ export default {
     }),
     micro() {
       return this.markerData ? this.markerData[0].MI : [];
+    },
+    importData() {
+      return this.markerData ? this.markerData[0].ImpP : [];
+    },
+    exportData() {
+      return this.markerData ? this.markerData[0].ExpP : [];
+    },
+    importGoods() {
+      return this.markerData ? this.markerData[0].ImpG : [];
+    },
+    exportGoods() {
+      return this.markerData ? this.markerData[0].ExpG : [];
     }
   },
   methods: {

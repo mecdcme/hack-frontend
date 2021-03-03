@@ -30,14 +30,13 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-primary': isMap }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
-          indicators
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Interactive map
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'GraphVisjs' }"
+          :to="{ name: 'Graph' }"
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-success': isGraph }"
         >
@@ -47,7 +46,7 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'ChartjsScatter' }"
+          :to="{ name: 'Policy' }"
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-warning': isPolicy }"
         >
@@ -57,7 +56,7 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
-          :to="{ name: 'ChartjsLine' }"
+          :to="{ name: 'Trade' }"
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-danger': isTrade }"
         >

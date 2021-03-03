@@ -26,17 +26,10 @@
           </CHeaderNavLink>
         </template>
         <CDropdownHeader tag="div" class="text-center" color="light">
-          <strong>IS<sup>2</sup> Workbench</strong>
+          <strong>Dashboard</strong>
         </CDropdownHeader>
         <CDropdownItem>
-          <router-link
-            tag="a"
-            :to="{
-              name: 'UserList'
-            }"
-          >
-            <span class="pl-1"><users-icon class="pr-3" />Users</span>
-          </router-link>
+          <span class="pl-1"><users-icon class="pr-3" />Users</span>
         </CDropdownItem>
         <CDropdownItem>
           <span class="pl-1"

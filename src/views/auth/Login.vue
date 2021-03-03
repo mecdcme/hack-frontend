@@ -2,36 +2,38 @@
   <div class="d-flex align-items-center min-vh-100">
     <CContainer fluid>
       <CRow class="justify-content-center">
-        <CCol sm="6" md="8" lg="6">
+        <CCol col="7" md="7" xl="6">
           <div class="card-group">
-            <div
-              class="card text-white bg-gradient-primary py-2 d-md-down-none"
-            >
+            <div class="card text-white bg-gradient-primary d-md-down-none">
               <div class="card-body text-center">
-                <div class="mb-2">
-                  <h2>IS<sup>2</sup> Workbench</h2>
-                  <p style="margin-bottom:8.6rem">
-                    Welcome to an open source environment that offers a set of
-                    statistical services to process your data. Services are
-                    classified according to GSBPM standard and can be chained in
-                    processes.
+                <div class="mt-2">
+                  <h2>RegEdit</h2>
+                  <p style="margin-bottom:5rem">
+                    Benvenuti nell'applicazione RegEdit. <br />
+                    L'applicazione permette di modificare gli indirizzi presenti
+                    nel registro dei luogi.
                   </p>
                   <p class="mb-0">
-                    The project has been developed in the context of SERV2
-                    ESSNet.
+                    Il progetto è open-source, il codice sorgente è disponibile
+                    <a
+                      style="color:white"
+                      href="https://github.com/istat-methodology/regedit-frontend"
+                      target="_blank"
+                      >@github</a
+                    >
                   </p>
                 </div>
               </div>
             </div>
             <CCard class="mb-0">
               <CCardHeader align="center">
-                <h3 class="mt-3">Sign in to IS<sup>2</sup> Workbench</h3>
+                <h3 class="mt-3">Accedi a RegEdit</h3>
               </CCardHeader>
-              <CCardBody class="mb-0">
+              <CCardBody class="mb-0 mt-3">
+                <CAlert color="danger" v-if="errorMsg" class="text-center">
+                  <span>{{ errorMsg }}</span>
+                </CAlert>
                 <CForm>
-                  <CAlert color="danger" v-if="errorMsg" class="text-center">
-                    <span>{{ errorMsg }}</span>
-                  </CAlert>
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -58,22 +60,21 @@
                         type="password"
                         class="form-control"
                         placeholder="Password"
+                        autocomplete="on"
                         v-model="password"
                       />
                     </div>
                   </div>
                   <CRow>
                     <CCol col="12">
-                      <CButton color="primary" @click.prevent="handleSubmit"
+                      <CButton
+                        :disabled="isLoading"
+                        shape="square"
+                        size="sm"
+                        color="primary"
+                        @click.prevent="handleSubmit"
+                        @keyup.enter="handleSubmit"
                         >Sign in</CButton
-                      >
-                    </CCol>
-                  </CRow>
-                  <CRow>
-                    <CCol col="12" class="register">
-                      <span>New to workbench? </span>
-                      <router-link tag="a" to="/register"
-                        >Create an account</router-link
                       >
                     </CCol>
                   </CRow>
@@ -88,9 +89,16 @@
 </template>
 
 <script>
+import { CRow, CCol, CForm } from "@coreui/vue";
 import { mapGetters } from "vuex";
+import { AuthStatus } from "@/common";
 
 export default {
+  components: {
+    CRow,
+    CCol,
+    CForm
+  },
   data() {
     return {
       username: "",
@@ -98,7 +106,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["errorMsg"])
+    ...mapGetters("auth", ["errorMsg"]),
+    ...mapGetters("coreui", ["isLoading"])
   },
   methods: {
     handleSubmit() {
@@ -106,7 +115,9 @@ export default {
         username: this.username,
         password: this.password
       };
-      this.$store.dispatch("auth/login", formData);
+      this.$store.dispatch("auth/login", formData).then(res => {
+        if (res.status === AuthStatus.Logged) this.$router.push("/"); //Go to main page
+      });
     }
   }
 };

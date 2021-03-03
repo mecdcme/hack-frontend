@@ -39,7 +39,7 @@
           This section contains the graph .
           <br />
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'GraphVisjs' }"
+            <router-link tag="a" :to="{ name: 'Graph' }"
               ><span>Go to graph section <chevron-right-icon /></span>
             </router-link>
           </p>
@@ -56,7 +56,7 @@
           This section contains the policy indicator.
           <br />
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'ChartjsScatter' }"
+            <router-link tag="a" :to="{ name: 'Policy' }"
               ><span>Go to policy indicator <chevron-right-icon /></span>
             </router-link>
           </p>
@@ -72,7 +72,7 @@
           This section contains trade data.
           <br />
           <p class="section-link">
-            <router-link tag="a" :to="{ name: 'ChartjsLine' }"
+            <router-link tag="a" :to="{ name: 'Trade' }"
               ><span>Go to trade section <chevron-right-icon /></span>
             </router-link>
           </p>

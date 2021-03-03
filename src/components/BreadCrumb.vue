@@ -6,23 +6,28 @@
       v-for="(breadcrumb, index) in breadcrumbs"
       :key="breadcrumb.path"
     >
-      <router-link
-        v-if="index < breadcrumbs.length - 1"
-        tag="a"
-        :to="breadcrumb.to"
-        >{{ upperCaseFirst(breadcrumb.path) }}</router-link
-      >
+      <template v-if="index < breadcrumbs.length - 1">
+        <router-link :to="breadcrumb.to" custom v-slot="{ href, navigate }">
+          <a :href="href" @click="navigate">
+            {{ upperCaseFirst(breadcrumb.path) }}
+          </a>
+        </router-link>
+      </template>
       <template v-else>{{ upperCaseFirst(breadcrumb.path) }}</template>
     </li>
   </ol>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import breadcrumbMixin from "@/components/mixins/breadcrumb.mixin";
 
 export default {
-  computed: {
-    ...mapGetters("coreui", ["breadcrumbs"])
+  name: "BreadCrumb",
+  mixins: [breadcrumbMixin],
+  data() {
+    return {
+      breadcrumbs: []
+    };
   },
   methods: {
     upperCaseFirst(str) {
@@ -31,14 +36,11 @@ export default {
   },
   watch: {
     $route() {
-      this.$store.dispatch("coreui/createBreadcrumbs", this.$route);
+      this.breadcrumbs = this.getBreadcrumbs(this.$route);
     }
   },
   created() {
-    //page reload
-    this.$store.dispatch("coreui/createBreadcrumbs", this.$route);
+    this.breadcrumbs = this.getBreadcrumbs(this.$route);
   }
 };
 </script>
-
-<style></style>

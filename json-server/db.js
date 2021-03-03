@@ -12,6 +12,8 @@ const expVar = require("./expvar");
 const impVar = require("./impvar");
 const importseries = require("./importseries");
 const exportseries = require("./exportseries");
+const becs = require("./clsBec");
+const partners = require("./partners");
 
 module.exports = () => ({
   countries,
@@ -27,5 +29,7 @@ module.exports = () => ({
   expVar,
   impVar,
   importseries,
-  exportseries
+  exportseries,
+  becs,
+  partners
 });

@@ -74,6 +74,12 @@ const routes = [
         meta: { authorize: [] }
       },
       {
+        path: "catalogue/mobility",
+        name: "Mobility",
+        component: () => import("../views/catalogue/mobility/Mobility"),
+        meta: { authorize: [] }
+      },
+      {
         path: "catalogue/line",
         name: "Trade",
         component: () => import("../views/catalogue/chartjs/ChartjsLine"),

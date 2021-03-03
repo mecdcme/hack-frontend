@@ -23,6 +23,15 @@
             @select-edge="handleSelectEdge"
             @hover-node="handleOverNode"
           />
+          <vue-slider
+            :adsorb="true"
+            :tooltip="'none'"
+            v-model="sliderValue"
+            :data="timePeriod"
+            :data-value="'id'"
+            :data-label="'name'"
+            @change="handleSliderChange"
+          />
         </CCardBody>
       </CCard>
     </div>
@@ -38,6 +47,7 @@
             :options="timePeriod"
             placeholder="Select period"
             v-model="selectedPeriod"
+            @input="updateSlider"
           />
           <CInput
             label="Percentage"
@@ -130,12 +140,15 @@
 import { Network } from "vue-visjs";
 import { mapGetters } from "vuex";
 import { Context } from "@/common";
+
 import visMixin from "@/components/mixins/vis.mixin";
 import sliderMixin from "@/components/mixins/slider.mixin";
 
+import VueSlider from "vue-slider-component";
+
 export default {
   name: "GraphVisjs",
-  components: { Network },
+  components: { Network, VueSlider },
   mixins: [visMixin, sliderMixin],
   data: () => ({
     //Form fields
@@ -153,7 +166,10 @@ export default {
     transportConstraint: null,
 
     //Metrics
-    nodeCentrality: 0
+    nodeCentrality: 0,
+
+    //Slider
+    sliderValue: "201912"
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges", "metrics"]),
@@ -230,13 +246,25 @@ export default {
     closeModal() {
       this.edgeModal = false;
     },
-    drawNetwork(id) {
-      this.$store.dispatch("graphVisjs/findById", id);
+
+    updateSlider() {
+      this.sliderValue = this.selectedPeriod.id;
     },
-    handleCounterChange(val) {
-      console.log("Slider value: " + val);
-      this.drawNetwork(val);
+
+    handleSliderChange(val) {
+      const form = {
+        tg_period: val,
+        tg_perc: this.percentage,
+        listaMezzi: this.getIds(this.transport),
+        product: this.product.id,
+        flow: this.flow.id,
+        weight_flag: this.weight.descr,
+        pos: "None",
+        selezioneMezziEdges: "None"
+      };
+      this.$store.dispatch("graphVisjs/postGraph", form);
     },
+
     handleSubmit() {
       const form = {
         tg_period: this.selectedPeriod.id,
@@ -272,15 +300,14 @@ export default {
   height: 550px;
   margin: 5px 0;
 }
-.card-no-border {
-  padding: 0;
-  border: none;
-}
 .card-label {
   color: #321fdb;
   font-size: 0.9em;
 }
 .list-group-item {
   padding: 0.5rem 1rem;
+}
+.vue-slider {
+  margin: 2rem;
 }
 </style>

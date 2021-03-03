@@ -83,6 +83,13 @@ button:focus {
   color: #321fdb;
   font-size: 0.9em;
 }
+.card-no-border {
+  padding: 0;
+  border: none;
+}
+.card-no-shadow{
+  box-shadow: none !important;
+}
 
 /* Forms */
 

@@ -10,6 +10,7 @@ const state = {
   isGraph: false,
   isPolicy: false,
   isTrade: false,
+  isMobility: false,
   breadcrumbs: [
     {
       path: "metadata",
@@ -48,6 +49,9 @@ const mutations = {
       case Context.Trade:
         state.isTrade = true;
         break;
+      case Context.Mobility:
+        state.isMobility = true;
+        break;
       default:
         break;
     }
@@ -59,6 +63,7 @@ const mutations = {
     state.isGraph = false;
     state.isPolicy = false;
     state.isTrade = false;
+    state.isMobility = false;
   },
   CREATE_BREADCRUMBS(state, breadcrumbs) {
     state.breadcrumbs = breadcrumbs;
@@ -139,6 +144,9 @@ const getters = {
   },
   isTrade: state => {
     return state.isTrade;
+  },
+  isMobility: state => {
+    return state.isMobility;
   },
   breadcrumbs: state => {
     return state.breadcrumbs;

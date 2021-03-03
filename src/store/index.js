@@ -11,6 +11,7 @@ import { chartjsBar } from "./modules/chartjsBar/chartjsBar";
 import { chartjsScatter } from "./modules/chartjsScatter/chartjsScatter";
 import { chartjsLine } from "./modules/chartjsLine/chartjsLine";
 import { classification } from "./modules/classification/classification";
+import { mobility } from "./modules/mobility/mobility";
 
 Vue.use(Vuex);
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     chartjsBar,
     chartjsScatter,
     chartjsLine,
-    classification
+    classification,
+    mobility
   }
 });

@@ -3,5 +3,6 @@ export const Context = {
   Map: "MAP",
   Graph: "GRAPH",
   Policy: "POLICY",
-  Trade: "TRADE"
+  Trade: "TRADE",
+  Mobility: "MOBILITY"
 };

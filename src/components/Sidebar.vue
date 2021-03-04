@@ -61,7 +61,18 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-warning': isPolicy }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Policy
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> BEC analysis
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
+          :to="{ name: 'Mobility' }"
+          class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-primary': isMobility }"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Mobility
+          analisys
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -71,17 +82,8 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-danger': isTrade }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Basket of traded products
-        </router-link>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <router-link
-          tag="a"
-          :to="{ name: 'Mobility' }"
-          class="c-sidebar-nav-link"
-          :class="{ 'c-active c-active-primay': isMobility }"
-        >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Mobility
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Basket of
+          traded products
         </router-link>
       </li>
     </ul>

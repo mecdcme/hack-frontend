@@ -32,7 +32,7 @@
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
-          International Trade Relations
+          <span class="card-title">International Trade Relations</span>
         </header>
         <div class="card-body">
           <p>
@@ -43,9 +43,9 @@
             graph structure and measures change accordingly.
           </p>
           <p class="mt-2">
-            Furthermore an animation is provided showing the evolution of the
-            international trade graph over time, spanning the entire time window
-            of trading data.
+            Furthermore an animation is provided showing the
+            <strong>evolution of the international trade graph over time</strong
+            >, spanning the entire time window of trading data.
           </p>
           <p class="section-link">
             <router-link tag="a" :to="{ name: 'Graph' }"
@@ -58,11 +58,17 @@
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
-          Policy
-          <span class="badge float-right badge-success">New</span>
+          <span class="card-title"
+            >Policy Evaluation (with Nowcasting or forecasting upon
+            request)</span
+          >
         </header>
         <div class="card-body">
-          This section contains the policy indicator.
+          Covid-19 <strong>impact evaluation on international trade</strong>.
+          Given a Country and Partner we will get a set of descriptive
+          statistics representing the trade situation between the two countries
+          in the period before and after a specific reference date (suggested by
+          the user).
           <br />
           <p class="section-link">
             <router-link tag="a" :to="{ name: 'Policy' }"
@@ -96,12 +102,21 @@
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
-          Mobility
-          <span class="badge float-right badge-success">New</span>
+          <span class="card-title"> Mobility Policy Analysis</span>
         </header>
         <div class="card-body">
-          This section contains the mobility indicator.
-          <br />
+          This function given the mobility data available from google provide
+          two different results:
+          <p class="mt-2">
+            A descriptive analysis of the main mobility index for the selected
+            country: Retail, Grocery and Pharmacy, Parks, Transit Station,
+            Workplaces, Residential
+          </p>
+          <p class="mt-1">
+            Provide a daily and a monthly mobility policy indicator whose value
+            rage is 0 – 1 representing the level of restriction imposed by the
+            selected country government.
+          </p>
           <p class="section-link">
             <router-link tag="a" :to="{ name: 'Mobility' }"
               ><span>Go to mobility indicator <chevron-right-icon /></span>

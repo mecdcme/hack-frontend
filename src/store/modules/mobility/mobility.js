@@ -1,10 +1,10 @@
 import { mobilityService } from "@/services";
 
 const state = {
-  charts: [],
-  chart: null
+  mobilities: [],
+  mobility: null
 };
-
+/*
 const mutations = {
   SET_SCATTER_CHARTS(state, charts) {
     state.charts = charts;
@@ -25,13 +25,44 @@ const actions = {
       });
   }
 };
+*/
+const mutations = {
+  SET_MOBILITIES(state, mobilities) {
+    state.mobilities = mobilities;
+  },
+  SET_MOBIITY(state, mobility) {
+    state.mobility = mobility;
+  }
+};
+const actions = {
+  findAll({ commit }) {
+    return mobilityService
+      .findAll()
+      .then(data => {
+        commit("SET_MOBILITIES", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  findByName({ commit }, filter) {
+    return mobilityService
+      .findByName(filter)
+      .then(data => {
+        commit("SET_MOBILITIES", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+};
 
 const getters = {
-  charts: state => {
-    return state.charts;
+  mobilities: state => {
+    return state.mobilities;
   },
-  chart: state => {
-    return state.chart;
+  mobility: state => {
+    return state.mobility;
   }
 };
 export const mobility = {

@@ -80,7 +80,7 @@ export default {
   }),
   computed: {
     ...mapGetters("classification", ["countries", "timeNext"]),
-    ...mapGetters("mobility", ["mobilities"])
+    ...mapGetters("mobility", ["mobilities", "mobilityCharts"])
   },
   methods: {
     handleSubmit() {

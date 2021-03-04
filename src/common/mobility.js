@@ -1,6 +1,6 @@
 export const timeStep = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"];
-export const chartType = ["tend", "pred_tp", "pred_tp_c"];
-export const forecastType = ["tend", "forecast"];
+export const chartType = ["tend", "pred_tp", "pred_tp_c", "covid"];
+export const forecastType = ["tend", "nowcast"];
 
 export function getCoordinates(dataArray) {
   const dataMap = [];
@@ -18,16 +18,47 @@ export function buildCharts(dataR) {
     const rawData = dataR[step];
     var chartDataArray = [];
     chartType.forEach(type => {
-      chartDataArray.push({
-        dataName: type,
-        data: getCoordinates(rawData[type])
-      });
+      if (type == "covid") {
+        chartDataArray.push({
+          dataName: type,
+          data: [
+            { x: 122, y: 100 },
+            { x: 122, y: -100 }
+          ]
+        });
+      } else {
+        chartDataArray.push({
+          dataName: type,
+          data: getCoordinates(rawData[type])
+        });
+      }
     });
     timeLapse.push({
       time: step,
       charts: chartDataArray
     });
   });
+  if (dataR["Forecast"]) {
+    var forecastRaw = dataR["Forecast"];
+    var forecastDataArray = [];
+    forecastType.forEach(type => {
+      forecastDataArray.push({
+        dataName: type,
+        data: getCoordinates(forecastRaw[type])
+      });
+    });
+    forecastDataArray.push({
+      dataName: "covid",
+      data: [
+        { x: 122, y: 100 },
+        { x: 122, y: -100 }
+      ]
+    });
+    timeLapse.push({
+      time: "Forecast",
+      charts: forecastDataArray
+    });
+  }
   return timeLapse;
 }
 
@@ -61,62 +92,76 @@ export function getChart(mobilityCharts, chartType) {
 export function getBecChart(timeLapse, timeStep) {
   var chartData = {};
   chartData.datasets = [];
-
   var rawCharts = timeLapse.find(element => {
     return element.time == timeStep;
   });
   if (rawCharts) {
     rawCharts.charts.forEach(chart => {
-      chartData.datasets.push({
-        type: getType(chart.dataName),
-        label: chart.dataName,
-        fill: !showLine(chart.dataName),
-        backgroundColor: getColor(chart.dataName),
-        borderColor: getColor(chart.dataName),
-        data: chart.data,
-        showLine: showLine(chart.dataName),
-        pointRadius: getPointRadius(chart.dataName)
-      });
+      var chartObj = {};
+      switch (chart.dataName) {
+        case "tend":
+          chartObj = {
+            label: chart.dataName,
+            fill: false,
+            backgroundColor: "rgba(46, 184, 92, 0.2)",
+            borderColor: "rgba(46, 184, 92, 1)",
+            data: chart.data,
+            showLine: false,
+            pointRadius: 12
+          };
+          break;
+        case "pred_tp":
+          chartObj = {
+            label: chart.dataName,
+            fill: false,
+            backgroundColor: "red", //color.background,
+            borderColor: "red", // color.border,
+            data: chart.data,
+            showLine: true,
+            lineTension: 0,
+            pointRadius: 0
+          };
+          break;
+        case "pred_tp_c":
+          chartObj = {
+            label: chart.dataName,
+            fill: false,
+            backgroundColor: "red", //color.background,
+            borderColor: "red", // color.border,
+            data: chart.data,
+            showLine: true,
+            lineTension: 0,
+            pointRadius: 0,
+            borderDash: [5, 5]
+          };
+          break;
+        case "covid":
+          chartObj = {
+            label: chart.dataName,
+            fill: false,
+            backgroundColor: "blue", //color.background,
+            borderColor: "blue", // color.border,
+            data: chart.data,
+            showLine: true,
+            lineTension: 0,
+            pointRadius: 0,
+            borderDash: [5, 5]
+          };
+          break;
+        default:
+          chartObj = {
+            label: chart.dataName,
+            fill: false,
+            backgroundColor: "red", //color.background,
+            borderColor: "red", // color.border,
+            data: chart.data,
+            showLine: true,
+            lineTension: 0,
+            pointRadius: 0
+          };
+      }
+      chartData.datasets.push(chartObj);
     });
   }
-
   return chartData;
-}
-
-export function getColor(name) {
-  switch (name) {
-    case "tend":
-      return "#321fdb";
-    case "pred_tp":
-      return "#2eb85c";
-    default:
-      return "#f9b115";
-  }
-}
-
-export function getType(name) {
-  switch (name) {
-    case "tend":
-      return "scatter";
-    default:
-      return "line";
-  }
-}
-
-export function showLine(name) {
-  switch (name) {
-    case "tend":
-      return false;
-    default:
-      return true;
-  }
-}
-
-export function getPointRadius(name) {
-  switch (name) {
-    case "tend":
-      return 6;
-    default:
-      return 0;
-  }
 }

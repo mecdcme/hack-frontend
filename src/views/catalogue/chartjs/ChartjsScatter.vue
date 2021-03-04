@@ -3,7 +3,10 @@
     <div class="col-9">
       <div class="card">
         <header class="card-header">
-          IT − WO @ T + 6 ; TOTAL (mln. euro)
+          <span v-if="this.countrySelected && this.partnerSelected"
+            >{{ this.countrySelected.country }} -
+            {{ this.partnerSelected.descr }}</span
+          ><span v-else>BEC analysis</span>
         </header>
         <CCardBody>
           <scatter-chart :chartData="scatterCharts" :options="options" />

@@ -50,18 +50,7 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-success': isGraphPlus }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph analysis
-          plus
-        </router-link>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <router-link
-          tag="a"
-          :to="{ name: 'Policy' }"
-          class="c-sidebar-nav-link"
-          :class="{ 'c-active c-active-warning': isPolicy }"
-        >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> BEC analysis
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph COMEXT - ITGS
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -73,6 +62,16 @@
         >
           <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Mobility
           analisys
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
+          :to="{ name: 'Policy' }"
+          class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-warning': isPolicy }"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> BEC analysis
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">

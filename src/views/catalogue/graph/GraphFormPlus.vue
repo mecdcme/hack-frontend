@@ -145,8 +145,8 @@ export default {
   mixins: [visMixin, sliderMixin],
   data: () => ({
     //Form fields
-    selectedPeriod: null,
-    percentage: 0,
+    selectedPeriod: { id: "202003", name: "Mar 20" },
+    percentage: 90,
     transport: null,
     product: null,
     weight: null,
@@ -161,7 +161,7 @@ export default {
     nodeCentrality: 0,
 
     //Slider
-    sliderValue: "201912"
+    sliderValue: "202003"
   }),
   computed: {
     ...mapGetters("graphVisjs", ["nodes", "edges", "metrics"]),

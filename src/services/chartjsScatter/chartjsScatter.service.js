@@ -21,7 +21,7 @@ function findByFilters(form) {
     flow: form.flow,
     var: form.var,
     country: form.country,
-    partner: "US",
+    partner: form.partner,
     fcst: form.fcst
   };
   return axiosR

@@ -2,7 +2,7 @@ import { chartjsScatterService } from "@/services";
 import { buildCharts } from "@/common";
 
 const state = {
-  charts: [],
+  charts: null,
   chart: null
 };
 
@@ -29,7 +29,8 @@ const actions = {
     return chartjsScatterService
       .findByFilters(form)
       .then(data => {
-        commit("SET_SCATTER_CHARTS", buildCharts(data));
+        var localData = buildCharts(data);
+        commit("SET_SCATTER_CHARTS", localData);
       })
       .catch(err => {
         console.log(err);

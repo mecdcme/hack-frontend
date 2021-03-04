@@ -143,64 +143,13 @@ export default {
     scatterData() {
       var scatterData = {};
       scatterData.datasets = [];
-      this.charts.forEach(element => {
-        console.log(element);
-        const color = this.getColor();
-        var str = "";
-        switch (element.dataname) {
-          case "01":
-            str = {
-              label: element.dataname,
-              fill: false,
-              backgroundColor: color.background,
-              borderColor: color.border,
-              data: element.data,
-              showLine: false,
-              pointRadius: 12
-            };
-            break;
-          case "04":
-            str = {
-              label: element.dataname,
-              fill: false,
-              backgroundColor: "red", //color.background,
-              borderColor: "red", // color.border,
-              data: element.data,
-              showLine: true,
-              lineTension: 0,
-              pointRadius: 0,
-              borderDash: [5, 5]
-            };
-            break;
-          case "05":
-            str = {
-              label: element.dataname,
-              fill: false,
-              backgroundColor: color.background,
-              borderColor: color.border,
-              data: element.data,
-              showLine: true,
-              lineTension: 0,
-              pointRadius: 0,
-              borderDash: [5, 5]
-            };
-            break;
-          default:
-            str = {
-              label: element.dataname,
-              fill: false,
-              backgroundColor: "red", //color.background,
-              borderColor: "red", //color.border,
-              data: element.data,
-              showLine: true,
-              lineTension: 0,
-              pointRadius: 0
-            };
-            break;
-        }
-        scatterData.datasets.push(str);
-      });
-      this.clearColor();
+      if (this.charts) {
+        this.charts.forEach(element => {
+          console.log(element.time);
+          console.log(element.charts[0].dataName);
+          console.log(element.charts[0].data.length);
+        });
+      }
       return scatterData;
     }
   },

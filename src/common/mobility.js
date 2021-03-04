@@ -10,11 +10,12 @@ export function getCoordinates(dataArray) {
       y: element
     });
   });
+  return dataMap;
 }
-export function buildCharts(data) {
+export function buildCharts(dataR) {
   var timeLapse = [];
   timeStep.forEach(step => {
-    const rawData = data[step];
+    const rawData = dataR[step];
     var chartDataArray = [];
     chartType.forEach(type => {
       chartDataArray.push({
@@ -27,17 +28,5 @@ export function buildCharts(data) {
       charts: chartDataArray
     });
   });
-  //Manage forecast
-  var forecastArray = [];
-  var forecastRaw = data["Forecast"];
-  forecastType.forEach(type => {
-    forecastArray.push({
-      dataName: type,
-      data: getCoordinates(forecastRaw[type])
-    });
-  });
-  timeLapse.push({
-    time: "Forecast",
-    charts: forecastArray
-  });
+  return timeLapse;
 }

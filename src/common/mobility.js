@@ -30,3 +30,30 @@ export function buildCharts(dataR) {
   });
   return timeLapse;
 }
+
+export function getChart(mobilityCharts, chartType) {
+  var chartData = {};
+  chartData.datasets = [];
+  chartData.labels = mobilityCharts[chartType].Date;
+  chartData.datasets.push({
+    type: "bar",
+    label: "Grocery Pharmacy",
+    fill: false,
+    backgroundColor: "#06188a",
+    borderColor: "#06188a",
+    data: mobilityCharts[chartType].Values,
+    showLine: false,
+    pointRadius: 3
+  });
+  chartData.datasets.push({
+    type: "line",
+    label: "Grocery Pharmacy",
+    fill: false,
+    backgroundColor: "red", //color.background,
+    borderColor: "red", //color.border,
+    data: mobilityCharts[chartType].Smooth,
+    showLine: true,
+    pointRadius: 0
+  });
+  return chartData;
+}

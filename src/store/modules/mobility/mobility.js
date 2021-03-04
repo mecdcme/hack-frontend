@@ -1,9 +1,12 @@
 import { mobilityService } from "@/services";
+import { getChart } from "@/common";
 
 const state = {
   mobilities: [],
   mobility: null,
-  mobilityCharts: null
+  mobilityCharts: null,
+  chartGroceryPharmacy: null,
+  chartParks: null
 };
 const mutations = {
   SET_MOBILITIES(state, mobilities) {
@@ -14,6 +17,8 @@ const mutations = {
   },
   SET_MOBILITY_CHARTS(state, mobilityCharts) {
     state.mobilityCharts = mobilityCharts;
+    state.chartGroceryPharmacy = getChart(mobilityCharts, "Grocery_Pharmacy");
+    state.chartParks = getChart(mobilityCharts, "Parks");
   }
 };
 const actions = {
@@ -58,6 +63,12 @@ const getters = {
   },
   mobilityCharts: state => {
     return state.mobilityCharts;
+  },
+  chartGroceryPharmacy: state => {
+    return state.chartGroceryPharmacy;
+  },
+  chartParks: state => {
+    return state.chartParks;
   }
 };
 export const mobility = {

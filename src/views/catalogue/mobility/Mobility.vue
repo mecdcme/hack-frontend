@@ -61,7 +61,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { Context } from "@/common";
-import chartMixin from "@/components/mixins/chart.mixin";
+import scatterMixin from "@/components/mixins/scatter.mixin";
 import paletteMixin from "@/components/mixins/palette.mixin";
 import LineChart from "@/components/charts/LineChart";
 
@@ -70,7 +70,7 @@ export default {
   components: {
     LineChart
   },
-  mixins: [chartMixin, paletteMixin],
+  mixins: [scatterMixin, paletteMixin],
   data: () => ({
     //Form fields
     countrySelected: null,
@@ -90,13 +90,18 @@ export default {
     ...mapGetters("mobility", ["mobilities", "mobilityCharts"]),
 
     chartData() {
-      var chartData = {};       
+      var chartData = {};
       chartData.datasets = [];
       //var str;
-      this.mobilityCharts.forEach(element => {
-        console.log(element);
-        //const color = this.getColor();
-        /*
+      if (this.mobilityCharts) {
+        console.log(this.mobilityCharts.Grocery_Pharmacy.Values.length);
+        console.log(this.mobilityCharts.Parks.Values.length);
+        console.log(this.mobilityCharts.Residential.Values.length);
+        console.log(this.mobilityCharts.Retail.Values.length);
+        console.log(this.mobilityCharts.Transit_Station.Values.length);
+        console.log(this.mobilityCharts.Workplaces.Values.length);
+          //const color = this.getColor();
+          /*
         str = {
           type: "line",
           //label: element.dataname,
@@ -109,8 +114,8 @@ export default {
         };
         chartData.datasets.push(str);
         */
-      });
-      this.clearColor();
+        this.clearColor();
+      }
       return chartData;
     }
   },

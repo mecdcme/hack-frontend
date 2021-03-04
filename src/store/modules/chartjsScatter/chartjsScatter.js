@@ -1,4 +1,5 @@
 import { chartjsScatterService } from "@/services";
+import { buildCharts } from "@/common";
 
 const state = {
   charts: [],
@@ -24,11 +25,11 @@ const actions = {
         console.log(err);
       });
   },
-  findByName({ commit }, name) {
+  findByFilters({ commit }, form) {
     return chartjsScatterService
-      .findByName(name)
+      .findByFilters(form)
       .then(data => {
-        commit("SET_SCATTER_CHARTS", data);
+        commit("SET_SCATTER_CHARTS", buildCharts(data));
       })
       .catch(err => {
         console.log(err);

@@ -32,8 +32,7 @@
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
-          Graph
-          <span class="badge float-right badge-success">New</span>
+          International Trade Relations
         </header>
         <div class="card-body">
           <p>

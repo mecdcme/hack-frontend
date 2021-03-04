@@ -1,10 +1,10 @@
-import { axiosHack } from "@/http";
+import { axiosR } from "@/http";
 export const chartjsScatterService = {
   findAll,
-  findByName
+  findByFilters
 };
 function findAll() {
-  return axiosHack
+  return axiosR
     .get("/timelapse/")
 
     .then(res => {
@@ -16,10 +16,16 @@ function findAll() {
       throw err;
     });
 }
-function findByName(name) {
-  return axiosHack
-    .get("/timelapse?dataname=" + name)
-
+function findByFilters(form) {
+  const params = {
+    flow: form.flow,
+    var: form.var,
+    country: form.country,
+    partner: "US",
+    fcst: form.fcst
+  };
+  return axiosR
+    .get("/itsa", { params: params })
     .then(res => {
       var data = res.data ? res.data : {};
       console.log(data);

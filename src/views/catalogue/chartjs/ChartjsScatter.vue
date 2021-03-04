@@ -209,7 +209,17 @@ export default {
       console.log("Val " + val);
     },
     handleSubmit() {
-      console.log("Submit!");
+      const form = {
+        flow: this.flowSelected.id,
+        var: this.becSelected.id,
+        country: this.countrySelected.country,
+        partner: this.partnerSelected.id,
+        fcst: this.previsionSelected.id
+      };
+      if (this.isForecasting) {
+        form.fcstpolind = this.restriction;
+      }
+      this.$store.dispatch("chartjsScatter/findByFilters", form);
     }
   },
   created() {
@@ -217,7 +227,6 @@ export default {
     this.$store.dispatch("classification/getCountries");
     this.$store.dispatch("classification/getPartners");
     this.$store.dispatch("classification/getBecs");
-    this.$store.dispatch("chartjsScatter/findAll");
   }
 };
 </script>

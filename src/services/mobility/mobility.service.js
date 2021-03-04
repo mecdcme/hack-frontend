@@ -1,7 +1,8 @@
 import { axiosR } from "@/http";
 export const mobilityService = {
   findAll,
-  findByName
+  findByName,
+  chartsByName
 };
 function findAll(classification) {
   return axiosR
@@ -16,19 +17,27 @@ function findAll(classification) {
     });
 }
 function findByName(filter) {
-  //desc-summary-j?region=Italy&subregion=Italy
-
-  const endpoint = "desc-summary-j";
-
   return axiosR
     .get(
-      "/" +
-        endpoint +
-        "?" +
-        "region=" +
-        filter.name +
+      "/desc-summary?region=" + filter.region + "&subregion=" + filter.subregion
+    )
+    .then(res => {
+      var data = res.data ? res.data : {};
+      console.log(data);
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
+}
+
+function chartsByName(filter) {
+  return axiosR
+    .get(
+      "/mobility-components?region=" +
+        filter.region +
         "&subregion=" +
-        filter.name
+        filter.subregion
     )
     .then(res => {
       var data = res.data ? res.data : {};

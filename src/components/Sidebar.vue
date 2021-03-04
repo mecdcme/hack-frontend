@@ -7,7 +7,7 @@
   >
     <CSidebarBrand class="d-md-down-none" to="/">
       <CIcon name="cil-terminal" size="lg"></CIcon>
-      <span class="brand">2021 Hackathon</span>
+      <span class="brand">Cosmopolitics</span>
     </CSidebarBrand>
 
     <ul class="c-sidebar-nav h-100 ps" style="position: relative;">
@@ -40,7 +40,7 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-success': isGraph }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph analysis
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">

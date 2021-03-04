@@ -11,6 +11,7 @@
         <CCardBody>
           <scatter-chart :chartData="scatterCharts" :options="options" />
           <vue-slider
+            v-if="showSlider"
             :adsorb="true"
             :tooltip="'none'"
             v-model="policyPeriodValue"
@@ -116,7 +117,10 @@ export default {
     becSelected: null,
     previsionSelected: null,
     timeSelected: null,
-    restriction: 0
+    restriction: 0,
+
+    //Slider
+    showSlider: false
   }),
   computed: {
     ...mapGetters("classification", [
@@ -133,9 +137,6 @@ export default {
       if (this.previsionSelected)
         forecast = this.previsionSelected.id == 2 ? true : false;
       return forecast;
-    },
-    showSlider() {
-      return this.timeSelected ? true : false;
     },
     sliderPeriod() {
       return this.timeSelected
@@ -160,7 +161,9 @@ export default {
       if (this.isForecasting) {
         form.fcstpolind = this.restriction;
       }
-      this.$store.dispatch("chartjsScatter/findByFilters", form);
+      this.$store.dispatch("chartjsScatter/findByFilters", form).then(() => {
+        this.showSlider = true;
+      });
     }
   },
   created() {

@@ -113,7 +113,7 @@
       <div class="card">
         <header class="card-header">
           <span class="card-title"
-            >Policy Evaluation (with Nowcasting or forecasting upon
+            >Policy Evaluation (with nowcasting or forecasting upon
             request)</span
           >
         </header>

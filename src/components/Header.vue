@@ -13,31 +13,7 @@
     <CHeaderBrand class="mx-auto d-lg-none" to="/">
       <img src="/img/istat-logo.png" height="20" />
     </CHeaderBrand>
-    <CHeaderNav class="d-md-down-none mr-auto">
-      <CDropdown
-        inNav
-        class="c-header-nav-items"
-        placement="bottom"
-        add-menu-classes="dropdown-menu-right pt-0"
-      >
-        <template #toggler>
-          <CHeaderNavLink>
-            <div class="c-header-nav-first">Settings</div>
-          </CHeaderNavLink>
-        </template>
-        <CDropdownHeader tag="div" class="text-center" color="light">
-          <strong>Dashboard</strong>
-        </CDropdownHeader>
-        <CDropdownItem>
-          <span class="pl-1"><users-icon class="pr-3" />Users</span>
-        </CDropdownItem>
-        <CDropdownItem>
-          <span class="pl-1"
-            ><server-icon class="pr-3" />Server</span
-          ></CDropdownItem
-        >
-      </CDropdown>
-    </CHeaderNav>
+    <CHeaderNav class="d-md-down-none mr-auto" />
     <CHeaderNav class="mr-4">
       <app-header-dropdown-account />
     </CHeaderNav>

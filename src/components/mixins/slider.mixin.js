@@ -25,7 +25,11 @@ export default {
       { id: "202008", name: "Aug 20" },
       { id: "202009", name: "Sep 20" },
       { id: "202010", name: "Oct 20" },
-      { id: "202011", name: "Nov 20" }
+      { id: "202011", name: "Nov 20" },
+      { id: "202012", name: "Dec 20" },
+      { id: "202101", name: "Jan 21" },
+      { id: "202102", name: "Feb 21" },
+      { id: "202103", name: "Mar 21" }
     ],
     periodTimeMap: [
       { id: "202003", time: "T1" },

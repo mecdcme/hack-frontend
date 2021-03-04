@@ -57,3 +57,66 @@ export function getChart(mobilityCharts, chartType) {
   });
   return chartData;
 }
+
+export function getBecChart(timeLapse, timeStep) {
+  var chartData = {};
+  chartData.datasets = [];
+
+  var rawCharts = timeLapse.find(element => {
+    return element.time == timeStep;
+  });
+  if (rawCharts) {
+    rawCharts.charts.forEach(chart => {
+      chartData.datasets.push({
+        type: getType(chart.dataName),
+        label: chart.dataName,
+        fill: !showLine(chart.dataName),
+        backgroundColor: getColor(chart.dataName),
+        borderColor: getColor(chart.dataName),
+        data: chart.data,
+        showLine: showLine(chart.dataName),
+        pointRadius: getPointRadius(chart.dataName)
+      });
+    });
+  }
+
+  return chartData;
+}
+
+export function getColor(name) {
+  switch (name) {
+    case "tend":
+      return "#321fdb";
+    case "pred_tp":
+      return "#2eb85c";
+    default:
+      return "#f9b115";
+  }
+}
+
+export function getType(name) {
+  switch (name) {
+    case "tend":
+      return "scatter";
+    default:
+      return "line";
+  }
+}
+
+export function showLine(name) {
+  switch (name) {
+    case "tend":
+      return false;
+    default:
+      return true;
+  }
+}
+
+export function getPointRadius(name) {
+  switch (name) {
+    case "tend":
+      return 6;
+    default:
+      return 0;
+  }
+}

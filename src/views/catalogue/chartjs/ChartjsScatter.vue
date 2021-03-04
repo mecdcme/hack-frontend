@@ -6,9 +6,8 @@
           IT − WO @ T + 6 ; TOTAL (mln. euro)
         </header>
         <CCardBody>
-          <scatter-chart :chartData="scatterData" :options="options" />
+          <scatter-chart :chartData="scatterCharts" :options="options" />
           <vue-slider
-            v-if="showSlider"
             :adsorb="true"
             :tooltip="'none'"
             v-model="policyPeriodValue"
@@ -125,7 +124,7 @@ export default {
       "previsions",
       "timeNext"
     ]),
-    ...mapGetters("chartjsScatter", ["charts"]),
+    ...mapGetters("chartjsScatter", ["scatterCharts"]),
     isForecasting() {
       var forecast = false;
       if (this.previsionSelected)
@@ -138,24 +137,14 @@ export default {
     sliderPeriod() {
       return this.timeSelected
         ? this.getSliderPeriod(this.timeSelected.value)
-        : [];
-    },
-    scatterData() {
-      var scatterData = {};
-      scatterData.datasets = [];
-      if (this.charts) {
-        this.charts.forEach(element => {
-          console.log(element.time);
-          console.log(element.charts[0].dataName);
-          console.log(element.charts[0].data.length);
-        });
-      }
-      return scatterData;
+        : this.getSliderPeriod("202103");
     }
   },
   methods: {
     handleCounterChange(val) {
-      console.log("Val " + val);
+      var time = this.getTime(val);
+      console.log("Time " + time);
+      this.$store.dispatch("chartjsScatter/findByTime", time);
     },
     handleSubmit() {
       const form = {

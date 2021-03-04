@@ -15,19 +15,28 @@ export default {
       { id: "202010", name: "Oct 20" },
       { id: "202011", name: "Nov 20" }
     ],
-    policyPeriodValue: "201912",
+    policyPeriodValue: "202003",
     policyPeriod: [
-      { id: "202102", name: "Feb 21" },
-      { id: "202103", name: "Mar 21" },
-      { id: "202104", name: "Apr 21" },
-      { id: "202105", name: "May 21" },
-      { id: "202106", name: "Jun 21" },
-      { id: "202107", name: "Jul 21" },
-      { id: "202108", name: "Aug 21" },
-      { id: "202109", name: "Sep 21" },
-      { id: "202110", name: "Oct 21" },
-      { id: "202111", name: "Nov 21" },
-      { id: "202112", name: "Dec 21" }
+      { id: "202003", name: "Mar 20" },
+      { id: "202004", name: "Apr 20" },
+      { id: "202005", name: "May 20" },
+      { id: "202006", name: "Jun 20" },
+      { id: "202007", name: "Jul 20" },
+      { id: "202008", name: "Aug 20" },
+      { id: "202009", name: "Sep 20" },
+      { id: "202010", name: "Oct 20" },
+      { id: "202011", name: "Nov 20" }
+    ],
+    periodTimeMap: [
+      { id: "202003", time: "T1" },
+      { id: "202004", time: "T2" },
+      { id: "202005", time: "T3" },
+      { id: "202006", time: "T4" },
+      { id: "202007", time: "T5" },
+      { id: "202008", time: "T6" },
+      { id: "202009", time: "T7" },
+      { id: "202010", time: "T8" },
+      { id: "202011", time: "T9" }
     ]
   }),
   methods: {
@@ -37,6 +46,12 @@ export default {
         if (parseInt(element.id) <= parseInt(value)) period.push(element);
       });
       return period;
+    },
+    getTime(value) {
+      var obj = this.periodTimeMap.find(element => {
+        return element.id == value;
+      });
+      return obj ? obj.time : null;
     }
   }
 };

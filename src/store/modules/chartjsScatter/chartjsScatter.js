@@ -1,40 +1,35 @@
 import { chartjsScatterService } from "@/services";
-import { buildCharts } from "@/common";
+import { buildCharts, getBecChart } from "@/common";
 
 const state = {
   charts: null,
-  chart: null
+  scatterCharts: null
 };
 
 const mutations = {
-  SET_SCATTER_CHARTS(state, charts) {
+  SET_CHARTS(state, charts) {
     state.charts = charts;
   },
-  SET_SCATTER_CHART(state, chart) {
-    state.chart = chart;
+  SET_SCATTER_CHARTS(state, scatterCharts) {
+    state.scatterCharts = scatterCharts;
   }
 };
 const actions = {
-  findAll({ commit }) {
-    return chartjsScatterService
-      .findAll()
-      .then(data => {
-        commit("SET_SCATTER_CHARTS", data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  },
   findByFilters({ commit }, form) {
     return chartjsScatterService
       .findByFilters(form)
       .then(data => {
         var localData = buildCharts(data);
-        commit("SET_SCATTER_CHARTS", localData);
+        commit("SET_CHARTS", localData);
+        commit("SET_SCATTER_CHARTS", getBecChart(localData, "T1"));
       })
       .catch(err => {
         console.log(err);
       });
+  },
+  findByTime({ commit }, time){
+    var scatterCharts = getBecChart(this.state.chartjsScatter.charts, time);
+    commit("SET_SCATTER_CHARTS", scatterCharts);
   }
 };
 
@@ -42,8 +37,8 @@ const getters = {
   charts: state => {
     return state.charts;
   },
-  chart: state => {
-    return state.chart;
+  scatterCharts: state => {
+    return state.scatterCharts;
   }
 };
 export const chartjsScatter = {

@@ -24,7 +24,7 @@
               </template>
               <CCard class="card-no-shadow">
                 <CCardBody>
-                  Chart goes here
+                  <line-chart :chartData="chartData" :options="options" />
                 </CCardBody>
               </CCard>
             </CTab>
@@ -61,9 +61,16 @@
 <script>
 import { mapGetters } from "vuex";
 import { Context } from "@/common";
+import chartMixin from "@/components/mixins/chart.mixin";
+import paletteMixin from "@/components/mixins/palette.mixin";
+import LineChart from "@/components/charts/LineChart";
 
 export default {
   name: "Mobility",
+  components: {
+    LineChart
+  },
+  mixins: [chartMixin, paletteMixin],
   data: () => ({
     //Form fields
     countrySelected: null,
@@ -80,7 +87,32 @@ export default {
   }),
   computed: {
     ...mapGetters("classification", ["countries", "timeNext"]),
-    ...mapGetters("mobility", ["mobilities", "mobilityCharts"])
+    ...mapGetters("mobility", ["mobilities", "mobilityCharts"]),
+
+    chartData() {
+      var chartData = {};       
+      chartData.datasets = [];
+      //var str;
+      this.mobilityCharts.forEach(element => {
+        console.log(element);
+        //const color = this.getColor();
+        /*
+        str = {
+          type: "line",
+          //label: element.dataname,
+          fill: false,
+          backgroundColor: color.background,
+          borderColor: color.border,
+          data: element.retail.values,
+          showLine: false,
+          pointRadius: 12
+        };
+        chartData.datasets.push(str);
+        */
+      });
+      this.clearColor();
+      return chartData;
+    }
   },
   methods: {
     handleSubmit() {

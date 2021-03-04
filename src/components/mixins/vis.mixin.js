@@ -298,11 +298,21 @@ export default {
       console.log("From: " + selectedEdge.from + ", To: " + selectedEdge.to);
       return selectedEdge ? selectedEdge : null;
     },
-    getCentrality(network, nodeId, metrics){
+    getCentrality(network, nodeId, metrics) {
+      var nodeMetric = null;
       const selectedNode = this.getNode(network, nodeId);
-      return selectedNode
-        ? metrics.degree_centrality[selectedNode.label].toPrecision(4)
-        : 0;
+      if (selectedNode) {
+        nodeMetric = {
+          centrality: metrics.degree_centrality[selectedNode.label].toPrecision(
+            4
+          ),
+          vulnerability: metrics.vulnerability[selectedNode.label].toPrecision(
+            4
+          ),
+          hubness: metrics.hubness[selectedNode.label].toPrecision(4)
+        };
+      }
+      return nodeMetric;
     }
   }
 };

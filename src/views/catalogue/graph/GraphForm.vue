@@ -8,10 +8,14 @@
             {{ graphDensity }}</span
           >
           <span v-else>Graph metrics</span>
-          <span class="pl-2 float-right" v-if="nodeCentrality > 0"
-            ><span class="text-primary">Node centrality:</span>
-            {{ nodeCentrality }}</span
-          >
+          <span class="pl-2 float-right" v-if="nodeMetric">
+            <span class="text-primary">Node centrality:</span>
+            {{ nodeMetric.centrality }},
+            <span class="text-primary"> vulnerability:</span>
+            {{ nodeMetric.vulnerability }},
+            <span class="text-primary"> hubness:</span>
+            {{ nodeMetric.hubness }}
+          </span>
         </CCardHeader>
         <CCardBody class="card-no-border">
           <network
@@ -166,7 +170,7 @@ export default {
     transportConstraint: null,
 
     //Metrics
-    nodeCentrality: 0,
+    nodeMetric: null,
 
     //Slider
     sliderValue: "202003"
@@ -214,7 +218,7 @@ export default {
     },
     handleOverNode(event) {
       const nodeId = event.node;
-      this.nodeCentrality = this.getCentrality(
+      this.nodeMetric = this.getCentrality(
         this.network,
         nodeId,
         this.metrics

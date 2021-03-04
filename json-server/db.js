@@ -14,6 +14,8 @@ const importseries = require("./importseries");
 const exportseries = require("./exportseries");
 const becs = require("./clsBec");
 const partners = require("./partners");
+const productplus = require("./productplus");
+
 
 module.exports = () => ({
   countries,
@@ -31,5 +33,6 @@ module.exports = () => ({
   importseries,
   exportseries,
   becs,
-  partners
+  partners,
+  productplus
 });

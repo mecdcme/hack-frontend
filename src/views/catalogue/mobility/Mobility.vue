@@ -3,7 +3,7 @@
     <div class="col-9">
       <div class="card">
         <CCardBody>
-          <CTabs variant="tabs" :active-tab="0">
+          <CTabs variant="tabs" :active-tab="1">
             <CTab>
               <template #title>
                 <span>Data</span>
@@ -20,11 +20,27 @@
             </CTab>
             <CTab>
               <template #title>
-                <span>Chart</span>
+                <span>Grocery Pharmacy</span>
               </template>
               <CCard class="card-no-shadow">
                 <CCardBody>
-                  <line-chart :chartData="chartData" :options="options" />
+                  <line-chart
+                    :chartData="chartGroceryPharmacy"
+                    :options="options"
+                  />
+                </CCardBody>
+              </CCard>
+            </CTab>
+            <CTab>
+              <template #title>
+                <span>Parks</span>
+              </template>
+              <CCard class="card-no-shadow">
+                <CCardBody>
+                  <line-chart
+                    :chartData="chartParks"
+                    :options="options"
+                  />
                 </CCardBody>
               </CCard>
             </CTab>
@@ -61,16 +77,17 @@
 <script>
 import { mapGetters } from "vuex";
 import { Context } from "@/common";
-import scatterMixin from "@/components/mixins/scatter.mixin";
+import mobilityMixin from "@/components/mixins/mobility.mixin";
 import paletteMixin from "@/components/mixins/palette.mixin";
 import LineChart from "@/components/charts/LineChart";
+import chartMixin from "@/components/mixins/chart.mixin";
 
 export default {
   name: "Mobility",
   components: {
     LineChart
   },
-  mixins: [scatterMixin, paletteMixin],
+  mixins: [mobilityMixin, chartMixin, paletteMixin],
   data: () => ({
     //Form fields
     countrySelected: null,
@@ -89,31 +106,66 @@ export default {
     ...mapGetters("classification", ["countries", "timeNext"]),
     ...mapGetters("mobility", ["mobilities", "mobilityCharts"]),
 
-    chartData() {
+    chartGroceryPharmacy() {
       var chartData = {};
       chartData.datasets = [];
-      //var str;
       if (this.mobilityCharts) {
-        console.log(this.mobilityCharts.Grocery_Pharmacy.Values.length);
-        console.log(this.mobilityCharts.Parks.Values.length);
+        const color = this.getColor();
+        chartData.labels = this.mobilityCharts.Grocery_Pharmacy.Date;
+        chartData.datasets.push({
+          type: "bar",
+          label: "Grocery Pharmacy",
+          fill: false,
+          backgroundColor: color.background,
+          borderColor: color.border,
+          data: this.mobilityCharts.Grocery_Pharmacy.Values,
+          showLine: false,
+          pointRadius: 3
+        });
+        chartData.datasets.push({
+          type: "line",
+          label: "Grocery Pharmacy",
+          fill: false,
+          backgroundColor: "red", //color.background,
+          borderColor: "red", //color.border,
+          data: this.mobilityCharts.Grocery_Pharmacy.Smooth,
+          showLine: true,
+          pointRadius: 0
+        });
+        this.clearColor();
+      }
+      return chartData;
+    },
+    chartParks() {
+      var chartData = {};
+      chartData.datasets = [];
+      if (this.mobilityCharts) {
         console.log(this.mobilityCharts.Residential.Values.length);
         console.log(this.mobilityCharts.Retail.Values.length);
         console.log(this.mobilityCharts.Transit_Station.Values.length);
         console.log(this.mobilityCharts.Workplaces.Values.length);
-          //const color = this.getColor();
-          /*
-        str = {
-          type: "line",
-          //label: element.dataname,
+        const color = this.getColor();
+        chartData.labels = this.mobilityCharts.Grocery_Pharmacy.Date;
+        chartData.datasets.push({
+          type: "bar",
+          label: "Parks",
           fill: false,
           backgroundColor: color.background,
           borderColor: color.border,
-          data: element.retail.values,
+          data: this.mobilityCharts.Parks.Values,
           showLine: false,
-          pointRadius: 12
-        };
-        chartData.datasets.push(str);
-        */
+          pointRadius: 3
+        });
+        chartData.datasets.push({
+          type: "line",
+          label: "Parks",
+          fill: false,
+          backgroundColor: "red", //color.background,
+          borderColor: "red", //color.border,
+          data: this.mobilityCharts.Parks.Smooth,
+          showLine: true,
+          pointRadius: 0
+        });
         this.clearColor();
       }
       return chartData;

@@ -63,6 +63,26 @@ const actions = {
         console.log(err);
       });
   },
+  postGraphPlus({ commit }, form) {
+    return graphVisjsService
+      .postGraphPlus(form)
+      .then(data => {
+        data.nodes.forEach(node => {
+          node.x = node.x * 314;
+          node.y = node.y * 314;
+          node.shape = "image";
+          node.image =
+            "https://flagpedia.net/data/flags/mini/" +
+            node.label.toLowerCase() +
+            ".png";
+          node.size = 15;
+        });
+        commit("SET_GRAPH", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
   clear({ commit }) {
     commit("SET_GRAPHS", []);
   }

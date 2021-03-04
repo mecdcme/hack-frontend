@@ -8,6 +8,7 @@ const state = {
   isLoading: false,
   isMap: false,
   isGraph: false,
+  isGraphPlus: false,
   isPolicy: false,
   isTrade: false,
   isMobility: false,
@@ -43,6 +44,9 @@ const mutations = {
       case Context.Graph:
         state.isGraph = true;
         break;
+      case Context.GraphPlus:
+        state.isGraphPlus = true;
+        break;
       case Context.Policy:
         state.isPolicy = true;
         break;
@@ -61,6 +65,7 @@ const mutations = {
     state.isHome = false;
     state.isMap = false;
     state.isGraph = false;
+    state.isGraphPlus = false;
     state.isPolicy = false;
     state.isTrade = false;
     state.isMobility = false;
@@ -138,6 +143,9 @@ const getters = {
   },
   isGraph: state => {
     return state.isGraph;
+  },
+  isGraphPlus: state => {
+    return state.isGraphPlus;
   },
   isPolicy: state => {
     return state.isPolicy;

@@ -75,10 +75,15 @@
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <header class="card-header">
-          <span class="card-title">YOY changes in products (CPA) shares</span>
+          <span class="card-title"
+            >Changes in basket composition of traded products (CPA -
+            classification of products by activity) by Member State</span
+          >
         </header>
         <div class="card-body">
-          This section contains trade data.
+          This section provides, for each Member State, the 2020 monthly time
+          series of year-over-year changes in the basket composition of exported
+          and imported goods, classified according to CPA-2 digits.
           <br />
           <p class="section-link">
             <router-link tag="a" :to="{ name: 'Trade' }"
@@ -100,6 +105,23 @@
           <p class="section-link">
             <router-link tag="a" :to="{ name: 'Mobility' }"
               ><span>Go to mobility indicator <chevron-right-icon /></span>
+            </router-link>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="card">
+        <header class="card-header">
+          Graph plus
+          <span class="badge float-right badge-success">New</span>
+        </header>
+        <div class="card-body">
+          This section a new graph analysis.
+          <br />
+          <p class="section-link">
+            <router-link tag="a" :to="{ name: 'GraphPlus' }"
+              ><span>Go to graph plus <chevron-right-icon /></span>
             </router-link>
           </p>
         </div>

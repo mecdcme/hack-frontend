@@ -56,6 +56,12 @@ const routes = [
         meta: { authorize: [] }
       },
       {
+        path: "catalogue/graphplus",
+        name: "GraphPlus",
+        component: () => import("../views/catalogue/graph/GraphFormPlus"),
+        meta: { authorize: [] }
+      },
+      {
         path: "catalogue/graphslider",
         name: "GraphSlider",
         component: () => import("../views/catalogue/graph/GraphSlider"),

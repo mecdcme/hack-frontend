@@ -46,6 +46,17 @@
       <li class="c-sidebar-nav-item">
         <router-link
           tag="a"
+          :to="{ name: 'GraphPlus' }"
+          class="c-sidebar-nav-link"
+          :class="{ 'c-active c-active-success': isGraphPlus }"
+        >
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Graph analysis
+          plus
+        </router-link>
+      </li>
+      <li class="c-sidebar-nav-item">
+        <router-link
+          tag="a"
           :to="{ name: 'Policy' }"
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-warning': isPolicy }"
@@ -60,7 +71,7 @@
           class="c-sidebar-nav-link"
           :class="{ 'c-active c-active-danger': isTrade }"
         >
-          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Trade
+          <CIcon name="cil-layers" class="c-sidebar-nav-icon" /> Basket of traded products
         </router-link>
       </li>
       <li class="c-sidebar-nav-item">
@@ -88,6 +99,7 @@ export default {
       isHome: "isHome",
       isMap: "isMap",
       isGraph: "isGraph",
+      isGraphPlus: "isGraphPlus",
       isPolicy: "isPolicy",
       isTrade: "isTrade",
       isMobility: "isMobility"

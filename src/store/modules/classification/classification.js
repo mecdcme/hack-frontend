@@ -3,6 +3,7 @@ import { classificationService } from "@/services";
 const state = {
   countries: [],
   products: [],
+  productPlus: [],
   transports: [],
   partners: [],
   becs: [],
@@ -40,6 +41,9 @@ const mutations = {
   SET_PRODUCTS(state, products) {
     state.products = products;
   },
+  SET_PRODUCT_PLUS(state, productPlus) {
+    state.productPlus = productPlus;
+  },
   SET_TRANSPORTS(state, transports) {
     state.transports = transports;
   },
@@ -67,6 +71,16 @@ const actions = {
       .findAll("product3s")
       .then(data => {
         commit("SET_PRODUCTS", data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  getProductPlus({ commit }) {
+    return classificationService
+      .findAll("productplus")
+      .then(data => {
+        commit("SET_PRODUCT_PLUS", data);
       })
       .catch(err => {
         console.log(err);
@@ -110,6 +124,9 @@ const getters = {
   },
   products: state => {
     return state.products;
+  },
+  productPlus: state => {
+    return state.productPlus;
   },
   transports: state => {
     return state.transports;

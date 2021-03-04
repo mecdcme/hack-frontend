@@ -19,5 +19,8 @@ module.exports = [
   },{
     id: 6,
     descr: "CONSUMER GOODS"
+  } ,{
+    id: 7,
+    descr: "TOTAL"
   } 
 ];

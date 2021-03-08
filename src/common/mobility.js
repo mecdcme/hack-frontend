@@ -22,8 +22,8 @@ export function buildCharts(dataR) {
         chartDataArray.push({
           dataName: type,
           data: [
-            { x: 122, y: 100 },
-            { x: 122, y: -100 }
+            { x: 122, y: 3000 },
+            { x: 122, y: -4000 }
           ]
         });
       } else {
@@ -50,8 +50,8 @@ export function buildCharts(dataR) {
     forecastDataArray.push({
       dataName: "covid",
       data: [
-        { x: 122, y: 100 },
-        { x: 122, y: -100 }
+        { x: 122, y: 3000 },
+        { x: 122, y: -4000 }
       ]
     });
     timeLapse.push({

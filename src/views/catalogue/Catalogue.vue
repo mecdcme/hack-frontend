@@ -40,7 +40,7 @@
             <strong>COMEXT transport data</strong>, along with relevant global
             and local measures detailing the structure of countries relations.
             The panel is interactive, providing the possibility to apply several
-            the data and to see how the graph structure and measures change
+            filters and to see how the graph structure and measures change
             accordingly.
           </p>
           <p class="mt-2">

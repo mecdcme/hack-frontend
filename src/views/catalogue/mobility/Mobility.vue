@@ -42,7 +42,7 @@
         <CCardBody>
           <label for="country" class="card-label">Mobility type:</label>
           <v-select
-            label="name"
+            label="descr"
             :options="mobilityTypes"
             placeholder="Mobility type"
             v-model="mobilitySelected"

@@ -3,7 +3,9 @@
     <div class="col-9">
       <CCard>
         <CCardHeader>
-          <b>{{ this.countrySelected.name }} <span >{{ this.report }} </span></b>
+          <b
+            >{{ this.countrySelected.name }} <span>{{ this.report }} </span></b
+          >
         </CCardHeader>
         <CCardBody>
           <CDataTable :items="tableData" :fields="tableFileds" hover />

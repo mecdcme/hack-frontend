@@ -3,7 +3,7 @@
     <div class="col-9">
       <CCard>
         <CCardHeader>
-          {{ this.countrySelected.name }}
+          <b>{{ this.countrySelected.name }}</b>
         </CCardHeader>
         <CCardBody>
           <CDataTable :items="tableData" :fields="tableFileds" hover />
@@ -98,7 +98,7 @@ export default {
     tableFileds: [
       { key: "row", label: "" },
       { key: "Retail", label: "Retail" },
-      { key: "Grocery_Pharmacy", label: "Grocery Pharmacy" },
+      { key: "Grocery_Pharmacy" || "Pharmacy", label: "Grocery Pharmacy" },
       { key: "Parks", label: "Parks" },
       { key: "Transit_Station", label: "Transit Station" },
       { key: "Workplaces", label: "Workplaces" },
@@ -203,7 +203,7 @@ export default {
         borderColor: "red", //color.border,
         data: mobilityCharts[chartType.name].Smooth,
         showLine: true,
-        pointRadius: 0
+        pointRadius: 3
       });
       return chartData;
     },

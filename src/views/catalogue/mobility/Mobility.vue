@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-9">
       <CCard>
+        <CCardHeader>
+          {{ this.countrySelected.name }}
+        </CCardHeader>
         <CCardBody>
           <CDataTable :items="tableData" :fields="tableFileds" hover />
         </CCardBody>
@@ -51,7 +54,7 @@
             color="primary"
             shape="square"
             size="sm"
-            @click="handleSelectChart"
+            @click="handleSubmit"
             class="mt-3"
             >Go!</CButton
           >
@@ -75,7 +78,7 @@ export default {
   mixins: [mobilityMixin, chartMixin],
   data: () => ({
     //Form fields
-    countrySelected: null,
+    countrySelected: { name: "Italy" },
     mobilitySelected: {
       id: 1,
       name: "Retail",
@@ -123,10 +126,17 @@ export default {
             .then(() => {
               this.tableData = this.mobilities;
             });
-          this.$store.dispatch("mobility/chartsByName", {
-            region: this.countrySelected.name,
-            subregion: this.countrySelected.name
-          });
+          this.$store
+            .dispatch("mobility/chartsByName", {
+              region: this.countrySelected.name,
+              subregion: this.countrySelected.name
+            })
+            .then(() => {
+              this.chartData = this.getChart(
+                this.mobilityCharts,
+                this.mobilitySelected
+              );
+            });
         } else {
           this.$store
             .dispatch("policyIndicator/findByName", {
@@ -140,12 +150,19 @@ export default {
               );
             });
 
-          this.$store.dispatch("policyIndicator/chartsByName", {
-            region: this.countrySelected.name,
-            subregion: this.countrySelected.name
-          });
-        }
+          this.$store
+            .dispatch("policyIndicator/chartsByName", {
+              region: this.countrySelected.name,
+              subregion: this.countrySelected.name
+            })
 
+            .then(() => {
+              this.chartData = this.getPIChart(
+                this.policyIndicatorCharts,
+                this.mobilitySelected
+              );
+            });
+        }
         this.countryName = this.countrySelected.name;
       }
     },

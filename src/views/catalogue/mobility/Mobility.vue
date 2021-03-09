@@ -3,7 +3,7 @@
     <div class="col-9">
       <CCard>
         <CCardHeader>
-          <b>{{ this.countrySelected.name }}</b>
+          <b>{{ this.countrySelected.name }} <span >{{ this.report }} </span></b>
         </CCardHeader>
         <CCardBody>
           <CDataTable :items="tableData" :fields="tableFileds" hover />
@@ -78,6 +78,7 @@ export default {
   mixins: [mobilityMixin, chartMixin],
   data: () => ({
     //Form fields
+    report: "",
     countrySelected: { name: "Italy" },
     mobilitySelected: {
       id: 1,
@@ -118,6 +119,7 @@ export default {
     handleSubmit() {
       if (this.countrySelected) {
         if (this.mobilitySelected.id != 7) {
+          this.report = "";
           this.$store
             .dispatch("mobility/findByName", {
               region: this.countrySelected.name,
@@ -138,6 +140,7 @@ export default {
               );
             });
         } else {
+          this.report = " - PCAResult";
           this.$store
             .dispatch("policyIndicator/findByName", {
               region: this.countrySelected.name,

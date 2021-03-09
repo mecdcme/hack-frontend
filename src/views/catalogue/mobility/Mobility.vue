@@ -89,19 +89,10 @@ export default {
     },
     chartData: null,
     //Table fields product
-    importFields: [
-      { key: "row", label: "" },
-      { key: "Retail", label: "Retail" },
-      { key: "Pharmacy", label: "Pharmacy" },
-      { key: "Parks", label: "Parks" },
-      { key: "Station", label: "Station" },
-      { key: "Workplaces", label: "Workplaces" },
-      { key: "Residential", label: "Residential" }
-    ],
     tableFileds: [
       { key: "row", label: "" },
       { key: "Retail", label: "Retail" },
-      { key: "Grocery_Pharmacy" || "Pharmacy", label: "Grocery Pharmacy" },
+      { key: "Grocery_Pharmacy", label: "Grocery Pharmacy" },
       { key: "Parks", label: "Parks" },
       { key: "Transit_Station", label: "Transit Station" },
       { key: "Workplaces", label: "Workplaces" },
@@ -276,34 +267,6 @@ export default {
           this.mobilitySelected
         );
       });
-
-    // Policy Indicator
-
-    /*
-    this.$store
-      .dispatch("policyIndicator/findByName", {
-        region: "Italy",
-        subregion: "Italy"
-      })
-      .then(() => {
-        this.tableData = this.getPIData(
-          this.policyIndicators,
-          this.mobilitySelected
-        );
-      });
-
-    this.$store
-      .dispatch("policyIndicator/chartsByName", {
-        region: "Italy",
-        subregion: "Italy"
-      })
-      .then(() => {
-        this.chartData = this.getPIChart(
-          this.policyIndicatorCharts,
-          this.mobilitySelected
-        );
-      });
-    */
   }
 };
 </script>

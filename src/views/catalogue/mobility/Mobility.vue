@@ -3,7 +3,7 @@
     <div class="col-9">
       <CCard>
         <CCardBody>
-          <CDataTable :items="mobilities" :fields="importFields" hover />
+          <CDataTable :items="tableData" :fields="tableFileds" hover />
         </CCardBody>
       </CCard>
       <CCard>
@@ -81,11 +81,8 @@ export default {
       name: "Retail",
       descr: "Retail"
     },
-
-    //Chart data
     chartData: null,
-
-    //Table fields
+    //Table fields product
     importFields: [
       { key: "row", label: "" },
       { key: "Retail", label: "Retail" },
@@ -94,32 +91,77 @@ export default {
       { key: "Station", label: "Station" },
       { key: "Workplaces", label: "Workplaces" },
       { key: "Residential", label: "Residential" }
-    ]
+    ],
+    tableFileds: [
+      { key: "row", label: "" },
+      { key: "Retail", label: "Retail" },
+      { key: "Grocery_Pharmacy", label: "Grocery Pharmacy" },
+      { key: "Parks", label: "Parks" },
+      { key: "Transit_Station", label: "Transit Station" },
+      { key: "Workplaces", label: "Workplaces" },
+      { key: "Residential", label: "Residential" }
+    ],
+    tableData: []
   }),
   computed: {
     ...mapGetters("classification", ["countries", "timeNext", "mobilityTypes"]),
-    ...mapGetters("mobility", ["mobilities", "mobilityCharts"])
+    ...mapGetters("mobility", ["mobilities", "mobilityCharts"]),
+    ...mapGetters("policyIndicator", [
+      "policyIndicators",
+      "policyIndicatorCharts"
+    ])
   },
   methods: {
     handleSubmit() {
       if (this.countrySelected) {
-        this.$store.dispatch("mobility/findByName", {
-          region: this.countrySelected.name,
-          subregion: this.countrySelected.name
-        });
-        this.$store.dispatch("mobility/chartsByName", {
-          region: this.countrySelected.name,
-          subregion: this.countrySelected.name
-        });
+        if (this.mobilitySelected.id != 7) {
+          this.$store
+            .dispatch("mobility/findByName", {
+              region: this.countrySelected.name,
+              subregion: this.countrySelected.name
+            })
+            .then(() => {
+              this.tableData = this.mobilities;
+            });
+          this.$store.dispatch("mobility/chartsByName", {
+            region: this.countrySelected.name,
+            subregion: this.countrySelected.name
+          });
+        } else {
+          this.$store
+            .dispatch("policyIndicator/findByName", {
+              region: this.countrySelected.name,
+              subregion: this.countrySelected.name
+            })
+            .then(() => {
+              this.tableData = this.getPIData(
+                this.policyIndicators,
+                this.mobilitySelected
+              );
+            });
+
+          this.$store.dispatch("policyIndicator/chartsByName", {
+            region: this.countrySelected.name,
+            subregion: this.countrySelected.name
+          });
+        }
+
         this.countryName = this.countrySelected.name;
       }
     },
     handleSelectChart() {
       if (this.mobilitySelected) {
-        this.chartData = this.getChart(
-          this.mobilityCharts,
-          this.mobilitySelected
-        );
+        if (this.mobilitySelected.id == 7) {
+          this.chartData = this.getPIChart(
+            this.policyIndicatorCharts,
+            this.mobilitySelected
+          );
+        } else {
+          this.chartData = this.getChart(
+            this.mobilityCharts,
+            this.mobilitySelected
+          );
+        }
       }
     },
     getChart(mobilityCharts, chartType) {
@@ -147,15 +189,60 @@ export default {
         pointRadius: 0
       });
       return chartData;
+    },
+    getPIData(policyIndicators) {
+      var tableData = [];
+      var keys = policyIndicators.row;
+      for (var product in policyIndicators) {
+        var rowObject = {};
+        if (product != "row" && product != "_row") {
+          rowObject["row"] = product;
+          policyIndicators[product].forEach(function(item, index) {
+            rowObject[keys[index]] = item;
+          });
+          tableData.push(rowObject);
+        }
+      }
+      return tableData;
+    },
+    getPIChart(policyIndicatorCharts, chartType) {
+      var chartData = {};
+      chartData.datasets = [];
+      chartData.labels = policyIndicatorCharts.Date;
+      chartData.datasets.push({
+        type: "bar",
+        label: chartType.descr,
+        fill: false,
+        backgroundColor: "#06188a",
+        borderColor: "#06188a",
+        data: policyIndicatorCharts.PolInd,
+        showLine: false,
+        pointRadius: 3
+      });
+      chartData.datasets.push({
+        type: "line",
+        label: chartType.descr + " smooth",
+        fill: false,
+        backgroundColor: "red", //color.background,
+        borderColor: "red", //color.border,
+        data: policyIndicatorCharts.smooth,
+        showLine: true,
+        pointRadius: 3
+      });
+      return chartData;
     }
   },
   created() {
     this.$store.dispatch("coreui/setContext", Context.Mobility);
     this.$store.dispatch("classification/getCountries");
-    this.$store.dispatch("mobility/findByName", {
-      region: "Italy",
-      subregion: "Italy"
-    });
+    this.$store
+      .dispatch("mobility/findByName", {
+        region: "Italy",
+        subregion: "Italy"
+      })
+      .then(() => {
+        this.tableData = this.mobilities;
+      });
     this.$store
       .dispatch("mobility/chartsByName", {
         region: "Italy",
@@ -167,6 +254,34 @@ export default {
           this.mobilitySelected
         );
       });
+
+    // Policy Indicator
+
+    /*
+    this.$store
+      .dispatch("policyIndicator/findByName", {
+        region: "Italy",
+        subregion: "Italy"
+      })
+      .then(() => {
+        this.tableData = this.getPIData(
+          this.policyIndicators,
+          this.mobilitySelected
+        );
+      });
+
+    this.$store
+      .dispatch("policyIndicator/chartsByName", {
+        region: "Italy",
+        subregion: "Italy"
+      })
+      .then(() => {
+        this.chartData = this.getPIChart(
+          this.policyIndicatorCharts,
+          this.mobilitySelected
+        );
+      });
+    */
   }
 };
 </script>

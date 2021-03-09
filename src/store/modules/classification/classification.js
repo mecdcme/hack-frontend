@@ -38,7 +38,8 @@ const state = {
     { id: 3, name: "Parks", descr: "Parks" },
     { id: 4, name: "Transit_Station", descr: "Station" },
     { id: 5, name: "Workplaces", descr: "Workplaces" },
-    { id: 6, name: "Residential", descr: "Residential" }
+    { id: 6, name: "Residential", descr: "Residential" },
+    { id: 7, name: "Policy Indicator", descr: "Policy Indicator" }
   ]
 };
 
